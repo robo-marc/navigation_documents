@@ -1,21 +1,33 @@
+dist: xenial # needed to use python 3.7
 language: python
+branches:
+  only:
+    - master
 python:
-    - "3.5"
-
-before_install:
-    - wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
-    - chmod +x miniconda.sh
-    - "./miniconda.sh -b"
-    - export PATH=/home/travis/miniconda2/bin:$PATH
-    - conda update --yes conda
-
+  - 3.7
 install:
-    - conda install --yes python="3.5" sphinx
-    - pip install --user travis-sphinx
-
+  - pip install -U pip
+  - pip install -r requirements.txt # install the required packages
+  - go get github.com/errata-ai/vale # install vale
 script:
-    - travis-sphinx build --source=source
-
-after_success:
-    - travis-sphinx deploy
-
+  - skip # Travis requires a `script` property, but we do not need it
+stages:
+  - build and test
+  - deploy
+jobs:
+  include:
+    - stage: build and test # This stage builds and lints in parallel
+      name: Build
+      script: make html # build the docs
+      skip-cleanup: true
+    - script: vale source # run vale
+      name: Test
+    - stage: deploy
+      name: Deploy to GitHub Pages
+      if: (NOT type IN (pull_request)) AND (branch = master) # only deploy if merging on master
+      script: make html
+      deploy:
+        provider: pages # deploy on github pages
+        skip_cleanup: true
+        github_token: "$token" # defined via the Travis interface
+        local_dir: build/html
