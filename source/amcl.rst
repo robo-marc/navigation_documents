@@ -54,7 +54,7 @@ amcl
 
 | base_scanトピックでレーザーデータを使用してローカライズするには以下のように指定します。
 
-.. code-block::
+.. code-block:: none
 
     amcl scan:=base_scan
 
@@ -305,7 +305,7 @@ amcl
 
 | 　Augmented MCLでは尤度平均が小さくなると、ランダムに配置するパーティクルの数を増やします。具体的には、前回より尤度平均が小さくなった段階で、2種類の平滑化係数(recovery_alpha_slow, recovery_alpha_fast)で指数移動平均を求め、その割合でランダムパーティクルの割合が決定します。指数移動平均とは、ひとつ前の重みに定数をかけることで、指数関数的に減少させる手法で、下記のように2種類の重み(weight_slow, weight_fast)を指数移動平均で求め、平滑化係数の違いによる値の差によってランダムパーティクルの割合を決定します。
 
-.. code-block::
+.. code-block:: none
 
    weight_slow = (1 - recovery_alpha_slow) * weight_slow + recovery_alpha_slow * (尤度平均)
    weight_fast = (1 - recovery_alpha_fast) * weight_fast + recovery_alpha_fast * (尤度平均)
