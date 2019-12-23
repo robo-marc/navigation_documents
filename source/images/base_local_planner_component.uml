@@ -1,0 +1,109 @@
+@startuml
+
+
+'participant "MoveBase" as move_base
+'participant "TrajectoryPlannerROS" as TrajectoryPlannerROS
+'participant "TrajectoryPlanner" as TrajectoryPlanner
+
+'participant "BaseLocalPlanner" as BaseLocalPlanner
+
+package "move_base" {
+  [MoveBase]
+}
+
+package "base_local_planner" {
+
+rectangle "ローカルプランナー I/F" {
+  interface "navcore::BaseLocalPlanner" as BaseLocalPlanner
+  BaseLocalPlanner -- [TrajectoryPlannerROS]
+  [MoveBase] --> BaseLocalPlanner
+
+  [TrajectoryPlannerROS] --> [TrajectoryPlanner]
+
+}
+
+
+rectangle "ライブラリ" {
+
+rectangle "軌道検索" {
+
+TrajectorySearch -- [SimpleScoredSamplingPlanner]
+
+
+}
+
+rectangle "軌道生成" {
+
+  interface "TrajectorySampleGenerator" as TrajectorySampleGenerator
+
+  [SimpleScoredSamplingPlanner] --> TrajectorySampleGenerator
+
+  TrajectorySampleGenerator -- [SimpleTrajectoryGenerator]
+
+}
+
+rectangle "コスト関数" {
+  [SimpleScoredSamplingPlanner] --> TrajectoryCostFunction
+  TrajectoryCostFunction -- [ObstacleCostFunction]
+  TrajectoryCostFunction -- [MapGridCostFunction]
+  TrajectoryCostFunction -- [OscillationCostFunction]
+  TrajectoryCostFunction -- [PreferForwardCostFunction]
+  TrajectoryCostFunction -- [TwirlingCostFunction]
+
+
+  [MapGridCostFunction] -down--> [MapGrid]
+  [TrajectoryPlanner] -down--> [MapGrid]
+
+  [MapGrid] -down--> [MapCell]
+
+rectangle "WorldModel" {
+
+  interface "WorldModel" as WorldModel1
+  WorldModel1 -- [CostmapModel]
+
+  [ObstacleCostFunction] -down--> WorldModel1
+  [TrajectoryPlanner] -down--> WorldModel1
+
+  interface "WorldModel" as WorldModel2
+  WorldModel2 -- [VoxelGridModel]
+
+  interface "WorldModel" as WorldModel3
+  WorldModel3 -- [PointGrid]
+}
+
+}
+rectangle "ヘルパクラス" {
+
+[LocalPlannerUtil]
+[OdometryHelperRos]
+[LatchedStopRotateController]
+[FootprintHelper]
+[MapGridVisualizer]
+
+  [LatchedStopRotateController] --> [OdometryHelperRos]
+  [TrajectoryPlannerROS] --> [OdometryHelperRos]
+  [TrajectoryPlanner] --> [FootprintHelper]
+  [TrajectoryPlannerROS] --> [MapGridVisualizer]
+
+}
+}
+}
+
+
+
+package "dwa_local_planner" {
+  interface "navcore::BaseLocalPlanner" as BaseLocalPlanner2
+  [MoveBase] --> BaseLocalPlanner2
+  [DWAPlannerROS] -up- BaseLocalPlanner2
+  [DWAPlannerROS] --> [DWAPlanner]
+
+
+  [DWAPlanner] --> TrajectorySearch
+  [DWAPlannerROS] --> [LocalPlannerUtil]
+  [DWAPlannerROS] --> [LatchedStopRotateController]
+  [DWAPlannerROS] --> [OdometryHelperRos]
+  [DWAPlanner] --> [MapGridVisualizer]
+
+}
+
+@enduml

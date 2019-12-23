@@ -1,0 +1,34 @@
+@startuml
+
+hide footbox
+
+participant "MoveBase" as move_base
+participant "TrajectoryPlannerROS" as TrajectoryPlannerROS
+participant "TrajectoryPlanner" as TrajectoryPlanner
+
+activate move_base
+move_base -> TrajectoryPlannerROS: computeVelocityCommands()
+activate TrajectoryPlannerROS
+
+
+opt ゴール地点到達済みの場合
+  TrajectoryPlannerROS -> TrajectoryPlannerROS ++ : 最終微調整/停止
+  TrajectoryPlannerROS --
+  move_base <-- TrajectoryPlannerROS : 駆動命令
+end
+
+TrajectoryPlannerROS -> TrajectoryPlanner ++ : findBestPath()
+TrajectoryPlanner -> TrajectoryPlanner ++ : createTrajectories()
+TrajectoryPlanner -> TrajectoryPlanner ++ : generateTrajectory()
+
+TrajectoryPlanner --
+TrajectoryPlanner --
+
+TrajectoryPlannerROS <-- TrajectoryPlanner : 駆動命令
+TrajectoryPlanner --
+
+move_base <-- TrajectoryPlannerROS : 駆動命令
+
+deactivate TrajectoryPlannerROS
+
+@enduml

@@ -1,0 +1,66 @@
+@startuml
+
+hide footbox
+
+participant "MoveBase" as move_base
+participant "DWAPlannerROS" as DWAPlannerROS
+participant "Latched\nStopRotate\nController" as LatchedStopRotateController
+participant "DWAPlanner" as DWAPlanner
+participant "Simple\nScoredSampling\nPlanner" as ScoredSamplingPlanner
+participant "Simple\nTrajectoryGenerator" as TrajectoryGenerator
+participant "Trajectory\nCostFunction\n(複数)" as TrajectoryCostFunction
+
+
+
+
+activate move_base
+move_base -> DWAPlannerROS: computeVelocityCommands()
+activate DWAPlannerROS
+
+DWAPlannerROS -> DWAPlanner ++ : updatePlanAndLocalCosts()
+DWAPlanner -> TrajectoryCostFunction ++ : 大域経路, フットプリントをセットする
+DWAPlanner <-- TrajectoryCostFunction --
+DWAPlannerROS <-- DWAPlanner --
+
+opt ゴール地点到達済みの場合
+  DWAPlannerROS -> LatchedStopRotateController ++ : 最終微調整/停止
+  DWAPlannerROS <-- LatchedStopRotateController -- : 駆動命令
+  move_base <-- DWAPlannerROS : 駆動命令
+end
+
+DWAPlannerROS -> DWAPlanner ++ : findBestPath()
+
+DWAPlanner -> TrajectoryGenerator ++ : initialise()
+
+DWAPlanner <-- TrajectoryGenerator -- : サンプリング速度
+
+DWAPlanner -> ScoredSamplingPlanner ++ : findBestTrajectory()
+
+loop サンプリング速度セットごと
+
+  ScoredSamplingPlanner -> TrajectoryGenerator ++ : nextTrajectory()
+
+  ScoredSamplingPlanner <-- TrajectoryGenerator -- : 軌道
+
+  loop コスト関数ごと
+
+    ScoredSamplingPlanner -> TrajectoryCostFunction ++ : scoreTrajectory()
+
+    ScoredSamplingPlanner <-- TrajectoryCostFunction -- : 軌道のコスト
+
+  end
+
+end
+
+DWAPlanner <-- ScoredSamplingPlanner -- : 最良の軌道
+
+
+
+DWAPlannerROS <-- DWAPlanner : 駆動命令
+DWAPlanner --
+
+move_base <-- DWAPlannerROS : 駆動命令
+
+deactivate DWAPlannerROS
+
+@enduml

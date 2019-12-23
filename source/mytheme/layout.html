@@ -1,0 +1,59 @@
+﻿{%- block doctype %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3c.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+{%- endblock doctype %}
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <title>NavigationStack - {{ title }}</title>
+
+    <script src="{{ pathto('_static/jquery-1.7.1.min.js', 1) }}"></script>
+    <script src="{{ pathto('_static/bootstrap-modal.js', 1) }}"></script>
+    <script src="{{ pathto('_static/bootstrap-collapse.js', 1) }}"></script>
+    <script src="{{ pathto('_static/bootstrap-dropdown.js', 1) }}"></script>
+
+    <link rel="stylesheet" href="{{ pathto('_static/' + style, 1) }}" type="text/css" />
+    <link rel="stylesheet" href="{{ pathto('_static/bootstrap-responsive.css', 1) }}" type="text/css" />
+    <link rel="stylesheet" href="{{ pathto('_static/template.css', 1) }}" type="text/css" />
+    <link rel="stylesheet" href="{{ pathto('_static/pygments.css', 1) }}" type="text/css" />
+
+
+</head>
+<body>
+    <div id="fb-root"></div>
+    
+    <div class="container-fluid">
+        <div class="hero-unit">
+            {%- block header %}
+            <div class="page-header">
+                <a href="{{ pathto('index.html', 1) }}"><font color="#000000">{{ "Navigation Stack" }}</font></a>
+                <br/>
+            </div>
+            {%- endblock header %}
+        </div>
+        <div class="row-fluid">
+            {%- block sidebar %}
+            <div class="span3">
+                <div class="well sidebar-nav">
+                    <ul class="nav nav-list">
+                        <h3>コンテンツ</h3>
+                        {{ toctree(collapse=False) }}
+                    </ul>
+                </div>
+            </div>
+            {%- endblock sidebar %}
+
+            {%- block document %}
+            <div class="span8">
+                {%- block body %}{%- endblock body %}
+            </div>
+            {%- endblock document %}
+        </div>
+
+        {%- block footer %}
+        {%- endblock footer %}
+    </div>
+</body>
+</html>
