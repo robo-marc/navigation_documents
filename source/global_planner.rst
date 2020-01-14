@@ -218,10 +218,6 @@ old_navfn_behavior=True　 :doc:`NavFn <navfn>` と同じように経路を再�
 
 `Global planner ROS - Orientation filter <https://www.youtube.com/watch?v=NQ2z90i5V2I>`__
 
-.. youtube:: NQ2z90i5V2I
-   :width: 480
-   :height: 270
-
 |
 
 
