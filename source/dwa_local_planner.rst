@@ -22,16 +22,12 @@ dwa_local_planner
 | 　　　4.3.5 :ref:`振動防止パラメーター<Oscillation_Prevention_Parameters_DWALocalPlanner>`
 | 　　　4.3.6 :ref:`グローバルプランパラメーター<Global_Plan_Parameters_DWALocalPlanner>`
 | 　　4.4 :ref:`C++ API<CPPAPI_DWALocalPlanner>`
-| 　  4.5 :ref:`下位クラス<InternalClasses_DWALocalPlanner>`
-| 　    4.5.1 :ref:`DWAプランナークラス<DWAPlanner_DWALocalPlanner>`
-| 　　  4.5.1.1 :ref:`C++ API<CPPAPI-1_DWALocalPlanner>`
+| 　　4.5 :ref:`下位クラス<InternalClasses_DWALocalPlanner>`
+| 　　　4.5.1 :ref:`DWAプランナークラス<DWAPlanner_DWALocalPlanner>`
+| 　　　4.5.1.1 :ref:`C++ API<CPPAPI-1_DWALocalPlanner>`
 | 　5. :ref:`内部処理手順<Sequence_DWALocalPlanner>`
 | 　　5.1 :ref:`メソッドコールシーケンスの概要<MethodCallSequence_DWALocalPlanner>`
 | 　　5.2 :ref:`各メソッドの処理概要<Method_Frame_DWALocalPlanner>`
-| 　6. :ref:`下位クラス<InternalClasses_DWALocalPlanner>`
-| 　  6.1 :ref:`DWAプランナークラス<DWAPlanner_DWALocalPlanner>`
-| 　　6.1.1 :ref:`C++ API<CPPAPI-1_DWALocalPlanner>`
-
 |
 
 .. _Summary_DWALocalPlanner:
@@ -81,7 +77,9 @@ dwa\_local\_plannerパッケージは、モバイルベースを平面上で運�
 プランナーは、マップを使い、ロボットがスタートからゴール位置に到達するまでの運動の軌道を作成します。
 その過程で、プランナーは、ロボットの周囲に、グリッドマップとして表される価値関数を作成します。
 この価値関数は、グリッドセルを通過するコストを表現します。
-コントローラーの仕事は、この価値関数を使用して、ロボットに送信する速度 （X軸直線速度、Y軸直線速度、Z軸回転速度）を決定することです。
+コントローラーの仕事は、この価値関数を使用して、ロボットに送信する速度 （縦方向速度、横方向速度、回転速度）を決定することです。
+(移動方向の定義については :ref:`座標系<Coord_BaseLocalPlanner>` 参照。)
+
 
 
 .. image:: images/local_plan.png
@@ -99,7 +97,7 @@ dwa\_local\_plannerパッケージは、モバイルベースを平面上で運�
 
 Dynamic Window Approach (DWA) アルゴリズムの基本的な考え方は次のとおりです。
 
-   #. ロボットの速度空間 (X軸直線速度, Y軸直線速度, Z軸回転速度) を離散的にサンプリングします。
+   #. ロボットの速度空間 (縦方向速度, 横方向速度, 回転速度) を離散的にサンプリングします。
 
    #. サンプリングされた速度ごとに、ロボットの現在の状態からフォワードシミュレーションを実行して、サンプリングされた速度を一定（短い）時間適用した場合にどう動くかを予測します。(軌道の予測)
    #. フォワードシミュレーションから得られた各軌道を評価 (スコア) します。評価には、障害物への近さ、目標地点への近さ、グローバルパスへの近さ、速度などの特性をとりこんだ距離空間を使用します。 不正な軌道（障害物と衝突する軌道）は破棄します。
@@ -112,7 +110,7 @@ Dynamic Window Approach (DWA) アルゴリズムの基本的な考え方は次�
 * `D. Fox, W. Burgard, and S. Thrun. "The dynamic window approach to collision avoidance" <https://pdfs.semanticscholar.org/dabd/bb636f02d3cff3d546bd1bdae96a058ba4bc.pdf?_ga=2.75374935.412017123.1520536154-80785446.1520536154>`__. ローカルコントロールへの Dynamic Window Approach。 
 
 
-* `Alonzo Kelly. "An Intelligent Predictive Controller for Autonomous Vehicles" <http://www.ri.cmu.edu/pub_files/pub1/kelly_alonzo_1994_7/kelly_alonzo_1994_7.pdf>`__. 同様のアプローチで制御する以前のシステム。 
+* `Alonzo Kelly. "An Intelligent Predictive Controller for Autonomous Vehicles" <http://www.ri.cmu.edu/pub_files/pub1/kelly_alonzo_1994_7/kelly_alonzo_1994_7.pdf>`__. 過去の同様のアプローチで制御するシステム。 
 
 * `Brian P. Gerkey and Kurt Konolige. "Planning and Control in Unstructured Terrain" <https://pdfs.semanticscholar.org/dabd/bb636f02d3cff3d546bd1bdae96a058ba4bc.pdf?_ga=2.75374935.412017123.1520536154-80785446.1520536154>`__. LAGRロボットで使用される Trajectory Rollout アルゴリズムの説明。 
 
@@ -125,30 +123,38 @@ Dynamic Window Approach (DWA) アルゴリズムの基本的な考え方は次�
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-ロボットの速度空間 (X軸直線速度, Y軸直線速度, Z軸回転速度) を離散的にサンプリングします。
+ロボットの速度空間 (縦方向速度, 横方向速度, 回転速度) を離散的にサンプリングします。
 
 サンプリングする範囲は、
 
-* X軸直線速度のサンプリング上限速度 = 現在のX軸直線速度 + :ref:`X軸直線加速度の上限<Robot_Configuration_Parameters_DWALocalPlanner>` + 1シミュレーション周期
+* 縦方向速度のサンプリング上限速度 = 現在の縦方向速度 + :ref:`縦方向加速度の上限<Robot_Configuration_Parameters_DWALocalPlanner>` + コントローラー周期
+    ただし最大で :ref:`縦方向速度の上限(max_vel_x)<Robot_Configuration_Parameters_DWALocalPlanner>`
 
-* X軸直線速度のサンプリング下限速度 = 現在のX軸直線速度 - :ref:`X軸直線加速度の上限<Robot_Configuration_Parameters_DWALocalPlanner>` + 1シミュレーション周期
+* 縦方向速度のサンプリング下限速度 = 現在の縦方向速度 - :ref:`縦方向加速度の上限<Robot_Configuration_Parameters_DWALocalPlanner>` + コントローラー周期
+    ただし最小で :ref:`縦方向速度の下限(min_vel_x)<Robot_Configuration_Parameters_DWALocalPlanner>`
 
-* Y軸直線速度のサンプリング上限速度 = 現在のY軸直線速度 + :ref:`Y軸直線加速度の上限<Robot_Configuration_Parameters_DWALocalPlanner>` + 1シミュレーション周期
+* 横方向速度のサンプリング上限速度 = 現在の横方向速度 + :ref:`横方向加速度の上限<Robot_Configuration_Parameters_DWALocalPlanner>` + コントローラー周期
+    ただし最大で :ref:`横方向速度の上限(max_vel_y)<Robot_Configuration_Parameters_DWALocalPlanner>`
 
-* Y軸直線速度のサンプリング下限速度 = 現在のY軸直線速度 - :ref:`Y軸直線加速度の上限<Robot_Configuration_Parameters_DWALocalPlanner>` + 1シミュレーション周期
+* 横方向速度のサンプリング下限速度 = 現在の横方向速度 - :ref:`横方向加速度の上限<Robot_Configuration_Parameters_DWALocalPlanner>` + コントローラー周期
+    ただし最小で :ref:`横方向速度の下限(max_vel_y)<Robot_Configuration_Parameters_DWALocalPlanner>`
 
-* Z軸回転速度のサンプリング上限速度 = 現在のZ軸回転速度 + :ref:`Z軸回転加速度の上限<Robot_Configuration_Parameters_DWALocalPlanner>` + 1シミュレーション周期
+* 回転速度のサンプリング上限速度 = 現在の回転速度 + :ref:`回転加速度の上限<Robot_Configuration_Parameters_DWALocalPlanner>` + コントローラー周期
+    ただし最大で :ref:`回転速度絶対値の上限(max_vel_theta)<Robot_Configuration_Parameters_DWALocalPlanner>`
 
-* Z軸回転速度のサンプリング下限速度 = 現在のZ軸回転速度 - :ref:`Z軸回転加速度の上限<Robot_Configuration_Parameters_DWALocalPlanner>` + 1シミュレーション周期
+* 回転速度のサンプリング下限速度 = 現在の回転速度 - :ref:`回転加速度の上限<Robot_Configuration_Parameters_DWALocalPlanner>` + コントローラー周期
+    ただし最小で :ref:`回転速度絶対値の上限(max_vel_theta)<Robot_Configuration_Parameters_DWALocalPlanner>` の負値
 
-    (1シミュレーション周期は、:ref:`controller_frequency<Forward_Simulation_Parameters_DWALocalPlanner>` パラメーターの逆数であり、既定値は 0.05s です)
+    (コントローラー周期は、:ref:`controller_frequency<Forward_Simulation_Parameters_DWALocalPlanner>` パラメーターの逆数であり、既定値は 0.05s です)
 
-です。 上式は DWAの場合ですが、base_local_planner と同様に Trajectory Rollout も選択でき、その場合上式の 「1シミュレーション周期」は、「:ref:`フォワードシミュレーション時間<Forward_Simulation_Parameters_DWALocalPlanner>` 」に置き換わります。
+です。 上式は DWAの場合ですが、base_local_planner と同様に Trajectory Rollout も選択でき、その場合上式の 「コントローラー周期」は、「:ref:`フォワードシミュレーション時間<Forward_Simulation_Parameters_DWALocalPlanner>` 」に置き換わります。
+
 
 
 求めたサンプリング範囲を等分割し、":ref:`サンプリング数<Forward_Simulation_Parameters_DWALocalPlanner>` "個のサンプル値を抽出します。
+さらに、正と負のサンプル値の間に、0のサンプル値を挿入します。
 
-その場回転やストラフ移動もこのサンプリング速度に含まれているため、base_local_plannerのような追加の専用サンプリング処理はありません。
+その場回転や横移動もこのサンプリング速度に含まれているため、base_local_plannerのような追加の専用サンプリング処理はありません。
 
 .. ソース：SimpleTrajectoryGenerator::initialise()
 
@@ -163,13 +169,22 @@ Dynamic Window Approach (DWA) アルゴリズムの基本的な考え方は次�
 
 フォワードシミュレーションのステップ数は、定義式が少し異なり、
 
-「 サンプリング速度のxy合成値 * フォワードシミュレーション時間 / :ref:`距離ステップサイズ(sim_granularity)<Forward_Simulation_Parameters_DWALocalPlanner>` 」 
+「 縦横方向サンプリング速度の合成値 * フォワードシミュレーション時間 / :ref:`距離ステップサイズ(sim_granularity)<Forward_Simulation_Parameters_DWALocalPlanner>` 」 
 
 または 
 
-「サンプリングZ軸回転速度の絶対値 * フォワードシミュレーション時間 / :ref:`角度ステップサイズ(angular_sim_granularity)<Forward_Simulation_Parameters_DWALocalPlanner>`  」  (注：フォワードシミュレーション時間が掛かる点が異なります)
+「サンプリング回転速度の絶対値 * フォワードシミュレーション時間 / :ref:`角度ステップサイズ(angular_sim_granularity)<Forward_Simulation_Parameters_DWALocalPlanner>`  」  (注：フォワードシミュレーション時間が掛かる点が base_local_plannerと異なります)
 
 のどちらか大きい方で決まります。
+
+
+また、ロボットのサンプリング速度をチェックし、次のような制限を超える軌道は破棄します。
+
+* 縦横方向合成速度が :ref:`上限(max_trans_vel)<Robot_Configuration_Parameters_DWALocalPlanner>` を超える軌道
+
+* 縦横方向合成速度が :ref:`下限(min_trans_vel)<Robot_Configuration_Parameters_DWALocalPlanner>` を下回る ＆ 回転速度絶対値が :ref:`下限(min_vel_theta)<Robot_Configuration_Parameters_DWALocalPlanner>` を下回る軌道
+
+
 
 |
 
@@ -276,17 +291,17 @@ dwa\_local\_planner::DWAPlannerROS ラッパーの動作をカスタマイズす
    :header: "パラメーター名", "内容", "型", "単位", "デフォルト"
    :widths: 5, 50, 5, 5, 8
 
-   "<name>/acc_lim_x", "ロボットのX軸直線加速度の上限", "double", "m/s^2", "2.5"
-   "<name>/acc_lim_y", "ロボットのY軸直線加速度の上限", "double", "m/s^2", "2.5"
-   "<name>/acc_lim_th",  "ロボットのZ軸回転加速度の上限", "double", "rad/s^2", "3.2"
-   "<name>/max_trans_vel",  "ロボットの並進速度絶対値の上限。(x方向とy方向の合成速度の上限。これを超えるサンプリング速度は無効)", "double", "m/s", "0.55"
-   "<name>/min_trans_vel",  "ロボットの並進速度絶対値の下限。(x方向とy方向の合成速度の下限。これを下回るサンプリング速度は無効)", "double", "m/s", "0.1"
-   "<name>/max_vel_x",  "ロボットのX軸直線速度の上限", "double", "m/s", "0.55"
-   "<name>/min_vel_x",  "ロボットのX軸直線速度の下限。逆方向の動きでは負。", "double", "m/s", "0.0"
-   "<name>/max_vel_y",  "ロボットのY軸直線速度の上限", "double", "m/s", "0.1"
-   "<name>/min_vel_y",  "ロボットのY軸直線速度の下限", "double", "m/s", "-0.1"
-   "<name>/max_rot_vel",  "ロボットのZ軸回転速度絶対値の上限", "double", "rad/s", "1.0"
-   "<name>/min_rot_vel",  "ロボットのZ軸回転速度絶対値の下限", "double", "rad/s", "0.4"
+   "<name>/acc_lim_x", "ロボットの縦方向加速度の上限", "double", "m/s^2", "2.5"
+   "<name>/acc_lim_y", "ロボットの横方向加速度の上限", "double", "m/s^2", "2.5"
+   "<name>/acc_lim_th",  "ロボットの回転加速度の上限", "double", "rad/s^2", "3.2"
+   "<name>/max_vel_trans",  "ロボットの並進速度絶対値の上限。旧max_trans_vel。 (縦方向と横方向の合成速度の上限。これを超える軌道は破棄します。)", "double", "m/s", "0.55"
+   "<name>/min_vel_trans",  "ロボットの並進速度絶対値の下限。旧min_trans_vel。(縦方向と横方向の合成速度の下限。これと min_vel_theta のどちらも満たさない軌道は破棄します。)", "double", "m/s", "0.1"
+   "<name>/max_vel_x",  "ロボットの縦方向速度の上限", "double", "m/s", "0.55"
+   "<name>/min_vel_x",  "ロボットの縦方向速度の下限。逆方向の動きでは負。", "double", "m/s", "0.0"
+   "<name>/max_vel_y",  "ロボットの横方向速度の上限", "double", "m/s", "0.1"
+   "<name>/min_vel_y",  "ロボットの横方向速度の下限", "double", "m/s", "-0.1"
+   "<name>/max_vel_theta",  "ロボットの回転速度絶対値の上限。旧max_rot_vel。", "double", "rad/s", "1.0"
+   "<name>/min_vel_theta",  "ロボットの回転速度絶対値の下限。旧min_rot_vel。 (これと min_vel_trans のどちらも満たさない軌道は破棄します。)", "double", "rad/s", "0.4"
 
 
 |
@@ -300,9 +315,9 @@ dwa\_local\_planner::DWAPlannerROS ラッパーの動作をカスタマイズす
    :header: "パラメーター名", "内容", "型", "単位", "デフォルト"
    :widths: 5, 50, 5, 5, 8
 
-   "<name>/yaw_goal_tolerance",  "目標地点に到達したときの、コントローラーの Yaw回転角許容誤差", "double", "rad", "0.05"
-   "<name>/xy_goal_tolerance",  "目標地点に到達したときの、コントローラーの x-y 平面上距離の許容誤差", "double", "m", "0.10"
-   "<name>/latch_xy_goal_tolerance",  "目標地点許容誤差がラッチされている場合、ロボットが目標xy位置に到達すると、後はその場回転のみ行います。回転の間に目標地点許容誤差の範囲外になることもあります。(falseの場合は、範囲外に出たら通常の動作に戻ります。)", "bool", "\-", "false"
+   "<name>/yaw_goal_tolerance",  "目標地点に到達したときの、コントローラーの向き(回転角)の許容誤差", "double", "rad", "0.05"
+   "<name>/xy_goal_tolerance",  "目標地点に到達したときの、コントローラーの 2D平面上距離の許容誤差", "double", "m", "0.10"
+   "<name>/latch_xy_goal_tolerance",  "目標地点許容誤差ラッチフラグ。trueの場合、ロボットが目標地点に到達すると、後はその場回転のみ行います。回転の間に目標地点許容誤差の範囲外になることもあります。(falseの場合は、範囲外に出たら通常の動作に戻ります。)", "bool", "\-", "false"
 
 |
 
@@ -318,9 +333,9 @@ dwa\_local\_planner::DWAPlannerROS ラッパーの動作をカスタマイズす
    "<name>/sim_time",  "軌道をフォワードシミュレーションする時間", "double", "s", "1.7"
    "<name>/sim_granularity",  "与えられた軌道上の点間のステップサイズ", "double", "m", "0.025"
    "<name>/angular_sim_granularity",  "与えられた軌道上の角度サンプル間のステップサイズ", "double", "rad", "0.1"
-   "<name>/vx_samples",  "X軸直線速度空間を探索するときに使用するサンプルの数 ", "integer", "\-", "3"
-   "<name>/vy_samples",  "Y軸直線速度空間を探索するときに使用するサンプルの数 ", "integer", "\-", "10"
-   "<name>/vth_samples",  "Z軸回転速度空間を探索するときに使用するサンプルの数 ", "integer", "\-", "20"
+   "<name>/vx_samples",  "縦方向速度空間を探索するときに使用するサンプルの数 ", "integer", "\-", "3"
+   "<name>/vy_samples",  "横方向速度空間を探索するときに使用するサンプルの数 ", "integer", "\-", "10"
+   "<name>/vth_samples",  "回転速度空間を探索するときに使用するサンプルの数 ", "integer", "\-", "20"
    "<name>/controller_frequency",  このコントローラーが呼び出される頻度。 コントローラーの名前空間に設定されていない場合、searchParamを使用して親の名前空間からパラメーターを読み取ります。 すなわち、move_base とともに使用する場合は move_base の "controller_frequency"パラメーターを設定するだけでよく 、このパラメーターを未設定のままにしておけます。, "double", "Hz", "20.0"
 
 |
@@ -469,7 +484,7 @@ dwa\_local\_planner::DWAPlanner クラスの C ++レベルのAPIドキュメン�
       * goal_front_costs_(ローカルゴールへの向き)   ← グローバルパスを設定
       * alignment_costs_(大域経路への向き) ←  グローバルパスを設定
 
-    * 速度サンプリング base_local_planner::SimpleTrajectoryGenerator::initialise() … とりうる (X軸直線速度, Y軸直線速度, Z軸回転速度) の組み合わせリストを作成. 
+    * 速度サンプリング base_local_planner::SimpleTrajectoryGenerator::initialise() … とりうる (縦方向速度, 横方向速度, 回転速度) の組み合わせリストを作成. 
     * 最良軌道検索 base_local_planner::SimpleScoredSamplingPlanner::findBestTrajectory() をコールする
 
 |

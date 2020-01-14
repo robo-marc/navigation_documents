@@ -1,0 +1,42 @@
+@startuml
+
+package "move_base" {
+    class MoveBase
+}
+
+package "nav_core" {
+    interface BaseLocalPlanner
+    interface BaseGlobalPlanner
+    interface RecoveryBehavior
+}
+
+package "navfn" {
+    class NavfnROS
+}
+
+package "base_local_planner" {
+    class TrajectoryPlannerROS
+}
+
+package "clear_costmap_recovery"{
+    class ClearCostmapRecovery
+}
+
+package "rotate_recovery"{
+    class RotateRecovery
+}
+
+package "costmap_2d"{
+    class Costmap2DROS
+}
+
+MoveBase ..> BaseLocalPlanner: called
+MoveBase ..> BaseGlobalPlanner: called
+MoveBase ..> RecoveryBehavior: called
+MoveBase ..> Costmap2DROS: called
+TrajectoryPlannerROS -up-|> BaseLocalPlanner
+NavfnROS -up-|> BaseGlobalPlanner
+ClearCostmapRecovery -up-|> RecoveryBehavior
+RotateRecovery -up-|> RecoveryBehavior
+
+@enduml

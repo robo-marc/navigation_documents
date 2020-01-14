@@ -1,0 +1,31 @@
+@startuml
+
+hide footbox
+
+participant "AMCLNode" as node
+participant "AMCLOdom" as odom
+participant "AMCLLaserData" as laser
+
+activate node
+opt 移動が閾値以上の場合
+group 予測
+node -> odom: UpdateAction()
+node <-- odom
+end
+
+group 尤度の計算
+node -> laser: UpdateSensor()
+laser -> laser: pf_update_sensor()
+node <-- laser
+end
+
+opt 予測回数がリサンプリングのインターバル数を超えた場合
+
+group リサンプリング
+node -> node: pf_update_resample()
+end
+
+end
+end
+
+@enduml

@@ -1,0 +1,101 @@
+@startuml
+
+hide footbox
+
+participant "MoveBase" as move_base
+participant "MoveBaseAcitionServer" as action_server
+participant "プランナースレッド" as planner_thread
+participant "GlobalCostmap\nCostmap2DROS" as global_costmap
+participant "BaseGlobalPlanner" as global_planner
+participant "LocalCostmap\nCostmap2DROS" as local_costmap
+participant "BaseLocalPlanner" as local_planner
+participant "RecoveryBehavior" as recovery_behavior
+
+activate move_base
+create action_server
+move_base -> action_server: new
+create planner_thread
+move_base -> planner_thread: new
+note over planner_thread: 別スレッドで状態遷移の制御を実行
+
+create global_costmap
+move_base -> global_costmap: new
+create global_planner
+move_base -> global_planner: new
+
+create local_costmap
+move_base -> local_costmap: new
+create local_planner
+move_base -> local_planner: new
+
+move_base -> move_base: リカバリ動作読込
+opt リカバリ動作読込失敗
+    move_base -> move_base: デフォルトリカバリ動作読込
+end
+
+== パラメータ再読み込み時 ==
+
+opt base_global_plannerが変更された
+    destroy global_planner
+    move_base -> global_planner: new
+    move_base -> move_base: 状態リセット（PLANNINGに戻す）
+end
+
+opt base_local_plannerが変更された
+    destroy local_planner
+    move_base -> local_planner: new
+    move_base -> move_base: 状態リセット（PLANNINGに戻す）
+end
+
+== move_base_simple/goalトピック受信時 ==
+
+move_base -> move_base: 受信した内容で\nmove_base/goalをパブリッシュ
+
+== make_planサービス ==
+
+move_base -> move_base ++ : コストマップウィンドウクリア
+    move_base -> global_costmap: getCostmap()
+    activate global_costmap
+    global_costmap -> global_costmap ++ : setConvexPolygonCost()
+    note right global_costmap: ロボット周辺のコストをクリアする
+    deactivate global_costmap
+    return
+
+    move_base -> local_costmap: getCostmap()
+    activate local_costmap
+    local_costmap -> local_costmap ++ : setConvexPolygonCost()
+    note right local_costmap: ロボット周辺のコストをクリアする
+    deactivate local_costmap
+    return
+    return 
+
+move_base -> global_planner: makePlan()
+activate global_planner
+return
+
+opt makePlan()失敗
+    loop 指定された許容範囲内
+        note right move_base: 指定された許容範囲内で実行可能な目標を外側に検索
+        move_base -> global_planner: makePlan()
+        activate global_planner
+        return
+        break makePlan()成功
+        end
+    end
+end
+
+note right move_base: 作成した計画を設定
+
+== clear_costmapsサービス ==
+note over move_base: TODO
+
+== move_baseアクション実行 ==
+activate action_server
+action_server -> move_base: executeCb()
+return
+deactivate action_server
+
+note over move_base: TODO
+
+
+@enduml

@@ -9,17 +9,18 @@ base_local_planner
 | 　　3.1 :ref:`目的<Purpose_BaseLocalPlanner>`
 | 　　3.2 :ref:`ローカルプランニングの処理概要<Procesure_BaseLocalPlanner>`
 | 　　3.3 :ref:`速度空間のサンプリング<VelocitySampling_BaseLocalPlanner>`
-| 　　  3.3.1 :ref:`DWA, Trajectory Rollout の速度<DWAVel_BaseLocalPlanner>`
-| 　　  3.3.2 :ref:`前進＋ストラフの速度<MoveForwardAndStrefeVel_BaseLocalPlanner>`
-| 　　  3.3.3 :ref:`その場回転の速度<RotateInPlaceVel_BaseLocalPlanner>`
-| 　　  3.3.4 :ref:`ストラフ速度<StrefeVel_BaseLocalPlanner>`
-| 　　  3.3.5 :ref:`脱出の速度<EscapeVel_BaseLocalPlanner>`
+| 　　　3.3.1 :ref:`DWA, Trajectory Rollout の速度サンプリング<DWAVel_BaseLocalPlanner>`
+| 　　　3.3.2 :ref:`斜め移動の速度サンプリング<MoveForwardAndStrefeVel_BaseLocalPlanner>`
+| 　　　3.3.3 :ref:`その場回転の速度サンプリング<RotateInPlaceVel_BaseLocalPlanner>`
+| 　　　3.3.4 :ref:`横移動の速度サンプリング<StrefeVel_BaseLocalPlanner>`
+| 　　　3.3.5 :ref:`脱出の速度サンプリング<EscapeVel_BaseLocalPlanner>`
 | 　　3.4 :ref:`軌道の計算<TrajectorySimulation_BaseLocalPlanner>`
-| 　　3.5 :ref:`障害物コスト<LocalCostMap_Grid_BaseLocalPlanner>`
-| 　　3.6 :ref:`マップグリッドコスト<Map_Grid_BaseLocalPlanner>`
-| 　　3.7 :ref:`軌道の評価<EvalTrajectory_BaseLocalPlanner>`
-| 　　3.8 :ref:`その場回転の軌道の追加評価<RotateInPlaceCost_BaseLocalPlanner>`
-| 　　3.9 :ref:`振動抑制<Oscillation_Suppression_BaseLocalPlanner>`
+| 　　3.5 :ref:`軌道のコスト<CostFuntions_BaseLocalPlanner>`
+| 　　　3.5.1 :ref:`障害物コスト<LocalCostMap_Grid_BaseLocalPlanner>`
+| 　　　3.5.2 :ref:`マップグリッドコスト<Map_Grid_BaseLocalPlanner>`
+| 　　3.6 :ref:`軌道の評価<EvalTrajectory_BaseLocalPlanner>`
+| 　　3.7 :ref:`その場回転の軌道の追加評価<RotateInPlaceCost_BaseLocalPlanner>`
+| 　　3.8 :ref:`振動抑制<Oscillation_Suppression_BaseLocalPlanner>`
 | 　4. :ref:`ローカルプランナークラス TrajectoryPlannerROS<TrajectoryPlannerROS_BaseLocalPlanner>`
 | 　　4.1 :ref:`Subscribe トピック<Subscribed_Topics_BaseLocalPlanner>`
 | 　　4.2 :ref:`Publish トピック<Published_Topics_BaseLocalPlanner>`
@@ -30,7 +31,7 @@ base_local_planner
 | 　　　4.3.4 :ref:`軌道スコアリングパラメーター<Trajectory_Scoring_Parameters_BaseLocalPlanner>`
 | 　　　4.3.5 :ref:`振動防止パラメーター<Oscillation_Prevention_Parameters_BaseLocalPlanner>`
 | 　　　4.3.6 :ref:`グローバルプランパラメーター<Global_Plan_Parameters_BaseLocalPlanner>`
-| 　　4.4 :ref:`下位クラス<TrajectoryPlanner_BaseLocalPlanner>`
+| 　　4.4 :ref:`下位クラス<InternalClasses_BaseLocalPlanner>`
 | 　  　4.4.1 :ref:`トラジェクトリプランナークラス<TrajectoryPlanner_BaseLocalPlanner>`
 | 　5. :ref:`内部処理手順<Sequence_BaseLocalPlanner>`
 | 　　5.1 :ref:`メソッドコールシーケンスの概要<MethodCallSequence_BaseLocalPlanner>`
@@ -51,7 +52,8 @@ base_local_planner
 | 　　　6.5.5 :ref:`TwirlingCostFunction クラス<TwirlingCostFunction_BaseLocalPlanner>`
 | 　7. :ref:`補足<Additional_Explanation_BaseLocalPlanner>`
 | 　　7.1 :ref:`dwa_local_planner パッケージとの比較<VS_DWAPlanner_BaseLocalPlanner>`
-| 　　7.2 :ref:`用語<Dic_BaseLocalPlanner>`
+| 　　7.2 :ref:`座標系<Coord_BaseLocalPlanner>`
+| 　　7.3 :ref:`用語<Dic_BaseLocalPlanner>`
 
 |
 
@@ -104,7 +106,8 @@ base\_local\_plannerパッケージは、モバイルベースを平面上で運
 プランナーはマップを使い、ロボットがスタートからゴール位置に到達するまでの運動の軌道を作成します。
 その過程で、プランナーはロボットの周囲にグリッドマップとして表される価値関数を作成します。
 この価値関数は、グリッドセルを通過するコストを表現します。
-コントローラーの仕事は、この価値関数を使用して、ロボットに送信する速度 (X軸直線速度, Y軸直線速度, Z軸回転速度) を決定することです。
+コントローラーの仕事は、この価値関数を使用して、ロボットに送信する速度 (縦方向速度, 横方向速度, 回転速度) を決定することです。
+(移動方向の定義については :ref:`座標系<Coord_BaseLocalPlanner>` 参照。)
 
 
 .. image:: images/local_plan.png
@@ -123,7 +126,7 @@ base\_local\_plannerパッケージは、モバイルベースを平面上で運
 
 Trajectory Rollout と Dynamic Window Approach (DWA) アルゴリズムの基本的な考え方は次のとおりです。
 
-   #. ロボットの速度空間 (X軸直線速度, Y軸直線速度, Z軸回転速度) を離散的にサンプリングします。
+   #. ロボットの速度空間 (縦方向速度, 横方向速度, 回転速度) を離散的にサンプリングします。
 
    #. サンプリング速度ごとに、ロボットの現在の状態からフォワードシミュレーションを実行して、サンプリング速度を一定（短い）時間適用した場合にどう動くかを予測します。(軌道の予測)
    #. フォワードシミュレーションから得られた各軌道を評価（スコア）します。評価には、障害物への近さ、目標地点への近さ、グローバルパスへの近さ、速度などの特性をとりこんだ距離空間を使用します。 不正な軌道（障害物と衝突する軌道）は破棄します。
@@ -132,7 +135,7 @@ Trajectory Rollout と Dynamic Window Approach (DWA) アルゴリズムの基本
 
 DWAと Trajectory Rollout とでは、ロボットの速度空間のサンプリング方法が異なります。 
 Trajectory Rollout では、フォワードシミュレーションの全期間でロボットの加速度制限から到達可能な速度セットをサンプリングするのに対し、
-DWAでは、1シミュレーション周期のみの間でロボットの加速度制限から到達可能な速度セットをサンプリングします。
+DWAでは、コントローラー周期のみの間でロボットの加速度制限から到達可能な速度セットをサンプリングします。
 つまり、DWAはより小さなスペースをサンプリングするため、より効率的なアルゴリズムですが、加速度制限が低いロボットでは Trajectory Rollout の方が性能がよくなるかもしれません。なぜならDWAは一定加速度をフォワードシミュレートしないためです。 ただし、我々の実際のすべてのテストでは、DWAと Trajectory Rollout は同等の性能を発揮しており、性能効率からみてDWAの使用を推奨します。
 
 便利なリファレンス：
@@ -153,74 +156,84 @@ DWAでは、1シミュレーション周期のみの間でロボットの加速�
 3.3　速度空間のサンプリング
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-ロボットの速度空間 (X軸直線速度, Y軸直線速度, Z軸回転速度) のサンプリングを次の各アルゴリズムで行います。
+ロボットの速度空間 (縦方向速度, 横方向速度, 回転速度) のサンプリングを次の各アルゴリズムで行います。
 
 |
 
 .. _DWAVel_BaseLocalPlanner:
 
-3.3.1　DWA, Trajectory Rollout の速度
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3.3.1　DWA, Trajectory Rollout の速度サンプリング
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-ロボットの速度空間（X軸直線速度、Z軸回転速度）を離散的にサンプリングします。
+ロボットの速度空間（縦方向速度、回転速度）を離散的にサンプリングします。
 まずサンプリングする範囲を求めます。DWAの場合、
 
-* X軸直線速度のサンプリング上限速度 = 現在のX軸直線速度 + :ref:`X軸直線加速度の上限<Robot_Configuration_Parameters_BaseLocalPlanner>` + 1シミュレーション周期
+* 縦方向速度のサンプリング上限速度 = 現在の縦方向速度 + :ref:`縦方向加速度の上限<Robot_Configuration_Parameters_BaseLocalPlanner>` + コントローラー周期
+    ただし最大で :ref:`縦方向速度の上限(max_vel_x)<Robot_Configuration_Parameters_BaseLocalPlanner>`
 
-* X軸直線速度のサンプリング下限速度 = 現在のX軸直線速度 - :ref:`X軸直線加速度の上限<Robot_Configuration_Parameters_BaseLocalPlanner>` + 1シミュレーション周期
+* 縦方向速度のサンプリング下限速度 = 現在の縦方向速度 - :ref:`縦方向加速度の上限<Robot_Configuration_Parameters_BaseLocalPlanner>` + コントローラー周期
+    ただし最小で :ref:`縦方向速度の下限(min_vel_x)<Robot_Configuration_Parameters_BaseLocalPlanner>`
 
-* Z軸回転速度のサンプリング上限速度 = 現在のZ軸回転速度 + :ref:`Z軸回転加速度の上限<Robot_Configuration_Parameters_BaseLocalPlanner>` + 1シミュレーション周期
+* 回転速度のサンプリング上限速度 = 現在の回転速度 + :ref:`回転加速度の上限<Robot_Configuration_Parameters_BaseLocalPlanner>` + コントローラー周期
+    ただし最大で :ref:`回転速度の上限(max_vel_theta)<Robot_Configuration_Parameters_BaseLocalPlanner>`
 
-* Z軸回転速度のサンプリング下限速度 = 現在のZ軸回転速度 - :ref:`Z軸回転加速度の上限<Robot_Configuration_Parameters_BaseLocalPlanner>` + 1シミュレーション周期
+* 回転速度のサンプリング下限速度 = 現在の回転速度 - :ref:`回転加速度の上限<Robot_Configuration_Parameters_BaseLocalPlanner>` + コントローラー周期
+    ただし最小で :ref:`回転速度の下限(min_vel_theta)<Robot_Configuration_Parameters_BaseLocalPlanner>`
 
-    (1シミュレーション周期は、:ref:`controller_frequency<Forward_Simulation_Parameters_BaseLocalPlanner>` パラメーターの逆数であり、既定値は 0.05s です)
+    (コントローラー周期は、:ref:`controller_frequency<Forward_Simulation_Parameters_BaseLocalPlanner>` パラメーターの逆数であり、既定値は 0.05s です)
 
 Trajectory Rollout の場合、
 
-* X軸直線速度のサンプリング上限速度 = 現在のX軸直線速度 + :ref:`X軸直線加速度の上限<Robot_Configuration_Parameters_BaseLocalPlanner>` + フォワードシミュレーション時間
+* 縦方向速度のサンプリング上限速度 = 現在の縦方向速度 + :ref:`縦方向加速度の上限<Robot_Configuration_Parameters_BaseLocalPlanner>` + フォワードシミュレーション時間
+    ただし最大で :ref:`縦方向速度の上限(max_vel_x)<Robot_Configuration_Parameters_BaseLocalPlanner>`
 
-* X軸直線速度のサンプリング下限速度 = 現在のX軸直線速度 - :ref:`X軸直線加速度の上限<Robot_Configuration_Parameters_BaseLocalPlanner>` + フォワードシミュレーション時間
+* 縦方向速度のサンプリング下限速度 = 現在の縦方向速度 - :ref:`縦方向加速度の上限<Robot_Configuration_Parameters_BaseLocalPlanner>` + フォワードシミュレーション時間
+    ただし最小で :ref:`縦方向速度の下限(min_vel_x)<Robot_Configuration_Parameters_BaseLocalPlanner>`
 
-* Z軸回転速度のサンプリング上限速度 = 現在のZ軸回転速度 + :ref:`Z軸回転加速度の上限<Robot_Configuration_Parameters_BaseLocalPlanner>` + フォワードシミュレーション時間
+* 回転速度のサンプリング上限速度 = 現在の回転速度 + :ref:`回転加速度の上限<Robot_Configuration_Parameters_BaseLocalPlanner>` + フォワードシミュレーション時間
+    ただし最大で :ref:`回転速度の上限(max_vel_theta)<Robot_Configuration_Parameters_BaseLocalPlanner>`
 
-* Z軸回転速度のサンプリング下限速度 = 現在のZ軸回転速度 - :ref:`Z軸回転加速度の上限<Robot_Configuration_Parameters_BaseLocalPlanner>` + フォワードシミュレーション時間
+* 回転速度のサンプリング下限速度 = 現在の回転速度 - :ref:`回転加速度の上限<Robot_Configuration_Parameters_BaseLocalPlanner>` + フォワードシミュレーション時間
+    ただし最小で :ref:`回転速度の下限(min_vel_theta)<Robot_Configuration_Parameters_BaseLocalPlanner>`
 
     (フォワードシミュレーション時間は、:ref:`sim_time<Forward_Simulation_Parameters_BaseLocalPlanner>` パラメーターであり、既定値は 1s です)
 
 です。
-この範囲制限のため、フォワードシミュレーションの際、 DWA は、1シミュレーション周期を超えて加速しませんが、Trajectory Rollout はフォワードシミュレーションの期間にわたって加速します。
+この速度制限のため、フォワードシミュレーションの際、 DWA は、コントローラー周期を超えて加速しませんが、Trajectory Rollout はフォワードシミュレーションの期間にわたって加速します。
 
-求めたサンプリング範囲を等分割し、":ref:`サンプリング数<Forward_Simulation_Parameters_BaseLocalPlanner>` "個のサンプル値を抽出します。
-なおY軸直線速度は0です。
+求めたサンプリング範囲を等分割し、":ref:`サンプリング数(vx_samples, vtheta_samples)<Forward_Simulation_Parameters_BaseLocalPlanner>` "個のサンプル値を抽出します。
+なお横方向速度は0です。
 
 |
 
 .. _MoveForwardAndStrefeVel_BaseLocalPlanner:
 
-3.3.2　前進＋ストラフの速度
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3.3.2　斜め移動の速度サンプリング
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-ホロノミックロボットの場合、向きを保ったまま左斜め前方 or 右斜め前方への移動を試みます。速度は x方向0.1, y方向±0.1(m/s)の固定値です。
+ホロノミックロボットの場合、向きを保ったまま左斜め前方 or 右斜め前方への移動を試みます。速度は 縦方向0.1, 横方向±0.1(m/s)の固定値です。
 
 |
 
 .. _RotateInPlaceVel_BaseLocalPlanner:
 
-3.3.3　その場回転の速度
-^^^^^^^^^^^^^^^^^^^^^^^^
+3.3.3　その場回転の速度サンプリング
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-X軸直線速度を0固定にして、Z軸回転速度のバリエーション（その場での回転）
+縦方向速度を0固定にして、回転速度のバリエーション（その場での回転）。
 
-:ref:`その場回転のコスト評価<RotateInPlaceCost_BaseLocalPlanner>` も参照。
+ただし最低 :ref:`min_in_place_vel_theta<Robot_Configuration_Parameters_BaseLocalPlanner>` の回転速度はもつようにします。
+
+:ref:`その場回転の軌道の追加評価<RotateInPlaceCost_BaseLocalPlanner>` も参照。
 
 |
 
 .. _StrefeVel_BaseLocalPlanner:
 
-3.3.4　ストラフ速度
-^^^^^^^^^^^^^^^^^^^^^^^^
+3.3.4　横移動の速度サンプリング
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-上記3点で有効な組み合わせがない＆ホロノミックロボットの場合、横移動を試みます。Y軸直線速度のバリエーションは、:ref:`y_vels<Robot_Configuration_Parameters_BaseLocalPlanner>` のリストです。X軸直線速度、Z軸回転速度のサンプリング値は0とします。
+上記3点で有効な組み合わせがない＆ホロノミックロボットの場合、横移動を試みます。横方向速度のバリエーションは、:ref:`y_vels<Robot_Configuration_Parameters_BaseLocalPlanner>` のリストです。縦方向速度と回転速度のサンプリング値は0とします。
 
 |
 
@@ -228,9 +241,9 @@ X軸直線速度を0固定にして、Z軸回転速度のバリエーション�
 
 .. _EscapeVel_BaseLocalPlanner:
 
-3.3.5　脱出の速度
-^^^^^^^^^^^^^^^^^^^^
-上記のサンプリング速度に有効な組み合わせがなかった場合は、少しの後退を試みます。
+3.3.5　脱出の速度サンプリング
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+上記のサンプリング速度に有効な組み合わせがなかった場合は、少しの後退を試みます (脱出)。
 脱出時の速度には、:ref:`escape_vel<Robot_Configuration_Parameters_BaseLocalPlanner>` を使用します。
 
 
@@ -248,11 +261,11 @@ X軸直線速度を0固定にして、Z軸回転速度のバリエーション�
 
 フォワードシミュレーションでは、次のサイクルを繰り返します。
 
-  #. 現在ステップでのロボットの位置・向きを軌道に追加します
+  #. 現在ステップ(時刻)でのロボットの位置・向きを軌道に追加します
 
   #. ロボットの次ステップの速度を計算します。
 
-     サンプリング速度に近づくように現在速度を毎ステップ加速・減速します。(ただしDWAの場合はすぐに上限速度に達します。)
+     サンプリング速度を目標として、それに近づくように現在速度を毎ステップ加速・減速します。(ただしDWAの場合はすぐに目標速度に達します。)
 
   #. ロボットの次ステップの位置・向きを、次ステップの速度から計算します。
 
@@ -262,14 +275,14 @@ X軸直線速度を0固定にして、Z軸回転速度のバリエーション�
 
 フォワードシミュレーション時間は、:ref:`sim_time<Forward_Simulation_Parameters_BaseLocalPlanner>` パラメータで設定されます。
 
-フォワードシミュレーションの1ステップの時間は、:ref:`速度サンプリング<DWAVel_BaseLocalPlanner>` で出てくるシミュレーション周期とは少し異なり、「フォワードシミュレーション時間 / ステップ数」です。
+フォワードシミュレーションの1ステップの時間は、:ref:`速度サンプリング<DWAVel_BaseLocalPlanner>` で出てくるコントローラー周期とは少し異なり、「フォワードシミュレーション時間 / ステップ数」です。
 ステップ数は、
 
-「 サンプリング速度のxy合成値 * フォワードシミュレーション時間 / :ref:`距離ステップサイズ(sim_granularity)<Forward_Simulation_Parameters_BaseLocalPlanner>` 」 
+「 縦横方向サンプリング速度の合成値 * フォワードシミュレーション時間 / :ref:`距離ステップサイズ(sim_granularity)<Forward_Simulation_Parameters_BaseLocalPlanner>` 」 
 
 または 
 
-「サンプリングZ軸回転速度の絶対値 / :ref:`角度ステップサイズ(angular_sim_granularity)<Forward_Simulation_Parameters_BaseLocalPlanner>`  」  (注：フォワードシミュレーション時間は掛けません)
+「サンプリング回転速度の絶対値 / :ref:`角度ステップサイズ(angular_sim_granularity)<Forward_Simulation_Parameters_BaseLocalPlanner>`  」  (注：フォワードシミュレーション時間は掛けません)
 
 のどちらか大きい方で決まりますが、
 ロボットの経路への向きに基づくスコアリングを行う場合(:ref:`heading_scoring<Trajectory_Scoring_Parameters_BaseLocalPlanner>` が trueの場合)は
@@ -280,10 +293,19 @@ X軸直線速度を0固定にして、Z軸回転速度のバリエーション�
 
 |
 
+.. _CostFuntions_BaseLocalPlanner:
+
+3.5　軌道のコスト
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+ロボットの辿る軌道をスコアリングするため、次のようなコストを使います。
+
+|
+
 .. _LocalCostMap_Grid_BaseLocalPlanner:
 
-3.5　障害物コスト
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+3.5.1　障害物コスト
+^^^^^^^^^^^^^^^^^^^^
 
 
 ローカルコストマップは、2D平面上の障害物のコスト分布を表したマップです。これを用いて、次のように軌道をスコアリングします。
@@ -307,19 +329,20 @@ occ_cost は、footprint cost とロボットの中心点が含まれるセル�
 
 .. _Map_Grid_BaseLocalPlanner:
 
-3.6　マップグリッドコスト
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+3.5.2　マップグリッドコスト
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-軌道を効率的にスコアリングするために、マップグリッドを使用します。 制御サイクルごとに、ロボットの周りにグリッド（ローカルコストマップと同サイズ）を作成し、
-各セルに path_dist と goal_distの2種類の評価値(コスト)を付与します。
+軌道を効率的にスコアリングするために、マップグリッドを使用します。 マップグリッドは、ロボットの周りのグリッドの各セルに path_dist と goal_distの2種類の評価値(コスト)を付与したものです。
 
-マップグリッドは次の手順で構築します。
+マップグリッドは制御サイクルごとに次の手順で構築します。
 
-  #. まず、グローバルパスをグリッドの領域にマッピングします。 
+  #. ロボットの周りにグリッド（ローカルコストマップと同サイズ）を作成します。
 
-  #. 次に、path_distの指標については、グローバルパスの通るセルを経路点までの距離0でマークし、また goal_dist の指標についてはローカルゴールのセルをゴールまでの距離0でマークします。
+  #. グローバルパスをグリッドの領域にマッピングします。 
 
-  #. そして伝播アルゴリズムによって、他のすべてのセルを、ゼロでマークされた最も近い点までのマンハッタン距離で効率的にマークします。
+  #. path_distの指標については、グローバルパスの通るセルを経路点までの距離0でマークし、また goal_dist の指標についてはローカルゴールのセルをゴールまでの距離0でマークします。
+
+  #. 伝播アルゴリズムによって、他のすべてのセルを、ゼロでマークされた最も近い点までのマンハッタン距離で効率的にマークします。
 
 このマップグリッドを使って、軌道をスコアリングします。
 
@@ -347,7 +370,7 @@ occ_cost は、footprint cost とロボットの中心点が含まれるセル�
 
 .. _EvalTrajectory_BaseLocalPlanner:
 
-3.7　軌道の評価
+3.6　軌道の評価
 ~~~~~~~~~~~~~~~~~~~~
 
 軌道のコストには次のものがあります。
@@ -383,13 +406,11 @@ occ_cost は、footprint cost とロボットの中心点が含まれるセル�
 
 .. _RotateInPlaceCost_BaseLocalPlanner:
 
-3.8　その場回転の軌道の追加評価
+3.7　その場回転の軌道の追加評価
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-その場での回転は、X軸直線速度を0固定とし、Z軸回転速度のバリエーションで評価します。
-
+その場での回転は、縦方向速度を0固定とし、回転速度のバリエーションで評価します。
 その際、その場回転ではロボットの位置は変わらないため、左右どちらのどのような速度の回転でも、path_distおよびgoal_distには差異が生じません。
-
 occ_costについては、ロボットが障害物に近い位置にいる場合は、footprintの変化により差が出る可能性がありますが、開けた場所であれば差が生じません。
 
 そのため、その場回転同士の比較には、追加の評価軸が用いられます。
@@ -406,10 +427,10 @@ occ_costについては、ロボットが障害物に近い位置にいる場合
 
 .. _Oscillation_Suppression_BaseLocalPlanner:
 
-3.9　振動抑制
+3.8　振動抑制
 ~~~~~~~~~~~~~~~~~~~~
 
-振動は、(x, y, z軸回転) のいずれかの次元で正と負の値が連続して選択されたときに発生します。 振動を防ぐため、ロボットがある方向に移動すると、次のサイクルでは反対方向への移動を不正と設定し、それをフラグが設定された位置から特定の距離を超えてロボットが移動するまで続けます。
+振動は、(縦, 横, 回転) のいずれかの次元で正と負の値が連続して選択されたときに発生します。 振動を防ぐため、ロボットがある方向に移動すると、次のサイクルでは反対方向への移動を不正と設定し、それをフラグが設定された位置から特定の距離 (:ref:`oscillation_reset_dist<Oscillation_Prevention_Parameters_BaseLocalPlanner>` ) を超えてロボットが移動するまで続けます。
 
 |
 
@@ -485,18 +506,18 @@ base\_local\_planner::TrajectoryPlannerROS ラッパーの動作をカスタマ�
    :header: "パラメーター名", "内容", "型", "単位", "デフォルト"
    :widths: 5, 50, 5, 5, 8
 
-   "<name>/acc_lim_x", "ロボットのX軸直線加速度の上限", "double", "m/s^2", "2.5"
-   "<name>/acc_lim_y", "ロボットのY軸直線加速度の上限", "double", "m/s^2", "2.5"
-   "<name>/acc_lim_theta",  "ロボットのZ軸回転加速度の上限", "double", "rad/s^2", "3.2"
-   "<name>/max_vel_x",  "ロボットのX軸直線速度の上限", "double", "m/s", "0.5"
-   "<name>/min_vel_x",  "ロボットのX軸直線速度の下限。これは、ロボットに摩擦を克服できるほど十分高い速度を指令するのに便利です。", "double", "m/s", "0.1"
-   "<name>/max_vel_theta",  "ロボットのZ軸回転速度の上限 (左回転は正の値)", "double", "rad/s", "1.0"
-   "<name>/min_vel_theta",  "ロボットのZ軸回転速度の下限 (右回転は負の値)", "double", "rad/s", "-1.0"
-   "<name>/min_in_place_vel_theta",  "その場回転時の、ロボットのZ軸回転速度の下限", "double", "rad/s", "0.4"
+   "<name>/acc_lim_x", "ロボットの縦方向加速度の上限", "double", "m/s^2", "2.5"
+   "<name>/acc_lim_y", "ロボットの横方向加速度の上限", "double", "m/s^2", "2.5"
+   "<name>/acc_lim_theta",  "ロボットの回転加速度の上限", "double", "rad/s^2", "3.2"
+   "<name>/max_vel_x",  "ロボットの縦方向速度の上限", "double", "m/s", "0.5"
+   "<name>/min_vel_x",  "ロボットの縦方向速度の下限。これは、ロボットに摩擦を克服できるほど十分高い速度を指令するのに便利です。", "double", "m/s", "0.1"
+   "<name>/max_vel_theta",  "ロボットの回転速度の上限 (左回転は正の値)", "double", "rad/s", "1.0"
+   "<name>/min_vel_theta",  "ロボットの回転速度の下限 (右回転は負の値)", "double", "rad/s", "-1.0"
+   "<name>/min_in_place_vel_theta",  "その場回転時の、ロボットの回転速度の下限。(低速でその場回転できないため)", "double", "rad/s", "0.4"
    "<name>/backup_vel",  "**DEPRECATED (escape_velを使用してください)**: 脱出中のバックに使用される速度。 ロボットが実際に反転するためには、負の速度を設定しなければならないことに注意してください。 正の速度を使用すると、ロボットは脱出しようとして前進します。", "double",  "m/s", "-0.1"
    "<name>/escape_vel",  "脱出中の走行に使用される速度。 ロボットが実際に反転するためには、負の速度を設定しなければならないことに注意してください。 正の速度を使用すると、ロボットは脱出しようとして前進します。 **Navigation 1.3.1の新機能**", "double", "m/s", "-0.1"
-   "<name>/holonomic_robot",  "速度コマンドをホロノミックまたは非ホロノミックロボットのどちらに対して発行するかを決定します。 ホロノミックロボットの場合は、ロボットにストラフ速度コマンドが発行されるかもしれません。 非ホロノミックロボットの場合、ストラフ速度コマンドは発行されません。", "bool", "\-", "true"
-   "<name>/y_vels",  "ホロノミックロボットがとるべきストラフ速度のリスト。このパラメーターは、 holonomic_robotがtrueに設定されている場合にのみ使用されます:", "list[double]", "m/s",  "[-0.3, -0.1, 0.1, 0.3]"
+   "<name>/holonomic_robot",  "速度コマンドをホロノミックまたは非ホロノミックロボットのどちらに対して発行するかを決定します。 ホロノミックロボットの場合は、ロボットに横移動速度コマンドが発行されるかもしれません。 非ホロノミックロボットの場合、横移動速度コマンドは発行されません。", "bool", "\-", "true"
+   "<name>/y_vels",  "ホロノミックロボットがとるべき横移動速度のリスト。このパラメーターは、 holonomic_robotがtrueに設定されている場合にのみ使用されます:", "list[double]", "m/s",  "[-0.3, -0.1, 0.1, 0.3]"
 
 
 
@@ -511,9 +532,9 @@ base\_local\_planner::TrajectoryPlannerROS ラッパーの動作をカスタマ�
    :header: "パラメーター名", "内容", "型", "単位", "デフォルト"
    :widths: 5, 50, 5, 5, 8
 
-   "<name>/yaw_goal_tolerance",  "目標地点に到達したときの、コントローラーの Yaw回転角許容誤差", "double", "rad", "0.05"
-   "<name>/xy_goal_tolerance",  "目標地点に到達したときの、コントローラーの x-y 平面上距離の許容誤差", "double", "m", "0.10"
-   "<name>/latch_xy_goal_tolerance",  "目標地点許容誤差がラッチされている場合、ロボットが目標xy位置に到達すると、後はその場回転のみ行います。回転の間に目標地点許容誤差の範囲外になることもあります。(falseの場合は、範囲外に出たら通常の動作に戻ります。) **Navigation 1.3.1の新機能**", "bool", "\-", "false"
+   "<name>/yaw_goal_tolerance",  "目標地点に到達したときの、コントローラーの向き(回転角)の許容誤差", "double", "rad", "0.05"
+   "<name>/xy_goal_tolerance",  "目標地点に到達したときの、コントローラーの 2D平面上距離の許容誤差", "double", "m", "0.10"
+   "<name>/latch_xy_goal_tolerance",  "目標地点許容誤差ラッチフラグ。trueの場合、ロボットが目標地点に到達すると、後はその場回転のみ行います。回転の間に目標地点許容誤差の範囲外になることもあります。(falseの場合は、範囲外に出たら通常の動作に戻ります。) **Navigation 1.3.1の新機能**", "bool", "\-", "false"
 
 |
 
@@ -529,8 +550,8 @@ base\_local\_planner::TrajectoryPlannerROS ラッパーの動作をカスタマ�
    "<name>/sim_time",  "軌道をフォワードシミュレーションする時間", "double", "s", "1.0"
    "<name>/sim_granularity",  "与えられた軌道上の点間のステップサイズ", "double", "m", "0.025"
    "<name>/angular_sim_granularity",  "与えられた軌道上の角度サンプル間のステップサイズ  **Navigation 1.3.1の新機能**", "double", "rad", "<name>/sim_granularity"
-   "<name>/vx_samples",  "X軸直線速度空間を探索するときに使用するサンプルの数 ", "integer", "\-", "3"
-   "<name>/vtheta_samples",  "Z軸回転速度空間を探索するときに使用するサンプルの数 ", "integer", "\-", "20"
+   "<name>/vx_samples",  "縦方向速度空間を探索するときに使用するサンプルの数 ", "integer", "\-", "3"
+   "<name>/vtheta_samples",  "回転速度空間を探索するときに使用するサンプルの数 ", "integer", "\-", "20"
    "<name>/controller_frequency",  このコントローラーが呼び出される頻度。 コントローラーの名前空間に設定されていない場合、searchParamを使用して親の名前空間からパラメーターを読み取ります。 すなわち、move_base とともに使用する場合は move_base の "controller_frequency"パラメーターを設定するだけでよく 、このパラメーターを未設定のままにしておけます。  **Navigation 1.3.1の新機能**, "double", "Hz", "20.0"
 
 |
@@ -656,19 +677,19 @@ base\_local\_planner::TrajectoryPlanner は、前述のDWAおよび Trajectory R
 
 * TrajectoryPlanner::createTrajectories() … 軌道作成
 
-  * X軸直線速度、Z軸回転速度のとり得る組み合わせを求め、それぞれの組み合わせに対してTrajectoryPlanner::generateTrajectory()をコールしてコストを計算し、コストが最小となるものを求めます。
+  * 縦方向速度、回転速度のとり得る組み合わせを求め、それぞれの組み合わせに対してTrajectoryPlanner::generateTrajectory()をコールしてコストを計算し、コストが最小となるものを求めます。
 
     * ①現在速度、②加速／減速の最大値、③速度の最大／最小値、④速度変化の単位から、とりうる全ての組み合わせ
-    * ホロノミックロボットの場合、向きを保ったまま左斜め前方 or 右斜め前方に移動。速度は x方向0.1, y方向±0.1(m/s)の固定値。
-    * X軸直線速度を0固定にして、Z軸回転速度のバリエーション（その場での回転）
-    * 上記3点で有効な組み合わせがない＆ホロノミックロボットの場合、横移動。Y軸直線速度のバリエーションは、:ref:`y_vels<Robot_Configuration_Parameters_BaseLocalPlanner>` パラメータのリストです。X軸直線速度、Z軸回転速度のサンプリング値は0とします。
-    * それでも有効な組み合わせがなかった場合は、少しの後退
+    * ホロノミックロボットの場合、向きを保ったまま左斜め前方 or 右斜め前方に移動。速度は 縦方向0.1, 横方向±0.1(m/s)の固定値。
+    * 縦方向速度を0固定にして、回転速度のバリエーション（その場での回転）
+    * 上記3点で有効な組み合わせがない＆ホロノミックロボットの場合、横移動。横方向速度のバリエーションは、:ref:`y_vels<Robot_Configuration_Parameters_BaseLocalPlanner>` パラメータのリストです。縦方向速度と回転速度のサンプリング値は0とします。
+    * それでも有効な組み合わせがなかった場合は、少しの後退 (脱出)
 
 |
 
 * TrajectoryPlanner::generateTrajectory() … 軌道生成
 
-  * 与えられた、ターゲットとなるX軸直線速度、Z軸回転速度について、path_dist, goal_dist, occ_costの3つの評価軸（オプションでheading_diffを追加可能）で評価を行い、コストを返却します。
+  * 与えられた、ターゲットとなる縦方向速度、回転速度について、path_dist, goal_dist, occ_costの3つの評価軸（オプションでheading_diffを追加可能）で評価を行い、コストを返却します。
 
 
 
@@ -759,7 +780,7 @@ SimpleScoredSamplingPlanner クラスは、軌道探索のインターフェー�
 
 理想的には、ローカルプランナーがロボットを停止すべき場所に正確に停止させます。 ただし、実際には、センサーのノイズとアクチュエータの不確実性により、ロボットが目標地点に近づいても行き過ぎることがあります。 これは、その場で振動するという望ましくないロボットの動作につながってしまいます。
 
-LatchedStopRotateControllerは、ロボットが目標に十分近づくとすぐに使用できるコントローラーです。 コントローラーは、フルストップし、ゴールの方向にその場回転するだけです。フルストップ後、ロボットの位置がゴールの許容範囲外になる場合があります。
+LatchedStopRotateControllerは、ロボットが目標に十分近づくとすぐに使用できるコントローラーです。 このコントローラーは、完全停止し、ゴールの方向にその場回転のみ行います。完全停止後、ロボットの位置がゴールの許容範囲外になる場合があります。
 
 |
 
@@ -803,7 +824,7 @@ dwa\_local\_plannerでは、このコスト関数はさまざまな目的のた�
 6.5.5　TwirlingCostFunction クラス
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 このコスト関数クラスは、ロボットのスピンのコストを表し、急カーブの軌道ほどコストが大きくなります。
-処理としては軌道のZ軸回転速度の絶対値を返します。
+処理としては軌道の回転速度の絶対値を返します。
 
 
 |
@@ -829,10 +850,46 @@ base_local_planner と dwa_local_planner パッケージは両方とも DWAを�
 
 |
 
+.. _Coord_BaseLocalPlanner:
+
+7.2　座標系
+~~~~~~~~~~~~
+
+このパッケージでは、ロボットに固定した下図のような座標系を使用します。
+
+.. image:: images/base_local_planner_coord.png
+   :width: 50%
+   :align: center
+
+|
+
+移動方向については次のように定義します。
+
+* 縦移動
+
+  縦方向への移動。前進/後退
+
+* 横移動, または ストライフ(strafe)
+
+  ロボットが向きを保ったまま横方向に移動すること。特殊な車輪駆動などを使って行います。
+
+* 斜め移動
+
+  縦移動と横移動を同時に行うと斜め移動になります。
+
+* 回転移動
+
+  前進/後退しながら進行方向を変えること。
+
+* その場回転 (超信地旋回)
+
+  ロボットが前進せずにその場で旋回すること。 とくに左右の車輪を逆方向に回転させる旋回を超信地旋回といいます。
+
+|
 
 .. _Dic_BaseLocalPlanner:
 
-7.2　用語
+7.3　用語
 ~~~~~~~~~~~~~~~~~~~
 * モバイルベース mobile base
 
@@ -843,10 +900,6 @@ base_local_planner と dwa_local_planner パッケージは両方とも DWAを�
   ホロノミック/非ホロノミックは、系の拘束条件の性質を述べた言葉です。
   このパッケージに限って言うと、前進と回転のみ可能なロボットは非ホロノミック、前進と回転に加えて横方向にも移動できるロボットはホロノミックです。(正確な定義ではありません)
 
-* ストラフ, strafe
-
-  特殊な車輪駆動などを使って、ロボットが横移動すること
-
 * PR2
 
   Willow Garage の開発した全方位移動双腕パーソナルロボット
@@ -854,18 +907,6 @@ base_local_planner と dwa_local_planner パッケージは両方とも DWAを�
 * フットプリント, footprint
 
   ロボットの接触範囲. 障害物を避ける軌道の算出に使用します. 実際のロボットの形状よりも大きめにとります.
-
-* X軸直線速度
-
-  ロボットの前進速度
-
-* Y軸直線速度
-
-  ロボットの横方向への移動速度。左方向が正の値です。
-
-* Z軸回転速度
-
-  ロボットが旋回するときの、向きの変化率(rad/s)。左旋回が正の値です。
 
 
 
