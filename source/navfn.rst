@@ -26,7 +26,7 @@ nav_fn
 navfnは、移動体の経路生成に使用可能な、高速で、補間されたナビゲーションを行う機能を、navfn::NavFnクラスで提供しています。
 このプランナーは、移動体として円形のロボットを想定しており、コストマップ上で、グリッド内の開始点から終了点を結ぶ最も低コストな経路を探索するための処理を行います。
 このナビゲーション機能は、ダイクストラ法を使用して経路計算を行っていますが、将来的にA*ヒューリスティクスが追加されるかもしれません。
-また、navfn::NavFnクラスのROSラッパーであるnavfn::NavfnROSオブジェクトも提供しています。navfn::NavfnROSオブジェクトは、 :doc:`nav_core <nav_core>`パッケージで定義されるnav_core :: BaseGlobalPlannerインターフェイスに準拠しており、move_baseノードからグローバルプランナープラグインとしても使用されています。
+また、navfn::NavFnクラスのROSラッパーであるnavfn::NavfnROSオブジェクトも提供しています。navfn::NavfnROSオブジェクトは、 :doc:`nav_core <nav_core>` パッケージで定義されるnav_core :: BaseGlobalPlannerインターフェイスに準拠しており、move_baseノードからグローバルプランナープラグインとしても使用されています。
 
 |
 
