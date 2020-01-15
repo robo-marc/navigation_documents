@@ -1,4 +1,4 @@
-
+﻿
 /* Override some defaults */
 
 .footer {
@@ -12,6 +12,13 @@
   text-align: center;
   line-height: 30pt;
   vertical-align: middle;
+}
+
+.footer ul {
+  list-style:none!important;
+  display:flex!important;
+  flex-wrap:nowrap!important;
+  justify-content: space-between;
 }
 
 /* Page header tweaks */

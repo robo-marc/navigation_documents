@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# SEC RT-Middleware documentation build configuration file, created by
+# ROS Navigation stack documentation build configuration file, created by
 # sphinx-quickstart on Mon Dec 12 14:44:21 2011.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -40,8 +40,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'SEC RT-Middleware'
-copyright = u'2012, Systems Engineering Consultants Co.,LTD.'
+project = u'AIST ROS Navigation stack documents'
+copyright = u'2020, National Institute of Advanced Industrial Science and Technology (AIST)'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -103,10 +103,10 @@ html_theme_path = ['.']
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
-html_title = u'人とロボットが共存する社会を目指して'
+html_title = u'ROS Navigation stack documents'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
-html_short_title = u'ROBOT Research & Development'
+html_short_title = u'ROS Navigation stack documents'
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
@@ -115,7 +115,7 @@ html_short_title = u'ROBOT Research & Development'
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
 # pixels large.
-html_favicon = '_static/favicon.ico'
+#html_favicon = '_static/favicon.ico'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -164,7 +164,7 @@ html_show_copyright = True
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'SECRT-Middlewaredoc'
+htmlhelp_basename = 'AIST-ROS-Navigation-Doc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -178,8 +178,8 @@ htmlhelp_basename = 'SECRT-Middlewaredoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'SECRT-Middleware.tex', u'SEC RT-Middleware Documentation',
-   u'Systems Engineering Consultants Co.,Ltd.', 'manual'),
+  ('index', 'AIST-ROS-Navigation-Doc.tex', u'ROS Navigation stack documents',
+   u'National Institute of Advanced Industrial Science and Technology (AIST)', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -211,6 +211,6 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'secrt-middleware', u'SEC RT-Middleware Documentation',
-     [u'Systems Engineering Consultants Co.,Ltd.'], 1)
+    ('index', 'AIST-ROS-Navigation-Doc', u'ROS Navigation stack documents',
+     [u'National Institute of Advanced Industrial Science and Technology (AIST)'], 1)
 ]
