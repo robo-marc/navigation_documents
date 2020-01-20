@@ -48,9 +48,25 @@ global_plannerは :doc:`navfn <navfn>` を元に構成されているため、�
 
 #. global_plannerは、グローバルコストマップおよびグローバルコストマップ上のスタート座標、ゴール座標を入力値として、経路を出力します。経路を出力するまでの過程は、以下のようになっています。
 
-#. ポテンシャル計算を行います。ポテンシャル計算を行うセルは、use_dijkstraパラメータで、 :ref:`ダイクストラ <globalplanner_dijkstra>` か :ref:`A* <globalplanner_a_star>` のどちらかを選択できます。また、ポテンシャル計算法は、use_quadraticパラメータで、 :ref:`２次近似 <nav_fn_algorithm_potential_map>` か :ref:`単純足し <globalplanner_simple_potential_calculation>` のどちらかを選択できます。
+#. ポテンシャル計算を行います。ポテンシャル計算を行うセルは、use_dijkstraパラメータで、 :ref:`ダイクストラ <globalplanner_dijkstra>` か :ref:`A* <globalplanner_a_star>` のどちらかを選択できます。また、ポテンシャル計算法は、use_quadraticパラメータで、 :ref:`2次方程式 <nav_fn_algorithm_potential_map>` か :ref:`単純加算 <globalplanner_simple_potential_calculation>` のどちらかを選択できます。
 
-#. ポテンシャル計算時に、ニュートラル値を底上げし、ポテンシャルマップを作成します。
+#. ポテンシャル計算時に、 :ref:`ニュートラルコスト値 <globalplanner_parameters>` で底上げし、ポテンシャルマップを作成します。ニュートラルコスト値の扱いは、ダイクストラとA*で異なります。それぞれの計算方法は下記の通りです。
+
+    #. ダイクストラ
+    
+        double dx = start_x - (int)start_x, dy = start_y - (int)start_y
+
+        dx = floorf(dx * 100 + 0.5) / 100
+
+        dy = floorf(dy * 100 + 0.5) / 100
+
+        potential = cost + neutral_cost * 2 * dx * dy
+
+    #. A*
+
+        float distance = abs(end_x - x) + abs(end_y - y)
+
+        potential = cost + neutral_cost + distance * neutral_cost
 
 #. コスト値の底上げを行ったコストマップから、ポテンシャルマップを生成します。
 
@@ -91,6 +107,8 @@ old_navfn_behavior=False
 .. image:: images/GlobalPlanner.png
    :align: center
 
+出典：`http://wiki.ros.org/global_planner <http://wiki.ros.org/global_planner>`__
+
 |
 
 
@@ -104,6 +122,8 @@ use_grid_path=True
 .. image:: images/GridPath.png
    :align: center
 
+出典：`http://wiki.ros.org/global_planner <http://wiki.ros.org/global_planner>`__
+
 経路はグリッド境界をたどります。
 
 |
@@ -112,17 +132,19 @@ use_grid_path=True
 .. _globalplanner_simple_potential_calculation:
 
 
-3.3. 単純足し
+3.3. 単純加算
 ************************************************************
 use_quadratic=False
 
-単純足しは、上下左右のセルのうちポテンシャル値が低いものを選択し、コスト値を加算します。
+単純加算は、上下左右のセルのうちポテンシャル値が低いものを選択し、コスト値を加算します。
 
 
 .. image:: images/Nonquad.png
    :align: center
 
-navfnの元のポテンシャル計算は2次近似であることに注意してください。 2次近似の計算については、 :doc:`navfn <navfn>` を参照してください。
+出典：`http://wiki.ros.org/global_planner <http://wiki.ros.org/global_planner>`__
+
+navfnの元のポテンシャル計算は2次方程式であることに注意してください。 2次方程式の計算については、 :doc:`navfn <navfn>` を参照してください。
 
 |
 
@@ -136,6 +158,9 @@ use_dijkstra=False
 
 .. image:: images/AStar.png
    :align: center
+
+
+出典：`http://wiki.ros.org/global_planner <http://wiki.ros.org/global_planner>`__
 
 
 ポテンシャル計算されたセルがはるかに少ないことに注目してください（色付きの領域で示されています）。これは、ダイクストラを使用するよりも確かに高速ですが、必ずしも同じ経路を生成するわけではありません。もう1つ注意すべき点は、A*の実装では、ポテンシャル値は4連結グリッド正方形を使用して計算されるのに対し、目標位置から開始位置までのポテンシャルのベクトルをトレースすることで見つかった経路は、8連結方式で同じグリッドを使用します。したがって、見つかった実際の経路は、8接続探索では完全に最適ではない可能性があります。（また、より一般的なA*実装のように、ポテンシャルの計算中に「訪問済み状態セットなし」が追跡されます。これは、4接続グリッドでは不要なためです）。ダイクストラの動作とA*の動作の違いを確認するには、後述の例を参考にしてください。
@@ -159,6 +184,8 @@ use_dijkstra=False
 .. image:: images/Dijkstra.png
    :align: center
 
+出典：`http://wiki.ros.org/global_planner <http://wiki.ros.org/global_planner>`__
+
 |
 
 .. _globalplanner_a_star:
@@ -177,6 +204,8 @@ A*の概要は、下記の通りです。
 .. image:: images/AStar2.png
    :align: center
 
+出典：`http://wiki.ros.org/global_planner <http://wiki.ros.org/global_planner>`__
+
 |
 
 
@@ -189,6 +218,8 @@ old_navfn_behavior=True　 :doc:`NavFn <navfn>` と同じように経路を再�
 
 .. image:: images/OldNavFn.png
    :align: center
+
+出典：`http://wiki.ros.org/global_planner <http://wiki.ros.org/global_planner>`__
 
 |
 
@@ -255,7 +286,7 @@ old_navfn_behavior=True　 :doc:`NavFn <navfn>` と同じように経路を再�
    "~<name>/default_tolerance", "プランナーの目標位置の許容値。プランナーは、指定された目標にできるだけ近いがdefault_toleranceを超えない計画を作成しようとします。", "double", "\-", "0.0"
    "~<name>/visualize_potential", "PointCloud2を介して計算されたポテンシャルエリアを視覚化するかどうかを指定します。", "bool", "\-", "false"
    "~<name>/use_dijkstra", "trueの場合、ダイクストラのアルゴリズムを使用します。それ以外の場合、A*を使用します。", "bool", "\-", "true"
-   "~<name>/use_quadratic", "trueの場合、ポテンシャルの2次近似を使用します。それ以外の場合は、より単純な計算を使用します。", "bool", "\-", "true"
+   "~<name>/use_quadratic", "trueの場合、ポテンシャルの2次方程式を使用します。それ以外の場合は、単純加算を使用します。", "bool", "\-", "true"
    "~<name>/use_grid_path", "trueの場合、グリッドの境界をたどる経路を作成します。それ以外の場合は、勾配降下法を使用します。", "bool", "\-", "false"
    "~<name>/old_navfn_behavior", "何らかの理由でglobal_plannerに :doc:`navfn <navfn>` の動作を正確に反映させたい場合は、これをtrueに設定します（他のbool型パラメーターはデフォルト値を設定します）", "bool", "\-", "false"
    "~<name>/lethal_cost", "致命的コスト値（動的再構成）", "int", "\-", "253"

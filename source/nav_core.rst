@@ -45,6 +45,8 @@ nav_core
    :width: 673
    :align: center
 
+出典: http://wiki.ros.org/nav_core
+
 .. _nav_core_base_global_planner:
 
 ============================================================
@@ -114,8 +116,8 @@ nav_core
 | 　nav_core::RecoveryBehaviorは、ナビゲーションで使用されるリカバリ動作のインタフェースを提供します。 :doc:`move_base</move_base>` ノードのプラグインとして記述されたすべてのリカバリ動作は、このインタフェースに準拠する必要があります。nav_core::RecoveryBehaviorインタフェースを使用した現在のリカバリ動作は次のとおりです。
 |
 
-* :doc:`clear_costmap_recovery</clear_costmap_recovery>` - move_baseが使用するコストマップをユーザー指定の範囲外の静的マップに戻すリカバリ動作。
-* :doc:`rotate_recovery</rotate_recovery>` - ロボットを360度回転させてスペースを空けることを試みるリカバリ動作。
+* :doc:`clear_costmap_recovery</clear_costmap_recovery>` - move_baseが使用するコストマップを、ユーザーが指定した範囲の外側について、静的マップの値に戻すリカバリ動作。
+* :doc:`rotate_recovery</rotate_recovery>` - ロボットを360度回転させてスペースをクリアすることを試みるリカバリ動作。
 
 |
 

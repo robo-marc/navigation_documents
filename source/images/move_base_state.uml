@@ -1,8 +1,8 @@
 @startuml
 
 [*] -down-> PLANNING
-PLANNING -down-> CONTROLLING: 大域経路検索成功
-PLANNING -down-> CLEARING: 大域経路検索失敗
+PLANNING -down-> CONTROLLING: 大域経路探索成功
+PLANNING -down-> CLEARING: 大域経路探索失敗
 CONTROLLING -left-> CLEARING: ロボットがスタック
 CONTROLLING -up-> PLANNING: ゴールの変更あり
 CLEARING -up-> PLANNING: リカバリ処理実行完了

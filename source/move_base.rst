@@ -31,7 +31,7 @@ move_base
 * ソース：git https://github.com/ros-planning/navigation.git (branch: melodic-devel)
 
 |
-| Note: move_baseパッケージを使用すると、Navigationスタックを使用してロボットを目的の位置に移動できます。走行距離計フレームでPR2ロボットを動かしたいだけなら、このチュートリアルに興味があるかもしれません： `pr2_controllers/Tutorials/ 走行距離計と変換情報でのベースコントローラーの使用 <http://wiki.ros.org/pr2_controllers/Tutorials/Using%20the%20base%20controller%20with%20odometry%20and%20transform%20information>`_
+| Note: move_baseパッケージを使用すると、Navigationスタックを使用してロボットを目的の位置に移動できます。走行距離計フレームでPR2ロボットを動かしたいだけであれば、このチュートリアルを参照してください： `pr2_controllers/Tutorials/ 走行距離計と変換情報でのベースコントローラーの使用 <http://wiki.ros.org/pr2_controllers/Tutorials/Using%20the%20base%20controller%20with%20odometry%20and%20transform%20information>`_
 |
 
 .. _move_base_nodes:
@@ -39,7 +39,7 @@ move_base
 ============================================================
 2. ノード
 ============================================================
-| 　このパッケージは、 `Navigationスタック <http://wiki.ros.org/ja/navigation>`_ の主要なコンポーネントであるmove_base ROSノードを提供します。このノードとその構成オプションの詳細な説明は以下にあります。
+| 　このパッケージは、 `Navigationスタック <http://wiki.ros.org/ja/navigation>`_ の主要なコンポーネントであるmove_base ROSノードを提供します。そのノードと構成オプションの詳細について以下で説明します。
 |
 
 .. _move_base_move_base:
@@ -53,8 +53,10 @@ move_base
    :width: 780
    :align: center
 
+出典: http://wiki.ros.org/move_base
+
 |
-| 　move_baseノードは、ロボット上のNavigationスタックを構成、実行、および対話するためのROSインタフェースを提供します。move_baseノードと他のコンポーネントとの相互作用の概要を上に示します。青色はロボットプラットフォームによって異なり、灰色はオプションですがすべてのシステムに提供され、白いノードは必須なだけでなくすべてのシステムに提供されます。move_baseノードの構成およびNavigationスタック全体の詳細については、 `ナビゲーションのセットアップと構成のチュートリアル <http://wiki.ros.org/ja/navigation/Tutorials/RobotSetup>`_ を参照してください。
+| 　move_baseノードは、ロボット上のNavigationスタックを構成、実行し、Navigationスタックと他のコンポーネントが対話するためのROSインタフェースを提供します。move_baseノードと他のコンポーネントとの相互作用の概要を上に示します。青色はロボットプラットフォームによって異なり、灰色はオプションですがすべてのシステムに提供されます。白いノードは必須で、すべてのシステムに提供されます。move_baseノードの構成およびNavigationスタック全体の詳細については、 `ナビゲーションのセットアップと構成のチュートリアル <http://wiki.ros.org/ja/navigation/Tutorials/RobotSetup>`_ を参照してください。
 | 　move_base内の各ノードについての説明を下表に示します。
 |
 
@@ -63,10 +65,10 @@ move_base
    :widths: 5, 50
 
    "global_costmap
-   local_costmap", "測距センサおよび地図から得られる障害物の配置状況から、ロボットの大きさを加味して、OccupancyGrid形式で各セルにおける移動の自由度を表現したもの。大域のglobal_costmapと狭域のlocal_costmapの2つが用いられます。"
-   "global_planner", "global_costmapを使用して、ゴールまでの大域経路選択を行います。Plug-in APIが規定されており、任意の経路検索アルゴリズムを実装して使用することが可能です。デフォルトではnavigationパッケージに含まれるnavfnが使用されます。"
-   "local_planner", "大域経路とlocal_costmapから、狭域の経路を選択して駆動命令を出力します。Plug-in APIで入れ替え可能です。デフォルトではnavigationパッケージに含まれるbase_local_plannerが使用されます。"
-   "recovery_behaviors", "ロボットがスタックした場合に、コストマップをいったんクリーンにするなどのリカバリ動作を行い、有効な経路の可能性を探るための機能。Plug-in APIで入れ替え可能です。デフォルトではnavigationパッケージに含まれるclear_costmap_recoveryおよびrotate_recoveryが使用されます。"
+   local_costmap", "測距センサおよび地図から得られる障害物の配置状況から、ロボットの大きさを加味して、OccupancyGrid形式で各セルにおける移動の自由度を表現したものです。大域のglobal_costmapと狭域のlocal_costmapの2つが用いられます。global_costmapのグローバルフレーム名は :ref:`global_costmap/global_frame<move_base_param>` で、ロボットのベースリンクのフレーム名は :ref:`global_costmap/robot_base_frame<move_base_param>` パラメータで設定されます。"
+   "global_planner", "global_costmapを使用して、ゴールまでの大域経路探索を行います。Plug-in APIが規定されており、任意の経路探索アルゴリズムを実装して使用することが可能です。デフォルトではnavigationパッケージに含まれるnavfnが使用されます。グローバルプランナーのプラグイン名は :ref:`base_global_planner<move_base_param>` パラメータで設定されます。"
+   "local_planner", "大域経路とlocal_costmapから、狭域の経路を探索して駆動命令を出力します。Plug-in APIで入れ替え可能です。デフォルトではnavigationパッケージに含まれるbase_local_plannerが使用されます。ローカルプランナーのプラグイン名は :ref:`base_local_planner<move_base_param>` パラメータで設定されます。"
+   "recovery_behaviors", "ロボットがスタックした場合に、コストマップをいったんクリーンにするなどのリカバリ動作を行い、有効な経路の可能性を探るための機能です。Plug-in APIで入れ替え可能です。デフォルトではnavigationパッケージに含まれるclear_costmap_recoveryおよびrotate_recoveryが使用されます。リカバリ動作プラグインのリストは :ref:`recovery_behaviors<move_base_param>` パラメータで設定されます。"
 
 |
 
@@ -81,9 +83,11 @@ move_base
    :header: "状態名", "説明"
    :widths: 5, 50
 
-   "PLANNING", "Navigationスタックにゴールが設定され、最初の大域経路を検索している状態。大域経路検索に成功すると、CONTROLLING状態へ遷移する。（大域経路検索は、CONTROLLING状態においても周期的に実行され、大域経路は都度更新される。）"
-   "CONTROLLING", "local_plannerを呼び出して最適な駆動命令を計算し、Base Controllerへ駆動命令を通知することを、周期的に繰り返している状態。"
-   "CLEARING", "ロボットのスタックを検知し、リカバリ処理を実行している状態。"
+   "PLANNING", "Navigationスタックにゴールが設定され、最初の大域経路を探索している状態です。大域経路探索に成功すると、CONTROLLING状態へ遷移します。大域経路探索は、CONTROLLING状態においても周期的に実行され、大域経路は都度更新されます。周期は :ref:`planner_frequency<move_base_param>` パラメータで設定されますが、このパラメータが0の場合は周期実行を行いません。
+   また、大域経路探索が成功しないまま一定時間（ :ref:`planner_patience<move_base_param>` ）経過するか、大域経路探索のリトライ回数（ :ref:`max_planning_retries<move_base_param>` ）を超えると、CLEARING状態へ遷移します。"
+   "CONTROLLING", "local_plannerを呼び出して最適な駆動命令を計算し、Base Controllerへ駆動命令を通知することを、周期的に繰り返している状態です。周期は :ref:`controller_frequency<move_base_param>` パラメータで設定されます。
+   また、一定時間（ :ref:`controller_patience<move_base_param>` ）有効なコントロールを受信出来ないと、CLEARING状態へ遷移します。"
+   "CLEARING", "ロボットのスタックを検知し、リカバリ処理を実行している状態です。"
 
 |
 
@@ -99,6 +103,8 @@ move_base
    :width: 711
    :align: center
 
+出典: http://wiki.ros.org/move_base
+
 |
 | 　適切に設定されたロボットでmove_baseノードを実行すると（詳細については `Navigationスタックのドキュメント <http://wiki.ros.org/ja/navigation>`_ を参照してください）、ロボットは、ユーザーが指定した許容範囲内を基礎として目標姿勢を達成しようとします。動的な障害物がない場合、move_baseノードは最終的に目標位置の範囲内に到達するか、失敗をユーザーに通知します。ロボットがスタックしていると認識した場合、move_baseノードはオプションでリカバリ動作を実行できます。デフォルトでは、 :doc:`move_base</move_base>` ノードは次のアクションを実行してスペースを空けようとします。
 |
@@ -107,14 +113,14 @@ move_base
 | 　デフォルトでの具体的な動作は、以下の流れになります。
 |
 
-#. ロボットが、一定時間の間、一定の距離（どちらもユーザー調整値）以上を移動できなかった場合は、ロボットがスタックしたとみなして、Local Plannerによる駆動命令演算を一時停止して、リカバリ制御を起動します。
-#. 上記の4つのリカバリ処理が起動されます。リカバリ制御を1つ行うごとに、Local Plannerによる駆動命令演算に戻して再度移動を試み、やはり一定時間一定距離を移動できなかった場合は、次のリカバリ処理を起動します。
+#. ロボットが、一定時間( :ref:`oscillation_timeout<move_base_param>` )の間、一定の距離( :ref:`oscillation_distance<move_base_param>` )以上を移動できなかった場合は、ロボットがスタックしたとみなして、ローカルプランナーによる駆動命令演算を一時停止して、リカバリ制御を起動します。
+#. 上記の4つのリカバリ処理が起動されます。リカバリ制御を1つ行うごとに、ローカルプランナーによる駆動命令演算に戻して再度移動を試み、やはり一定時間( :ref:`oscillation_timeout<move_base_param>` )一定距離( :ref:`oscillation_distance<move_base_param>` )を移動できなかった場合は、次のリカバリ処理を起動します。
 
-   * Conservative ResetおよびAggressive Resetは、ClearCostmapRecoveryモジュールをコールして、ロボット付近のコストマップをいったんクリアする処理です。Conservativeではユーザー設定値（デフォルト：3m）、Aggressiveではロボット外接円半径の4倍の範囲がクリアされます。
+   * Conservative ResetおよびAggressive Resetは、ClearCostmapRecoveryモジュールをコールして、ロボットから一定の距離以上離れたコストマップをいったんクリアする処理です。Conservativeではユーザー設定値（ :ref:`conservative_reset_dist_<move_base_param>` パラメータで設定。デフォルト：3m）、Aggressiveではロボット外接円半径（ :ref:`local_costmap/circumscribed_radius<move_base_param>` ）の4倍の範囲の外側がクリアされます。
    * Clearing Rotationは、RotateRecoveryモジュールをコールして、ロボットを360度回転させる処理です。
    * つまり、ClearCostmapとRotateを組み合わせて、「周りをもう一度よく見てみる」という動作を行います。
 
-#. 4つのリカバリ処理を実行後も、やはり一定時間一定距離を移動できなかった場合は、自律移動処理を途中終了します。
+#. 4つのリカバリ処理を実行後も、やはり一定時間( :ref:`oscillation_timeout<move_base_param>` )一定距離 :ref:`oscillation_distance<move_base_param>` )を移動できなかった場合は、自律移動処理を途中終了します。
 
 |
 
@@ -215,12 +221,12 @@ move_base
    "~base_local_planner", "move_baseで使用するローカルプランナーのプラグインの名前。プラグインの詳細について `pluginlib <http://wiki.ros.org/pluginlib>`_ のドキュメントを参照してください。このプラグインは、 :doc:`nav_core</nav_core>` パッケージで指定されたnav_core::BaseLocalPlannerインタフェースに準拠する必要があります。 (1.0 series default: ""TrajectoryPlannerROS"")", "string", "－", """base_local_planner/TrajectoryPlannerROS"" For 1.1+ series"
    "~recovery_behaviors", "move_baseで使用するリカバリ動作プラグインのリスト。プラグインの詳細については、 `pluginlib <http://wiki.ros.org/pluginlib>`_ のドキュメントを参照してください。これらの動作は、move_baseが指定された順序で有効なプランを見つけられなかった場合に実行されます。各動作が完了すると、move_baseは計画を立てようとします。計画が成功した場合、move_baseは通常の操作を続行します。それ以外の場合は、リスト内の次のリカバリ動作が実行されます。これらのプラグインは、 :doc:`nav_core</nav_core>` パッケージで指定されたnav_core :: RecoveryBehaviorインタフェースに準拠する必要があります。 (1.0 series default: [{name: conservative_reset, type: ClearCostmapRecovery}, {name: rotate_recovery, type: RotateRecovery}, {name: aggressive_reset, type: ClearCostmapRecovery}]). 注：デフォルトのパラメータの場合、aggressive_reset動作は4 \*~/local_costmap/circumscribed_radiusの距離までクリアされます。", "list", "－", "[{name: conservative_reset, type: clear_costmap_recovery/ClearCostmapRecovery}, {name: rotate_recovery, type: rotate_recovery/RotateRecovery}, {name: aggressive_reset, type: clear_costmap_recovery/ClearCostmapRecovery}] For 1.1+ series"
    "~controller_frequency", "制御ループを実行し、速度コマンドをベースに送信する周期（Hz単位）。", "double", "Hz", "20.0"
-   "~planner_patience", "プランナーが有効なプランを見つけられにあ時に、スペースクリアリング操作が実行されるまでの待機時間（秒単位）。", "double", "sec", "5.0"
+   "~planner_patience", "プランナーが有効なプランを見つけられない時に、スペースクリアリング操作が実行されるまでの待機時間（秒単位）。", "double", "sec", "5.0"
    "~controller_patience", "コントローラーが有効なコントロールを受信しない時に、スペースクリアリング操作が実行されるまでの待機時間（秒単位）。", "double", "sec", "15.0"
    "~conservative_reset_dist", "地図内のスペースをクリアしようとするときに、 :doc:`コストマップ</costmap_2d>` から障害物がクリアされるロボットからの距離（メートル単位）。このパラメータは、move_baseにデフォルトのリカバリ動作が使用される場合にのみ使用されることに注意してください。", "double", "m", "3.0"
    "~recovery_behavior_enabled", "スペースを空けるためのmove_baseリカバリ動作を有効にするかどうか。", "bool", "－", "true"
    "~clearing_rotation_allowed", "ロボットがスペースを空にするときにインプレース回転を試みるかどうかを決定します。注：このパラメーターは、デフォルトのリカバリ動作が使用されている場合にのみ使用されます。つまり、ユーザーがrecovery_behaviorsパラメーターをカスタムに設定していないことを意味します。", "bool", "－", "true"
-   "~shutdown_costmaps", "move_baseが非アクティブ状態のときにノードのコストマップをシャットダウンするかどうかを決定します", "bool", "－", "false"
+   "~shutdown_costmaps", "move_baseが非アクティブ状態のときにノードのコストマップをシャットダウンするかどうかを決定します。このパラメータをtrueに設定すると、アクティブ状態のとき（目標を与えられてから目標に到達するまで）にのみコストマップをセンサーからの情報で更新します。", "bool", "－", "false"
    "~oscillation_timeout", "スタック状態（有効な座標移動がない状態）になってから、リカバリ動作を実行するまでの時間（秒単位）。値0.0は、タイムアウト無し（無限待ち）になります。New in navigation 1.3.1", "double", "sec", "0.0"
    "~oscillation_distance", "スタック状態（有効な座標移動がない状態）ではないと見なされるためにロボットが移動しなければならない距離（メートル単位）。ここまで移動すると、タイマーのカウントがoscillation_timeoutまでリセットされます。 New in navigation 1.3.1", "double", "m", "0.5"
    "~planner_frequency", "グローバルプランニングループを実行する周期（Hz単位）。頻度が0.0に設定されている場合、グローバルプランナーは、新しい目標が受信されるか、ローカルプランナーがその経路がブロックされていると報告したときにのみ実行されます。New in navigation 1.6.0", "double", "Hz", "0.0"

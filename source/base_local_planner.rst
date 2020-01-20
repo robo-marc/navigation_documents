@@ -6,7 +6,7 @@ base_local_planner
 | 　1. :ref:`概要<Summary_BaseLocalPlanner>`
 | 　2. :ref:`パッケージの構成<PackageComponent_BaseLocalPlanner>`
 | 　3. :ref:`アルゴリズム<Overview_BaseLocalPlanner>`
-| 　　3.1 :ref:`目的<Purpose_BaseLocalPlanner>`
+| 　　3.1 :ref:`パッケージの目的<Purpose_BaseLocalPlanner>`
 | 　　3.2 :ref:`ローカルプランニングの処理概要<Procesure_BaseLocalPlanner>`
 | 　　3.3 :ref:`速度空間のサンプリング<VelocitySampling_BaseLocalPlanner>`
 | 　　　3.3.1 :ref:`DWA, Trajectory Rollout の速度サンプリング<DWAVel_BaseLocalPlanner>`
@@ -21,6 +21,7 @@ base_local_planner
 | 　　3.6 :ref:`軌道の評価<EvalTrajectory_BaseLocalPlanner>`
 | 　　3.7 :ref:`その場回転の軌道の追加評価<RotateInPlaceCost_BaseLocalPlanner>`
 | 　　3.8 :ref:`振動抑制<Oscillation_Suppression_BaseLocalPlanner>`
+| 　　3.9 :ref:`目標地点到達時の処理<GoalReaching_BaseLocalPlanner>`
 | 　4. :ref:`ローカルプランナークラス TrajectoryPlannerROS<TrajectoryPlannerROS_BaseLocalPlanner>`
 | 　　4.1 :ref:`Subscribe トピック<Subscribed_Topics_BaseLocalPlanner>`
 | 　　4.2 :ref:`Publish トピック<Published_Topics_BaseLocalPlanner>`
@@ -61,7 +62,7 @@ base_local_planner
 
 1　概要
 --------
-このパッケージは、平面上のローカルロボットナビゲーションを行うもので、Trajectory Rollout および Dynamic Window Approach の方式で実装しています。 従うべきグローバルプランとコストマップが与えられると、コントローラーは速度ベースのコマンドを生成してモバイルベースに送信します。 このパッケージは、ホロノミックロボットと非ホロノミックロボットの両方、凸多角形または円として表現できる任意のロボット footprint (接触範囲)をサポートします。設定項目はROSパラメーターとして公開されており、起動ファイルで設定できます。 このパッケージのROSラッパーは、`nav_core <http://wiki.ros.org/nav_core>`__ パッケージで指定されたBaseLocalPlannerインターフェースに準拠しています。
+このパッケージは、平面上のローカルロボットナビゲーションを行うもので、Trajectory Rollout および Dynamic Window Approach の方式で実装しています。 従うべきグローバルプランとコストマップが与えられると、コントローラーは速度ベースのコマンドを生成してモバイルベースに送信します。 このパッケージは、ホロノミックロボットと非ホロノミックロボットの両方をサポートし、凸多角形または円として表現できる任意のロボットの footprint (接触範囲)をサポートします。設定項目はROSパラメーターとして公開されており、起動ファイルで設定できます。 このパッケージのROSラッパーは、`nav_core <http://wiki.ros.org/nav_core>`__ パッケージで指定されたBaseLocalPlannerインターフェースに準拠しています。
 
 
 * 管理状態：管理済み 
@@ -98,11 +99,11 @@ base_local_planner
 
 .. _Purpose_BaseLocalPlanner:
 
-3.1 目的
-~~~~~~~~~~
+3.1 パッケージの目的
+~~~~~~~~~~~~~~~~~~~~~~
 
 base\_local\_plannerパッケージは、モバイルベースを平面上で運転するコントローラーを提供します。
-このコントローラーは、パスプランナーとロボットを接続します。
+このコントローラーは、パスプランナーをロボットに接続します。
 プランナーはマップを使い、ロボットがスタートからゴール位置に到達するまでの運動の軌道を作成します。
 その過程で、プランナーはロボットの周囲にグリッドマップとして表される価値関数を作成します。
 この価値関数は、グリッドセルを通過するコストを表現します。
@@ -387,7 +388,7 @@ occ_cost は、footprint cost とロボットの中心点が含まれるセル�
 
 |
 
-3つの（または4つ）コストを、所定の重み付け（カスタマイズ可能）を掛け合わせて合算し、与えられた軌道のコストとします。
+3つ（または4つ）のコストを、:ref:`所定の重み付け（カスタマイズ可能）<Trajectory_Scoring_Parameters_BaseLocalPlanner>` を掛け合わせて合算し、与えられた軌道のコストとします。
 各軌道ごとにコストを算出し、最も低コストの軌道を結果の軌道とします。
 
 軌道上のいずれかの点で、occ_costが負値になる(衝突する)場合や、impossible_costのセルに入る場合は、その軌道を破棄します。
@@ -416,7 +417,7 @@ occ_costについては、ロボットが障害物に近い位置にいる場合
 そのため、その場回転同士の比較には、追加の評価軸が用いられます。
 回転後に、ロボットがその方向に少し前進（:ref:`heading_lookahead パラメータ<Trajectory_Scoring_Parameters_BaseLocalPlanner>` ）したと仮定して、前進後の位置のgoal_distがより小さい方を採用します。下図の場合は、右回転より左回転の方が有利となります。
 
-ただし、ロボットが既にその場回転を始めていた場合は、現在の回転方向が優先されます。（ロボットが首を左右に振り続けてスタックするような挙動を回避するため。）
+ただし、ロボットが既にその場回転を始めていた場合は、現在の回転方向が優先されます。（ロボットが首を左右に振り続けてスタックするような挙動を回避するため。:ref:`振動抑制<Oscillation_Suppression_BaseLocalPlanner>` 参照。）
 
 .. image:: images/goal_dist_roll.png
    :width: 50%
@@ -434,6 +435,15 @@ occ_costについては、ロボットが障害物に近い位置にいる場合
 
 |
 
+.. _GoalReaching_BaseLocalPlanner:
+
+3.9　目標地点到達時の処理
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+TODO
+
+|
+|
 
 .. _TrajectoryPlannerROS_BaseLocalPlanner:
 
@@ -513,11 +523,13 @@ base\_local\_planner::TrajectoryPlannerROS ラッパーの動作をカスタマ�
    "<name>/min_vel_x",  "ロボットの縦方向速度の下限。これは、ロボットに摩擦を克服できるほど十分高い速度を指令するのに便利です。", "double", "m/s", "0.1"
    "<name>/max_vel_theta",  "ロボットの回転速度の上限 (左回転は正の値)", "double", "rad/s", "1.0"
    "<name>/min_vel_theta",  "ロボットの回転速度の下限 (右回転は負の値)", "double", "rad/s", "-1.0"
-   "<name>/min_in_place_vel_theta",  "その場回転時の、ロボットの回転速度の下限。(低速でその場回転できないため)", "double", "rad/s", "0.4"
-   "<name>/backup_vel",  "**DEPRECATED (escape_velを使用してください)**: 脱出中のバックに使用される速度。 ロボットが実際に反転するためには、負の速度を設定しなければならないことに注意してください。 正の速度を使用すると、ロボットは脱出しようとして前進します。", "double",  "m/s", "-0.1"
-   "<name>/escape_vel",  "脱出中の走行に使用される速度。 ロボットが実際に反転するためには、負の速度を設定しなければならないことに注意してください。 正の速度を使用すると、ロボットは脱出しようとして前進します。 **Navigation 1.3.1の新機能**", "double", "m/s", "-0.1"
+   "<name>/min_in_place_vel_theta",  "その場回転時の、ロボットの回転速度の下限。(低速では その場回転できないため)", "double", "rad/s", "0.4"
+   "<name>/backup_vel",  "**DEPRECATED (escape_velを使用してください)**: 脱出中のバックに使用される速度。 ロボットが実際にバックするためには、負の速度を設定しなければならないことに注意してください。 正の速度を設定すると、ロボットは脱出しようとして前進します。", "double",  "m/s", "-0.1"
+   "<name>/escape_vel",  "脱出中の走行に使用される速度。 ロボットが実際にバックするためには、負の速度を設定しなければならないことに注意してください。 正の速度を設定すると、ロボットは脱出しようとして前進します。 **Navigation 1.3.1の新機能**", "double", "m/s", "-0.1"
    "<name>/holonomic_robot",  "速度コマンドをホロノミックまたは非ホロノミックロボットのどちらに対して発行するかを決定します。 ホロノミックロボットの場合は、ロボットに横移動速度コマンドが発行されるかもしれません。 非ホロノミックロボットの場合、横移動速度コマンドは発行されません。", "bool", "\-", "true"
-   "<name>/y_vels",  "ホロノミックロボットがとるべき横移動速度のリスト。このパラメーターは、 holonomic_robotがtrueに設定されている場合にのみ使用されます:", "list[double]", "m/s",  "[-0.3, -0.1, 0.1, 0.3]"
+   "<name>/y_vels",  "ホロノミックロボットがとるべき横移動速度のリスト。このパラメーターは、 holonomic_robot が true に設定されている場合にのみ使用されます。(左方向は正の値で右方向は負の値。)", "list[double]", "m/s",  "[-0.3, -0.1, 0.1, 0.3]"
+   "<name>/escape_reset_dist",  "脱出フラグがリセットされるまでにロボットが移動する必要がある距離。escape_reset_theta とどちらかを満たせばリセット。(ROS Wiki 未記載)", "double", "m", "0.1"
+   "<name>/escape_reset_theta",  "脱出フラグがリセットされるまでにロボットが回転する必要がある角度。escape_reset_dist とどちらかを満たせばリセット。(ROS Wiki 未記載)", "double", "rad", "0.5 * π"
 
 
 
@@ -576,8 +588,8 @@ base\_local\_planner::TrajectoryPlannerROS ラッパーの動作をカスタマ�
    :widths: 5, 50, 5, 5, 8
 
    "<name>/meter_scoring",  "gdist_scaleおよびpdist_scaleパラメーターが使われる際、 goal_distanceおよびpath_distanceがメートルの単位で表されると解釈するかどうか。falseの場合、単位はセルとなります。 デフォルト値はセルに設定されています。 **Navigation 1.3.1の新機能**", "bool", "\-", "false"
-   "<name>/pdist_scale",  "コントローラーが与えられたパスにどれだけ近づいておこうとするかの重み。最大値は5.0です。 ", "double", "\-", "0.6"
-   "<name>/gdist_scale",  "コントローラーがローカルの目標にどれだけ到達しようとするかの重み。速度も制御します。可能な最大値は5.0です。", "double", "\-", "0.8"
+   "<name>/pdist_scale",  "コントローラーが与えられたパスにどれだけ近づこうとするかの重み。最大値は5.0です。 ", "double", "\-", "0.6"
+   "<name>/gdist_scale",  "コントローラーがローカルの目標にどれだけ近づこうとするかの重み。このパラメーターは速度も制御します。可能な最大値は5.0です。", "double", "\-", "0.8"
    "<name>/occdist_scale",  "コントローラーが障害物をどれだけ回避しようとするかの重み。 ", "double", "\-", "0.01"
    "<name>/heading_lookahead",  "その場回転の異なる軌道をスコアリングする際に、どれだけ前方を見るか。(dwa_local_planner の :ref:`forward_point_distance<Trajectory_Scoring_Parameters_DWALocalPlanner>` に相当) ", "double", "m", "0.325"
    "<name>/heading_scoring",  "ロボットの経路への向きに基づいてスコアリングするかどうか。", "bool", "\-", "false"
@@ -585,6 +597,7 @@ base\_local\_planner::TrajectoryPlannerROS ラッパーの動作をカスタマ�
    "<name>/dwa",  "Dynamic Window Approach (DWA) を使用するか、Trajectory Rollout を使用するか（注：私たちの経験では、DWAは Trajectory Rollout と同様に機能し、計算コストが低くなります。ロボットの加速性能が非常に低い場合は Trajectory Rollout で動かすとよいかもしれません。ただし、最初にDWAを試すことをお勧めします。）", "bool", "\-", "true"
    "<name>/publish_cost_grid_pc",  "プランナーが計画時に使用するコストグリッドを公開するかどうか。 trueの場合、 sensor_msgs/PointCloud2 が~<name>/cost_cloudトピックで利用可能になります。 各点群はコストグリッドを表し、個々のスコアリング関数コンポーネントのフィールドを持ちます。 また、スコアリングパラメーターを考慮に入れた各セルの全体的なコストを持ちます。 **Navigation 1.4.0の新機能**", "bool", "\-", "false"
    "<name>/global_frame_id",  "cost_cloudに設定するフレーム。 ローカルコストマップのグローバルフレームと同じフレームに設定する必要があります。 **Navigation 1.4.0の新機能**", "string", "\-", "odom"
+   "<name>/simple_attractor",  "単純な誘引。オンのとき、gdist をローカルゴールではなくグローバルゴールまでの距離とし、pdistを0とします。(ROS Wiki 未記載)", "bool", "\-", "false"
 
 |
 
@@ -720,7 +733,7 @@ ROSのgroovyリリースには、 :doc:`dwa\_local\_planner <dwa_local_planner>`
 6.1　TrajectorySampleGenerator クラス
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-このインターフェースは、軌道のジェネレーターを表します。有限または無限の軌道を生成し、 nextTrajectory() の呼び出しごとに新しい軌道を返します。
+このインターフェースは、軌道のジェネレーターを表します。有限または無限の数の軌道を生成し、 nextTrajectory() の呼び出しごとに新しい軌道を返します。
 
 SimpleTrajectoryGenerator クラスは、TrajectorySampleGeneratorを継承した実装クラスで、Trajectory Rollout または DWAのいずれかを使用して、:ref:`アルゴリズム<Overview_BaseLocalPlanner>` で説明されている軌道を生成できます。
 

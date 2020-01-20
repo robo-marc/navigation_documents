@@ -27,6 +27,8 @@ carrot_planner :: CarrotPlannerは、 :doc:`nav_core <nav_core>` パッケージ
 .. image:: images/planner_overview.png
    :align: center
 
+出典：`http://wiki.ros.org/carrot_planner <http://wiki.ros.org/carrot_planner>`__
+
 |
 
 

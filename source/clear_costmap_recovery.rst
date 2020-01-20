@@ -15,7 +15,7 @@ clear_costmap_recovery
 ============================================================
 1. 概要
 ============================================================
-| 　このパッケージは、Navigationスタックが使用するコストマップを特定の領域外の静的マップに戻すことでスペースをクリアしようとするNavigationスタックのリカバリ動作を提供します。
+| 　このパッケージは、Navigationスタックが使用するコストマップの特定の領域の外側を静的マップに戻すことでスペースをクリアしようとするNavigationスタックのリカバリ動作を提供します。
 |
 
 * 管理状態：管理済み 
@@ -31,7 +31,8 @@ clear_costmap_recovery
 ============================================================
 2. clear_cost_map_recoveryの概要
 ============================================================
-| 　clear_costmap_recovery::ClearCostmapRecoveryは、ロボットから特定の半径の外側を静的マップに戻すことにより、Navigationスタックの :doc:`コストマップ</costmap_2d>` 内のスペースをクリアする単純なリカバリ動作です。 :doc:`nav_core</nav_core>` パッケージに含まれるnav_core::RecoveryBehaviorインタフェースに準拠しており、 :doc:`move_base</move_base>` ノードのリカバリ動作 `プラグイン <http://wiki.ros.org/pluginlib>`_ として使用できます。
+| 　clear_costmap_recovery::ClearCostmapRecoveryは、ロボットから特定の半径（ :ref:`reset_distance<clear_cost_map_recovery_param>` ）の外側を静的マップに戻すことにより、Navigationスタックの :doc:`コストマップ</costmap_2d>` 内のスペースをクリアする単純なリカバリ動作です。 :doc:`nav_core</nav_core>` パッケージに含まれるnav_core::RecoveryBehaviorインタフェースに準拠しており、 :doc:`move_base</move_base>` ノードのリカバリ動作 `プラグイン <http://wiki.ros.org/pluginlib>`_ として使用できます。
+| クリア対象のコストマップを :ref:`affected_maps<clear_cost_map_recovery_param>` パラメータで指定することが可能です。また、クリア対象のレイヤーを :ref:`layer_names<clear_cost_map_recovery_param>` パラメータで複数指定することもできます。
 |
 
 .. image:: /images/clear_costmap_recovery_overview.png

@@ -17,7 +17,7 @@ fake_localization
 ============================================================
 1. 概要
 ============================================================
-| 　オドメトリ情報を単に転送するROSノード。
+| 　オドメトリ情報を単に転送するROSノードを提供します。
 |
 
 * 管理状態：管理済み 
@@ -34,7 +34,7 @@ fake_localization
 2. 説明
 ============================================================
 | 　fake_localizationパッケージは自己位置推定システムに代わり、 :doc:`amcl</amcl>` で使用されるROS APIのサブセットを提供する単一ノードfake_localizationを提供します。このノードは、計算コストの小さい方法で完全な自己位置推定を提供する方法として、シミュレーション中に最も頻繁に使用されます。
-| 　具体的には、fake_localizationは走行距離データを :doc:`amcl</amcl>` によってパブリッシュされる ロボットの姿勢(amcl_pose)、パーティクル群(particlecloud)、transformのデータ(tf)に変換します。
+| 　具体的には、fake_localizationは走行距離データを、 :doc:`amcl</amcl>` によってパブリッシュされる ロボットの姿勢(amcl_pose)、パーティクル群(particlecloud)、transformのデータ(tf)に変換します。
 |
 
 .. _fake_localization_nodes:
@@ -77,7 +77,7 @@ fake_localization
    :widths: 5, 10, 30
 
    "amcl_pose", "geometry_msgs/PoseWithCovarianceStamped", "シミュレーターによって報告された姿勢情報をそのまま送信します。"
-   "particlecloud", "geometry_msgs/PoseArray", "ロボットの姿勢を`rviz <http://wiki.ros.org/rviz>`_ および `nav_view <http://wiki.ros.org/nav_view>`_ で視覚化するために使用されるパーティクルクラウド。"
+   "particlecloud", "geometry_msgs/PoseArray", "ロボットの姿勢を `rviz <http://wiki.ros.org/rviz>`_ および `nav_view <http://wiki.ros.org/nav_view>`_ で視覚化するために使用されるパーティクルクラウド。"
 
 |
 

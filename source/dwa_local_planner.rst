@@ -6,11 +6,12 @@ dwa_local_planner
 | 　1. :ref:`概要<Summary_DWALocalPlanner>`
 | 　2. :ref:`パッケージの構成<PackageComponent_DWALocalPlanner>`
 | 　3. :ref:`アルゴリズム<Overview_DWALocalPlanner>`
-| 　　3.1 :ref:`目的<Purpose_DWALocalPlanner>`
+| 　　3.1 :ref:`パッケージの目的<Purpose_DWALocalPlanner>`
 | 　　3.2 :ref:`ローカルプランニングの処理概要<Procesure_DWALocalPlanner>`
 | 　　3.3 :ref:`速度空間のサンプリング<VelocitySampling_DWALocalPlanner>`
 | 　　3.4 :ref:`軌道の計算<TrajectorySimulation_DWALocalPlanner>`
 | 　　3.5 :ref:`軌道の評価<EvalTrajectory_DWALocalPlanner>`
+| 　　3.6 :ref:`目標地点到達時の処理<GoalReaching_DWALocalPlanner>`
 | 　4. :ref:`ローカルプランナークラス DWAPlannerROS<DWAPlannerROS_DWALocalPlanner>`
 | 　　4.1 :ref:`Subscribe トピック<Subscribed_Topics_DWALocalPlanner>`
 | 　　4.2 :ref:`Publish トピック<Published_Topics_DWALocalPlanner>`
@@ -64,16 +65,16 @@ dwa_local_planner
 
 .. _Overview_DWALocalPlanner:
 
-2　アルゴリズム
+3　アルゴリズム
 ----------------
 
 .. _Purpose_DWALocalPlanner:
 
-3.1 目的
-~~~~~~~~~~
+3.1 パッケージの目的
+~~~~~~~~~~~~~~~~~~~~~~
 
 dwa\_local\_plannerパッケージは、モバイルベースを平面上で運転するコントローラーを提供します。
-このコントローラーは、パスプランナーとロボットを接続します。
+このコントローラーは、パスプランナーをロボットに接続します。
 プランナーは、マップを使い、ロボットがスタートからゴール位置に到達するまでの運動の軌道を作成します。
 その過程で、プランナーは、ロボットの周囲に、グリッドマップとして表される価値関数を作成します。
 この価値関数は、グリッドセルを通過するコストを表現します。
@@ -154,7 +155,7 @@ Dynamic Window Approach (DWA) アルゴリズムの基本的な考え方は次�
 求めたサンプリング範囲を等分割し、":ref:`サンプリング数<Forward_Simulation_Parameters_DWALocalPlanner>` "個のサンプル値を抽出します。
 さらに、正と負のサンプル値の間に、0のサンプル値を挿入します。
 
-その場回転や横移動もこのサンプリング速度に含まれているため、base_local_plannerのような追加の専用サンプリング処理はありません。
+その場回転や横移動もサンプリング速度空間に含まれているため、base_local_plannerのような追加の専用サンプリング処理はありません。
 
 .. ソース：SimpleTrajectoryGenerator::initialise()
 
@@ -190,7 +191,7 @@ Dynamic Window Approach (DWA) アルゴリズムの基本的な考え方は次�
 
 .. _EvalTrajectory_DWALocalPlanner:
 
-3.4　軌道の評価
+3.5　軌道の評価
 ~~~~~~~~~~~~~~~~~~~~
 
 
@@ -206,12 +207,21 @@ Dynamic Window Approach (DWA) アルゴリズムの基本的な考え方は次�
    "alignment_costs", "グローバルパスへの向き (ROS Wiki 未記載)", "ロボットが :ref:`forward_point_distance<Trajectory_Scoring_Parameters_DWALocalPlanner>` だけ前進した位置での path_costs", ":ref:`path_distance_bias<Trajectory_Scoring_Parameters_DWALocalPlanner>` ", ":ref:`MapGridCostFunction<MapGridCostFunction_BaseLocalPlanner>` "
    "goal_front_costs", "ローカルゴールへの向き (ROS Wiki 未記載)", "ロボットが :ref:`forward_point_distance<Trajectory_Scoring_Parameters_DWALocalPlanner>` だけ前進した位置での goal_costs (:ref:`その場回転の軌道の追加評価<RotateInPlaceCost_BaseLocalPlanner>` と同様。ただしその場回転以外でも有効。)", ":ref:`goal_distance_bias<Trajectory_Scoring_Parameters_DWALocalPlanner>` ", ":ref:`MapGridCostFunction<MapGridCostFunction_BaseLocalPlanner>` "
    "twirling_costs", "スピンコスト(option) (ROS Wiki 未記載)", "急カーブの軌道ほど大きくなるため、カーブの緩い軌道を選好します。ただしデフォルトの重みは0です", ":ref:`twirling_scale<Trajectory_Scoring_Parameters_DWALocalPlanner>` ", ":ref:`TwirlingCostFunction<TwirlingCostFunction_BaseLocalPlanner>` "
-   "oscillation_costs",  "振動コスト (ROS Wiki 未記載)", "base_local_plannerの :ref:`振動抑制 参照<Oscillation_Suppression_BaseLocalPlanner>` ", "コスト負の軌道は破棄", ":ref:`OscillationCostFunction<OscillationCostFunction_BaseLocalPlanner>` "
+   "oscillation_costs",  "振動コスト (ROS Wiki 未記載)", "base_local_plannerの :ref:`振動抑制 参照<Oscillation_Suppression_BaseLocalPlanner>`。ただし、振動フラグが設定されたときから特定の角度 (:ref:`oscillation_reset_angle<Oscillation_Prevention_Parameters_DWALocalPlanner>` ) を超えてロボットが回転した場合もフラグをリセットします。 ", "コスト負の軌道は破棄", ":ref:`OscillationCostFunction<OscillationCostFunction_BaseLocalPlanner>` "
 
 |
 
 これらのコストを、所定の重み付け（カスタマイズ可能）を掛け合わせて合算し、与えられた軌道のコストとします。
 各軌道ごとにコストを算出し、最も低コストの軌道を結果の軌道とします。
+
+|
+
+.. _GoalReaching_DWALocalPlanner:
+
+3.6　目標地点到達時の処理
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+TODO
 
 
 |
@@ -293,13 +303,14 @@ dwa\_local\_planner::DWAPlannerROS ラッパーの動作をカスタマイズす
 
    "<name>/acc_lim_x", "ロボットの縦方向加速度の上限", "double", "m/s^2", "2.5"
    "<name>/acc_lim_y", "ロボットの横方向加速度の上限", "double", "m/s^2", "2.5"
-   "<name>/acc_lim_th",  "ロボットの回転加速度の上限", "double", "rad/s^2", "3.2"
-   "<name>/max_vel_trans",  "ロボットの並進速度絶対値の上限。旧max_trans_vel。 (縦方向と横方向の合成速度の上限。これを超える軌道は破棄します。)", "double", "m/s", "0.55"
-   "<name>/min_vel_trans",  "ロボットの並進速度絶対値の下限。旧min_trans_vel。(縦方向と横方向の合成速度の下限。これと min_vel_theta のどちらも満たさない軌道は破棄します。)", "double", "m/s", "0.1"
+   "<name>/acc_lim_theta",  "ロボットの回転加速度の上限", "double", "rad/s^2", "3.2"
+   "<name>/acc_lim_trans",  "ロボットの並進運動加速度の上限。現在のソースでは無効なパラメーター (ROS Wiki 未記載)", "double", "m/s^2", "0.1"
+   "<name>/max_vel_trans",  "ロボットの並進運動速度の絶対値の上限。旧max_trans_vel。 (縦方向と横方向の合成速度の上限。これを超える軌道は破棄します。)", "double", "m/s", "0.55"
+   "<name>/min_vel_trans",  "ロボットの並進運動速度の絶対値の下限。旧min_trans_vel。(縦方向と横方向の合成速度の下限。これと min_vel_theta のどちらも満たさない軌道は破棄します。)", "double", "m/s", "0.1"
    "<name>/max_vel_x",  "ロボットの縦方向速度の上限", "double", "m/s", "0.55"
-   "<name>/min_vel_x",  "ロボットの縦方向速度の下限。逆方向の動きでは負。", "double", "m/s", "0.0"
-   "<name>/max_vel_y",  "ロボットの横方向速度の上限", "double", "m/s", "0.1"
-   "<name>/min_vel_y",  "ロボットの横方向速度の下限", "double", "m/s", "-0.1"
+   "<name>/min_vel_x",  "ロボットの縦方向速度の下限。バックの動きでは負の値。", "double", "m/s", "0.0"
+   "<name>/max_vel_y",  "ロボットの横方向速度の上限。(左方向は正の値。)", "double", "m/s", "0.1"
+   "<name>/min_vel_y",  "ロボットの横方向速度の下限。(右方向は負の値。)", "double", "m/s", "-0.1"
    "<name>/max_vel_theta",  "ロボットの回転速度絶対値の上限。旧max_rot_vel。", "double", "rad/s", "1.0"
    "<name>/min_vel_theta",  "ロボットの回転速度絶対値の下限。旧min_rot_vel。 (これと min_vel_trans のどちらも満たさない軌道は破棄します。)", "double", "rad/s", "0.4"
 
@@ -318,6 +329,8 @@ dwa\_local\_planner::DWAPlannerROS ラッパーの動作をカスタマイズす
    "<name>/yaw_goal_tolerance",  "目標地点に到達したときの、コントローラーの向き(回転角)の許容誤差", "double", "rad", "0.05"
    "<name>/xy_goal_tolerance",  "目標地点に到達したときの、コントローラーの 2D平面上距離の許容誤差", "double", "m", "0.10"
    "<name>/latch_xy_goal_tolerance",  "目標地点許容誤差ラッチフラグ。trueの場合、ロボットが目標地点に到達すると、後はその場回転のみ行います。回転の間に目標地点許容誤差の範囲外になることもあります。(falseの場合は、範囲外に出たら通常の動作に戻ります。)", "bool", "\-", "false"
+   "<name>/trans_stopped_vel",  "最終補正にあたって停止したとみなす X-Y合成速度。停止後その場回転します。(ROS Wiki 未記載)", "double", "m/s", "0.1"
+   "<name>/theta_stopped_vel",  "最終補正にあたって停止したとみなす回転速度。停止後その場回転します。(ROS Wiki 未記載)", "double", "rad/s", "0.1"
 
 |
 
@@ -361,11 +374,11 @@ dwa\_local\_planner::DWAPlannerROS ラッパーの動作をカスタマイズす
    :header: "パラメーター名", "内容", "型", "単位", "デフォルト"
    :widths: 5, 50, 5, 5, 8
 
-   "<name>/path_distance_bias",  "コントローラーが与えられたパスにどれだけ近くに留まるべきかの重み ", "double", "1/m", "32"
-   "<name>/goal_distance_bias",  "コントローラーがローカルの目標に到達しようとする程度の重み。速度も制御します。", "double", "1/m", "24"
-   "<name>/occdist_scale",  "コントローラーが障害物を回避しようとする程度の重み。 ", "double", "\-", "0.01"
+   "<name>/path_distance_bias",  "コントローラーがパスにどれだけ近づこうとするかの重み ", "double", "1/m", "32"
+   "<name>/goal_distance_bias",  "コントローラーがローカルの目標にどれだけ近づこうとするかの重み。このパラメーターは速度も制御します。", "double", "1/m", "24"
+   "<name>/occdist_scale",  "コントローラーが障害物をどれだけ回避しようとするかの重み。 ", "double", "\-", "0.01"
    "<name>/twirling_scale",  "スピンコストの重み。 ", "double", "s/rad", "0"
-   "<name>/forward_point_distance",  "追加のスコアリングポイントを配置するためのロボットの中心点からの距離 (ロボットの向きの評価で使用。base_local_planner の :ref:`heading_lookahead<Trajectory_Scoring_Parameters_BaseLocalPlanner>` に相当。)", "double", "m", "0.325"
+   "<name>/forward_point_distance",  "追加のスコアリングポイントを配置するためのロボット中心点からの距離 (ロボットの向きの評価で使用。base_local_planner の :ref:`heading_lookahead<Trajectory_Scoring_Parameters_BaseLocalPlanner>` に相当。)", "double", "m", "0.325"
    "<name>/stop_time_buffer",  "軌道が有効と見なされるために、衝突前にロボットが停止しなければならない時間 (現状のソースコードでは無効)", "double", "s", "0.2"
    "<name>/scaling_speed",  "ロボットの footprint のスケーリングを開始する速度の絶対値 (現状のソースコードではスケーリングは行っていないため無効。)", "double", "m/s", "0.25"
    "<name>/max_scaling_factor",  "ロボットの footprint をスケーリングする最大係数　(現状のソースコードではスケーリングは行っていないため無効。)", "double", "\-", "0.2"
@@ -384,6 +397,7 @@ dwa\_local\_planner::DWAPlannerROS ラッパーの動作をカスタマイズす
    :widths: 5, 50, 5, 5, 8
 
    "<name>/oscillation_reset_dist",  "振動フラグがリセットされるまでにロボットが移動する必要がある距離", "double", "m", "0.05"
+   "<name>/oscillation_reset_angle",  "振動フラグがリセットされるまでにロボットが回転する必要がある角度 (ROS Wiki 未記載)", "double", "rad", "0.2"
 
 |
 

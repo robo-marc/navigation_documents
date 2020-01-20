@@ -15,7 +15,7 @@ move_slow_and_clear
 ============================================================
 1. 概要
 ============================================================
-| 　move_slow_and_clear
+| 　このパッケージは、:doc:`コストマップ</costmap_2d>` 内の情報をクリアし、ロボットの速度を制限する単純なリカバリ動作を提供します。
 |
 
 * 管理状態：管理済み 
@@ -31,22 +31,22 @@ move_slow_and_clear
 ============================================================
 2. move_slow_and_clearの概要
 ============================================================
-| 　move_slow_and_clear::MoveSlowAndClearは、 :doc:`コストマップ</costmap_2d>` 内の情報をクリアし、ロボットの速度を制限する単純なリカバリ動作です。このリカバリ動作は真に安全ではないことに注意してください。ロボットが物にぶつかる可能性があり、ユーザーが指定した速度で発生するだけです。また、このリカバリ動作は、 :doc:`dwa_local_planner</dwa_local_planner>` などの `dynamic_reconfigure <http://wiki.ros.org/dynamic_reconfigure>`_ を介して最大速度を設定できるローカルプランナーとのみ互換性があります。
+| 　move_slow_and_clear::MoveSlowAndClearは、 :doc:`コストマップ</costmap_2d>` 内の情報をクリアし、ロボットの速度を制限する単純なリカバリ動作です。このリカバリ動作は真に安全ではないことに注意してください。ユーザーが指定した速度で動くだけで、ロボットが物にぶつかる可能性があります。また、このリカバリ動作は、 :doc:`dwa_local_planner</dwa_local_planner>` などの `dynamic_reconfigure <http://wiki.ros.org/dynamic_reconfigure>`_ を介して最大速度を設定できるローカルプランナーとのみ互換性があります。
 |
 | 　以下の手順でリカバリを行います。
 |
 
-#. グローバルコストマップとローカルコストマップのロボットの周辺のエリアを空き（占有されていない）にします。
+#. グローバルコストマップとローカルコストマップのロボットの周辺のエリア（ロボットを中心とした1辺が :ref:`clearing_distance<move_slow_and_clear_ros_param>` * 2 の正方形 ）を空き（占有されていない）にします。
 
    .. image:: /images/move_slow_and_clear.png
       :height: 194
       :width: 816
       :align: center
 
-#. ~planner_name_spaceで示したプランナーのmax_trans_velとmax_rot_velパラメータを、指定した速度に更新します。
+#. :ref:`planner_name_space<move_slow_and_clear_ros_param>` で示したプランナーのmax_trans_velとmax_rot_velパラメータを、:ref:`limited_trans_speed<move_slow_and_clear_ros_param>` と :ref:`limited_rot_speed<move_slow_and_clear_ros_param>` パラメータで指定した速度に更新します。
 #. 0.1秒周期で、グローバルコストマップ上の移動距離をチェックします。
 
-   * 指定した距離 ≦ 速度制限開始位置と現在位置の距離 : 移動距離のチェックを終了し、max_trans_velとmax_rot_velを元の速度に戻します。
+   * 指定した距離（ :ref:`limited_distance<move_slow_and_clear_ros_param>` ） ≦ 速度制限開始位置と現在位置の距離 : 移動距離のチェックを終了し、max_trans_velとmax_rot_velを元の速度に戻します。
 
 |
 
@@ -55,7 +55,7 @@ move_slow_and_clear
 ============================================================
 3. MoveSlowAndClear
 ============================================================
-| 　move_slow_and_clear::MoveSlowAndClearオブジェクトは、その機能を `C++ ROSラッパー <http://wiki.ros.org/navigation/ROS_Wrappers>`_ として公開します。これは、初期化時に指定されたROS名前空間（以降、\ *name*\ と仮表記）内で動作します。 `nav_core</nav_core>` パッケージにあるnav_core::RecoveryBehaviorインタフェースに準拠しています。
+| 　move_slow_and_clear::MoveSlowAndClearオブジェクトは、その機能を `C++ ROSラッパー <http://wiki.ros.org/navigation/ROS_Wrappers>`_ として公開します。これは、初期化時に指定されたROS名前空間（以降、\ *name*\ と仮表記）内で動作します。 :doc:`nav_core</nav_core>` パッケージにあるnav_core::RecoveryBehaviorインタフェースに準拠しています。
 |
 
 .. _move_slow_and_clear_api:
