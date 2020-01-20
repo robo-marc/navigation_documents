@@ -21,3 +21,10 @@
    rotate_recovery
    fake_localization
 
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   staticmap
+   inflation
+   obstacles
