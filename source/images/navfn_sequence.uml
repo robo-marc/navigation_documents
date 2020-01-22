@@ -1,0 +1,50 @@
+@startuml
+
+hide footbox
+
+participant "MoveBase" as move_base
+participant "NavfnROS" as NavfnROS
+participant "NavFn" as NavFn
+
+activate move_base
+move_base -> NavfnROS: makePlan()
+activate NavfnROS
+NavfnROS -> NavFn : setNavArr()
+activate NavFn
+note right: グリッド地図を指定サイズで初期化
+return
+NavfnROS -> NavFn : setCostmap()
+activate NavFn
+note right: グローバルコストマップを設定
+return
+NavfnROS -> NavFn : setStart()
+activate NavFn
+note right: ゴール座標を設定
+return
+NavfnROS -> NavFn : setGoal()
+activate NavFn
+note right: スタート座標を設定
+return
+NavfnROS -> NavFn : calcNavFnDijkstra()
+activate NavFn
+note right: ポテンシャルマップ生成
+return
+NavfnROS -> NavfnROS : ゴール位置補正
+
+opt ゴール到達可能である場合
+  NavfnROS -> NavfnROS ++ : getPlanFromPotential()
+  NavfnROS -> NavFn : setStart()
+  activate NavFn
+  note right: 補正後のゴール座標を設定
+  return
+  NavfnROS -> NavFn : calcPath()
+  activate NavFn
+  note right: 経路を生成
+  return
+  NavfnROS -> NavfnROS : NavFnが生成した経路を逆順に入れ替え
+  return
+end
+
+return
+
+@enduml
