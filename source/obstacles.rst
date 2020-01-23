@@ -46,10 +46,10 @@ obstacles
    :header: "トピック名", "型", "内容"
    :widths: 10, 10, 30
 
-   "point_cloud_topic", "`sensor_msgs/PointCloud <http://docs.ros.org/api/sensor_msgs/html/msg/PointCloud.html>`__", "observation_sourcesパラメーターリストにリストされている各「PointCloud」ソースについて、そのソースからの情報がコストマップの更新に使用されます。"
-   "point_cloud2_topic", "`sensor_msgs/PointCloud2 <http://docs.ros.org/api/sensor_msgs/html/msg/PointCloud2.html>`__", "observation_sourcesパラメーターリストにリストされている各「PointCloud2」ソースについて、そのソースからの情報がコストマップの更新に使用されます。"
-   "laser_scan_topic", "`sensor_msgs/LaserScan <http://docs.ros.org/api/sensor_msgs/html/msg/LaserScan.html>`__", "observation_sourcesパラメーターリストにリストされている各「LaserScan」ソースについて、そのソースからの情報がコストマップの更新に使用されます。"
-   "map", "`nav_msgs/OccupancyGrid <http://docs.ros.org/api/nav_msgs/html/msg/OccupancyGrid.html>`__", "コストマップには、ユーザー生成の静的マップから初期化するオプションがあります（ :ref:`static_map <staticmap_parameters>` パラメーターを参照）。 このオプションが選択されている場合、コストマップはこのマップを取得するために :doc:`map_server <map_server>` のサービスを使用します。"
+   "point_cloud_topic", "`sensor_msgs/PointCloud <http://docs.ros.org/api/sensor_msgs/html/msg/PointCloud.html>`__", "observation_sourcesパラメータリストにリストされている各「PointCloud」ソースについて、そのソースからの情報がコストマップの更新に使用されます。"
+   "point_cloud2_topic", "`sensor_msgs/PointCloud2 <http://docs.ros.org/api/sensor_msgs/html/msg/PointCloud2.html>`__", "observation_sourcesパラメータリストにリストされている各「PointCloud2」ソースについて、そのソースからの情報がコストマップの更新に使用されます。"
+   "laser_scan_topic", "`sensor_msgs/LaserScan <http://docs.ros.org/api/sensor_msgs/html/msg/LaserScan.html>`__", "observation_sourcesパラメータリストにリストされている各「LaserScan」ソースについて、そのソースからの情報がコストマップの更新に使用されます。"
+   "map", "`nav_msgs/OccupancyGrid <http://docs.ros.org/api/nav_msgs/html/msg/OccupancyGrid.html>`__", "コストマップには、ユーザー生成の静的マップから初期化するオプションがあります（ :ref:`static_map <staticmap_parameters>` パラメータを参照）。 このオプションが選択されている場合、コストマップはこのマップを取得するために :doc:`map_server <map_server>` のサービスを使用します。"
 
 |
 
@@ -68,7 +68,7 @@ obstacles
 
 |
 
-observation_sourcesの各source_nameは、パラメーターを設定できる名前空間を定義します。
+observation_sourcesの各source_nameは、パラメータを設定できる名前空間を定義します。
 
 .. csv-table:: 
    :header: "パラメータ名", "内容", "型", "単位", "デフォルト"
@@ -77,11 +77,11 @@ observation_sourcesの各source_nameは、パラメーターを設定できる�
    "~<name>/<source_name>/topic", "このソースのセンサーデータが入力されるトピック。デフォルトはソースの名前です。", "string", "\-", "source_name"
    "~<name>/<source_name>/sensor_frame", "センサーの原点のフレーム。空のままにして、センサーデータからフレームを読み取ろうとします。フレームは、sensor_msgs / LaserScan、sensor_msgs / PointCloud、sensor_msgs / PointCloud2メッセージから読み取ることができます。", "string", "\-", ""
    "~<name>/<source_name>/observation_persistence", "各センサーの読み取りを保持する時間。 0.0の値は、最新の読み取り値のみを保持します。", "double", "s", "0.0"
-   "~<name>/<source_name>/expected_update_rate", "センサーからの読み取りを数秒で予想する頻度。値を0.0にすると、読み取りと読み取りの間の時間が無限になります。このパラメーターは、センサーが故障したときに `navigationスタック <http://wiki.ros.org/navigation>`__ がロボットに命令しないようにするフェールセーフとして使用されます。センサーの実際の速度よりわずかに許容性の高い値に設定する必要があります。たとえば、0.05秒ごとにレーザーからのスキャンが予想される場合、このパラメーターを0.1秒に設定して、十分なバッファーを確保し、ある程度のシステムレイテンシを考慮できます。", "double", "s", "0.0"
+   "~<name>/<source_name>/expected_update_rate", "期待されるセンサーからの読み取り時間間隔。値を0.0にすると、読み取りと読み取りの間の時間が無限になります。このパラメータは、センサーが故障したときに `navigationスタック <http://wiki.ros.org/navigation>`__ がロボットに命令しないようにするフェールセーフとして使用されます。センサーの実際の速度よりわずかに許容性の高い値に設定する必要があります。たとえば、0.05秒ごとにレーザーからのスキャンが予想される場合、このパラメータを0.1秒に設定して、十分なバッファーを確保し、ある程度のシステムレイテンシを考慮できます。", "double", "s", "0.0"
    "~<name>/<source_name>/data_type", "トピックに関連付けられているデータ型。現在、「PointCloud」、「PointCloud2」、「LaserScan」のみがサポートされています。", "string", "\-", "PointCloud"
    "~<name>/<source_name>/clearing", "この観測を使用して空き領域をクリアするかどうか。", "bool", "\-", "false"
    "~<name>/<source_name>/marking", "この観測を障害物のマークに使用するかどうか。", "bool", "\-", "true"
-   "~<name>/<source_name>/max_obstacle_height", "有効と見なされるセンサーが読み取る高さの最大値。これは通常、ロボットの高さよりわずかに高く設定されます。このパラメーターをグローバルなmax_obstacle_heightパラメーターより大きい値に設定しても効果はありません。このパラメーターをグローバルなmax_obstacle_heightよりも小さい値に設定すると、この高さより上にあるこのセンサーからのポイントが除外されます。", "double", "m", "2.0"
+   "~<name>/<source_name>/max_obstacle_height", "有効と見なされるセンサーが読み取る高さの最大値。これは通常、ロボットの高さよりわずかに高く設定されます。このパラメータをグローバルなmax_obstacle_heightパラメータより大きい値に設定しても効果はありません。このパラメータをグローバルなmax_obstacle_heightよりも小さい値に設定すると、この高さより上にあるこのセンサーからのポイントが除外されます。", "double", "m", "2.0"
    "~<name>/<source_name>/min_obstacle_height", "有効と見なされるセンサーが読み取る高さの最小値。通常、これは地面の高さに設定されますが、センサーのノイズモデルに基づいて高め又は低めに設定できます。", "double", "m", "0.0"
    "~<name>/<source_name>/obstacle_range", "センサーデータを使用してコストマップに障害物を挿入する範囲の最大値。", "double", "m", "2.5"
    "~<name>/<source_name>/raytrace_range", "センサーデータを使用してマップから障害物をレイトレースする範囲の最大値。", "double", "m", "3.0"
@@ -98,13 +98,13 @@ observation_sourcesの各source_nameは、パラメーターを設定できる�
 1.2.3. グローバルフィルタリングパラメータ
 ------------------------------------------------------------
 
-これらのパラメーターはすべてのセンサーに適用されます。
+これらのパラメータはすべてのセンサーに適用されます。
 
 .. csv-table:: 
    :header: "パラメータ名", "内容", "型", "単位", "デフォルト"
    :widths: 10, 50, 5, 5, 8
 
-   "~<name>/max_obstacle_height", "コストマップに挿入される障害物の最大の高さ。 このパラメーターは、ロボットの高さよりわずかに高く設定する必要があります。", "double", "m", "2.0"
+   "~<name>/max_obstacle_height", "コストマップに挿入される障害物の最大の高さ。 このパラメータは、ロボットの高さよりわずかに高く設定する必要があります。", "double", "m", "2.0"
    "~<name>/obstacle_range", "障害物がコストマップに挿入されるロボットからのデフォルトの最大距離。 これは、センサーごとに上書きできます。", "double", "m", "2.5"
    "~<name>/raytrace_range", "センサーデータを使用してマップから障害物をレイトレースするデフォルトの範囲。 これは、センサーごとに上書きできます。", "double", "m", "3.0"
 
@@ -117,7 +117,7 @@ observation_sourcesの各source_nameは、パラメーターを設定できる�
 1.2.4. 障害物コストマッププラグイン
 ------------------------------------------------------------
 
-これらのパラメーターは、ObstacleCostmapPluginによって使用されます。
+これらのパラメータは、ObstacleCostmapPluginによって使用されます。
 
 .. csv-table:: 
    :header: "パラメータ名", "内容", "型", "単位", "デフォルト"
@@ -125,9 +125,9 @@ observation_sourcesの各source_nameは、パラメーターを設定できる�
 
    "~<name>/track_unknown_space", "falseの場合、各ピクセルには、致命的障害物または空きの2つの状態のいずれかがあります。 trueの場合、各ピクセルには、致命的障害物、空き、未知スペースの3つの状態のいずれかがあります。", "bool", "\-", "false"
    "~<name>/footprint_clearing_enabled", "trueの場合、ロボットのフットプリントにより、ロボットが通ったスペースがクリアされます（空きとしてマークされます）。", "bool", "\-", "true"
-   "~<name>/combination_method", "disaster_layerがそれ以上のレイヤーからの着信データを処理する方法を変更します。設定可能な値は、Overwrite（0）、Maximum（1）、Nothing（99）です。 Overwriteは、単に以下のデータを上書きします。つまり、使用されません。 Maximumは、ほとんどの場合に必要なものです。 disaster_layerまたは着信データで提供されるものの最大値を取ります。 Nothingは受信データをまったく変更しません。これは、track_unkown_spaceの設定に応じて、コストマップの動作に大きく影響することに注意してください。", "enum", "\-", "1"
+   "~<name>/combination_method", "obstacle_layerが、その向こうのレイヤーから入ってきたデータの処理方法を変更します。設定可能な値は、Overwrite（0）、Maximum（1）、Nothing（99）です。 Overwriteは、単にコストマップのデータをobstacle_layerの値で上書きします。つまり、コストマップのデータは使用されません。 Maximumは、obstacle_layerの値とコストマップの値の大きい方を取ります。ほとんどの場合は、この設定を使用します。 Nothingはコストマップを全く変更しません。これは、track_unkown_spaceの設定に依存し、コストマップの動作に大きく影響することに注意してください。", "enum", "\-", "1"
 
-combination_methodおよびtrack_unknown_spaceパラメーターの影響に関する議論については、この関連する議論のROSの回答をご覧ください： `https://answers.ros.org/question/316191 <https://answers.ros.org/question/316191>`__
+combination_methodおよびtrack_unknown_spaceパラメータの影響に関する議論については、この関連する議論のROSの回答をご覧ください： `https://answers.ros.org/question/316191 <https://answers.ros.org/question/316191>`__
 
 |
 
@@ -137,7 +137,7 @@ combination_methodおよびtrack_unknown_spaceパラメーターの影響に関�
 
 1.2.5. ボクセルコストマッププラグイン
 ------------------------------------------------------------
-次のパラメーターは、VoxelCostmapPluginによって使用されます。
+次のパラメータは、VoxelCostmapPluginによって使用されます。
 
 .. csv-table:: 
    :header: "パラメータ名", "内容", "型", "単位", "デフォルト"
@@ -148,7 +148,7 @@ combination_methodおよびtrack_unknown_spaceパラメーターの影響に関�
    "~<name>/z_voxels", "各""列""のボクセル数、グリッドの高さはz_resolution * z_voxelsです。", "int", "\-", "10"
    "~<name>/unknown_threshold", "「既知」と見なされる""列""で許容される未知のセルの数。", "int", "\-", "~<name>/z_voxels"
    "~<name>/mark_threshold", "「空き」と見なされる""列""で許容されるマークされたセルの最大数。", "int", "\-", "0"
-   "~<name>/publish_voxel_map", "可視化のために、基礎となるボクセルグリッドを公開するかどうか。", "bool", "\-", "false"
+   "~<name>/publish_voxel_map", "可視化のために、基礎となるボクセルグリッドをパブリッシュするかどうか。", "bool", "\-", "false"
    "~<name>/footprint_clearing_enabled", "trueの場合、ロボットのフットプリントにより、ロボットが通ったスペースがクリアされます（空きとしてマークされます）。", "bool", "\-", "true"
 
 |

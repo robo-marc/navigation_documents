@@ -14,7 +14,7 @@ activate TrajectoryPlannerROS
 opt ゴール地点到達済みの場合
   TrajectoryPlannerROS -> TrajectoryPlannerROS ++ : 最終微調整/停止
   TrajectoryPlannerROS --
-  move_base <-- TrajectoryPlannerROS : 駆動命令
+  move_base <-- TrajectoryPlannerROS : 速度指令
 end
 
 TrajectoryPlannerROS -> TrajectoryPlanner ++ : findBestPath()
@@ -24,10 +24,10 @@ TrajectoryPlanner -> TrajectoryPlanner ++ : generateTrajectory()
 TrajectoryPlanner --
 TrajectoryPlanner --
 
-TrajectoryPlannerROS <-- TrajectoryPlanner : 駆動命令
+TrajectoryPlannerROS <-- TrajectoryPlanner : 速度指令
 TrajectoryPlanner --
 
-move_base <-- TrajectoryPlannerROS : 駆動命令
+move_base <-- TrajectoryPlannerROS : 速度指令
 
 deactivate TrajectoryPlannerROS
 

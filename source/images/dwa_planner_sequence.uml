@@ -18,14 +18,14 @@ move_base -> DWAPlannerROS: computeVelocityCommands()
 activate DWAPlannerROS
 
 DWAPlannerROS -> DWAPlanner ++ : updatePlanAndLocalCosts()
-DWAPlanner -> TrajectoryCostFunction ++ : 大域経路, フットプリントをセットする
+DWAPlanner -> TrajectoryCostFunction ++ : グローバルパス, フットプリントをセットする
 DWAPlanner <-- TrajectoryCostFunction --
 DWAPlannerROS <-- DWAPlanner --
 
 opt ゴール地点到達済みの場合
   DWAPlannerROS -> LatchedStopRotateController ++ : 最終微調整/停止
-  DWAPlannerROS <-- LatchedStopRotateController -- : 駆動命令
-  move_base <-- DWAPlannerROS : 駆動命令
+  DWAPlannerROS <-- LatchedStopRotateController -- : 速度指令
+  move_base <-- DWAPlannerROS : 速度指令
 end
 
 DWAPlannerROS -> DWAPlanner ++ : findBestPath()
@@ -56,10 +56,10 @@ DWAPlanner <-- ScoredSamplingPlanner -- : 最良の軌道
 
 
 
-DWAPlannerROS <-- DWAPlanner : 駆動命令
+DWAPlannerROS <-- DWAPlanner : 速度指令
 DWAPlanner --
 
-move_base <-- DWAPlannerROS : 駆動命令
+move_base <-- DWAPlannerROS : 速度指令
 
 deactivate DWAPlannerROS
 
