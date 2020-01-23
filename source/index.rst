@@ -1,11 +1,3 @@
-
-コンテンツ
----------------------
-
-.. toctree::
-   :maxdepth: 3
-
-   introduction
-   navigation_overview
-   packages
+.. image:: images/cover.png
+   :align: center
 
