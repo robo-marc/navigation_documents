@@ -199,16 +199,16 @@ sensor_msgs/ChannelFloat32
 
 .. parsed-literal:: 
 
-    string name
-    float32[] values
+    string name        # チャンネルデータ名称
+    float32[] values   # チャンネルデータ値
 
-sensor_msgs/LaserScan
+sensor_msgs/PointCloud
 
 .. parsed-literal:: 
 
     :ref:`std_msgs/Header<msg_std_msgs_Header3>` header
-    :ref:`geometry_msgs/Point32<msg_geometry_msgs_Point32>` [] points
-    :ref:`sensor_msgs/ChannelFloat32<msg_sensor_msgs_ChannelFloat32>` [] channels
+    :ref:`geometry_msgs/Point32<msg_geometry_msgs_Point32>` [] points         # 点群データ
+    :ref:`sensor_msgs/ChannelFloat32<msg_sensor_msgs_ChannelFloat32>` [] channels  # チャンネルデータ（デバイス依存）
 
 |
 
@@ -372,4 +372,125 @@ geometry_msgs/Twist
 
     :ref:`geometry_msgs/Vector3<msg_geometry_msgs_Vector3>` linear   # 並進速度
     :ref:`geometry_msgs/Vector3<msg_geometry_msgs_Vector3>` angular  # 回転速度
+
+|
+
+その他のメッセージ型
+************************************************************
+
+共分散・タイムスタンプ付き位置・姿勢
+------------------------------------------------------------
+オドメトリ情報と同じ共分散付き位置・姿勢データにヘッダが付与されたメッセージ型です。ロボット自己位置の初期設定等に使用されます。
+
+.. _msg_std_msgs_Header_com:
+
+std_msgs/Header
+
+.. parsed-literal:: 
+
+    uint32 seq       # シーケンス番号
+    time stamp       # タイムスタンプ
+    string frame_id  # フレームID
+
+.. _msg_geometry_msgs_PoseWithCovarianceStamped:
+
+geometry_msgs/PoseWithCovarianceStamped
+
+.. parsed-literal:: 
+
+    :ref:`std_msgs/Header<msg_std_msgs_Header_com>` header
+    :ref:`geometry_msgs/PoseWithCovariance<msg_geometry_msgs_PoseWithCovariance>` pose   # 位置・姿勢
+
+|
+
+
+位置・姿勢配列
+------------------------------------------------------------
+位置・姿勢データの配列です。パーティクル分散の視覚情報等に使用されます。
+
+.. _msg_geometry_msgs_PoseArray:
+
+geometry_msgs/PoseArray
+
+.. parsed-literal:: 
+
+    :ref:`std_msgs/Header<msg_std_msgs_Header_com>` header
+    :ref:`geometry_msgs/Pose<msg_geometry_msgs_Pose>` [] poses   # 位置・姿勢配列
+
+|
+
+経路情報
+------------------------------------------------------------
+経路情報です。位置・姿勢データの配列で表現されます。経路の視覚情報等に使用されます。
+
+.. _msg_geometry_msgs_PoseStamped:
+
+geometry_msgs/PoseStamped
+
+.. parsed-literal:: 
+
+    :ref:`std_msgs/Header<msg_std_msgs_Header_com>` header
+    :ref:`geometry_msgs/Pose<msg_geometry_msgs_Pose>` pose   # 位置・姿勢
+
+
+.. _msg_nav_msgs_Path:
+
+nav_msgs/Path
+
+.. parsed-literal:: 
+
+    :ref:`std_msgs/Header<msg_std_msgs_Header_com>` header
+    :ref:`geometry_msgs/PoseStamped<msg_geometry_msgs_PoseStamped>` [] poses   # 位置・姿勢配列
+
+|
+
+↓TODO
+------------------------------------------------------------
+
+|
+
+ポイントクラウド（BLOB版）
+------------------------------------------------------------
+ポイントクラウドの点群情報をBLOBデータで表現するデータ型です。
+
+.. _msg_sensor_msgs_PointCloud2:
+
+sensor_msgs/PointCloud2
+
+std_msgs/Header header
+uint32 height
+uint32 width
+sensor_msgs/PointField[] fields
+bool is_bigendian
+uint32 point_step
+uint32 row_step
+uint8[] data
+bool is_dense
+
+|
+
+~<name>/footprint (geometry_msgs/Polygon)
+~<name>/costmap_updates (map_msgs/OccupancyGridUpdate)
+~<name>/voxel_grid (costmap_2d/VoxelGrid)
+
+map_metadata (nav_msgs/MapMetaData)
+
+
+
+move_base/goal (move_base_msgs/MoveBaseActionGoal)
+move_base/cancel (actionlib_msgs/GoalID)
+move_base/feedback (move_base_msgs/MoveBaseActionFeedback)
+move_base/status (actionlib_msgs/GoalStatusArray)
+move_base/result (move_base_msgs/MoveBaseActionResult)
+move_base_simple/goal (geometry_msgs/PoseStamped)
+~make_plan (nav_msgs/GetPlan)
+
+|
+
+サービス型
+************************************************************
+
+std_srvs/Empty
+set_map (nav_msgs/SetMap)
+static_map (nav_msgs/GetMap)
 
