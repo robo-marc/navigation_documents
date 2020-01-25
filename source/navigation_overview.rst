@@ -69,9 +69,9 @@ geometry_msgs/Vector3
 
 .. parsed-literal:: 
 
-    float64 x
-    float64 y
-    float64 z
+    float64 x   # x軸差異[m]または速度[m/s][rad/s]
+    float64 y   # y軸差異[m]または速度[m/s][rad/s]
+    float64 z   # z軸差異[m]または速度[m/s][rad/s]
 
 .. _msg_geometry_msgs_Quaternion:
 
@@ -79,10 +79,10 @@ geometry_msgs/Quaternion
 
 .. parsed-literal:: 
 
-    float64 x
-    float64 y
-    float64 z
-    float64 w
+    float64 x   # クォータニオンx
+    float64 y   # クォータニオンy
+    float64 z   # クォータニオンz
+    float64 w   # クォータニオンw
 
 .. _msg_geometry_msgs_Transform:
 
@@ -101,7 +101,7 @@ geometry_msgs/TransformStamped
 
     :ref:`std_msgs/Header<msg_std_msgs_Header>` header
     string child_frame_id              # 子フレームID
-    :ref:`geometry_msgs/Transform<msg_geometry_msgs_Transform>` transform
+    :ref:`geometry_msgs/Transform<msg_geometry_msgs_Transform>` transform  # TF情報
 
 .. _msg_tf_tfMessage:
 
@@ -109,7 +109,7 @@ tf/tfMessage
 
 .. parsed-literal:: 
 
-    :ref:`geometry_msgs/TransformStamped<msg_geometry_msgs_TransformStamped>` [] transforms
+    :ref:`geometry_msgs/TransformStamped<msg_geometry_msgs_TransformStamped>` [] transforms  # TF情報リスト
 
 |
 
@@ -189,9 +189,9 @@ geometry_msgs/Point32
 
 .. parsed-literal:: 
 
-    float32 x
-    float32 y
-    float32 z
+    float32 x   # x座標[m]
+    float32 y   # y座標[m]
+    float32 z   # z座標[m]
 
 .. _msg_sensor_msgs_ChannelFloat32:
 
@@ -255,9 +255,9 @@ geometry_msgs/Point
 
 .. parsed-literal:: 
 
-    float64 x
-    float64 y
-    float64 z
+    float64 x  # x座標[m]
+    float64 y  # y座標[m]
+    float64 z  # z座標[m]
 
 .. _msg_geometry_msgs_Pose:
 
@@ -342,6 +342,8 @@ nav_msgs/MapMetaData
     uint32 width                # 地図横サイズ[セル数]
     uint32 height               # 地図縦サイズ[セル数]
     :ref:`geometry_msgs/Pose<msg_geometry_msgs_Pose>` origin   # オリジン座標
+
+.. _msg_nav_msgs_OccupancyGrid:
 
 nav_msgs/OccupancyGrid
 
@@ -444,53 +446,179 @@ nav_msgs/Path
 
 |
 
-↓TODO
-------------------------------------------------------------
 
-|
-
-ポイントクラウド（BLOB版）
+ポイントクラウド2
 ------------------------------------------------------------
-ポイントクラウドの点群情報をBLOBデータで表現するデータ型です。
+ポイントクラウドの点群情報を、BLOBデータで表現するデータ型です。
+
+1つのデータがどのような構成になっているかをfieldsで定義します。例えば、"x","y","z"座標が、FLOAT32(7)で1つずつ入っているといった具合です。（全部で12byte）さらに、反射強度など任意のフィールドを定義できます。
+このデータが、height * width分含まれる形で、TOFカメラの出力のようなイメージのデータ形式となります。（2D画像の各ピクセルが、3D座標情報を持っているようなイメージ。）
+
+.. _msg_sensor_msgs_PointField:
+
+sensor_msgs/PointField
+
+.. parsed-literal:: 
+
+    uint8 INT8    = 1
+    uint8 UINT8   = 2
+    uint8 INT16   = 3
+    uint8 UINT16  = 4
+    uint8 INT32   = 5
+    uint8 UINT32  = 6
+    uint8 FLOAT32 = 7
+    uint8 FLOAT64 = 8
+
+    string name      # データ内のフィールドの名前
+    uint32 offset    # このフィールドがデータ内の何バイト目から始まるか
+    uint8  datatype  # このフィールドのデータ型（上記のいずれか）
+    uint32 count     # このフィールドのデータ数
 
 .. _msg_sensor_msgs_PointCloud2:
 
 sensor_msgs/PointCloud2
 
-std_msgs/Header header
-uint32 height
-uint32 width
-sensor_msgs/PointField[] fields
-bool is_bigendian
-uint32 point_step
-uint32 row_step
-uint8[] data
-bool is_dense
+.. parsed-literal:: 
+
+    :ref:`std_msgs/Header<msg_std_msgs_Header_com>` header
+    uint32 height                     # データ配列の高さ
+    uint32 width                      # データ配列の幅
+    :ref:`sensor_msgs/PointField<msg_sensor_msgs_PointField>` [] fields  # フィールド定義
+    bool is_bigendian                 # フィールドのデータ型がビッグエンディアンかどうか
+    uint32 point_step                 # 1データのあたりのバイト数
+    uint32 row_step                   # 1行あたりのバイト数(point_step * width)
+    uint8[] data                      # データ(サイズはrow_step * height)
+    bool is_dense                     # データがすべて有効値かどうか
 
 |
 
-~<name>/footprint (geometry_msgs/Polygon)
-~<name>/costmap_updates (map_msgs/OccupancyGridUpdate)
-~<name>/voxel_grid (costmap_2d/VoxelGrid)
+多角形
+------------------------------------------------------------
+多角形の頂点座標配列です。ロボットのフットプリント表現などに使用されます。
 
-map_metadata (nav_msgs/MapMetaData)
+geometry_msgs/Polygon
 
+.. parsed-literal:: 
 
+    :ref:`geometry_msgs/Point32<msg_geometry_msgs_Point32>` [] points         # 頂点座標配列
 
-move_base/goal (move_base_msgs/MoveBaseActionGoal)
-move_base/cancel (actionlib_msgs/GoalID)
-move_base/feedback (move_base_msgs/MoveBaseActionFeedback)
-move_base/status (actionlib_msgs/GoalStatusArray)
-move_base/result (move_base_msgs/MoveBaseActionResult)
-move_base_simple/goal (geometry_msgs/PoseStamped)
-~make_plan (nav_msgs/GetPlan)
+|
+
+占有グリッド更新情報
+------------------------------------------------------------
+:ref:`nav_msgs/OccupancyGrid<msg_nav_msgs_OccupancyGrid>` のデータを部分更新するためのデータ型です。
+
+map_msgs/OccupancyGridUpdate
+
+.. parsed-literal:: 
+
+    :ref:`std_msgs/Header<msg_std_msgs_Header_com>` header
+    int32 x        # 始点x座標[m]
+    int32 y        # 始点y座標[m]
+    uint32 width   # 幅[m]
+    uint32 height  # 高さ[m]
+    int8[] data    # 更新データ
+
+|
+
+ボクセルグリッド情報
+------------------------------------------------------------
+:doc:`voxel_grid <voxel_grid>` のデータを視覚表示するためのデータ型です。
+
+3Dグリッドの高さを最大16段階とし、2Dで見た各列の占有／空きを、16ビットデータの各ビットの1/0で表現したものです。（「不明」は、全てのビットが1の列としています。）
+
+costmap_2d/VoxelGrid
+
+.. parsed-literal:: 
+
+    :ref:`std_msgs/Header<msg_std_msgs_Header_com>` header
+    uint32[] data                       # グリッド占有／空きデータ
+    :ref:`geometry_msgs/Point32<msg_geometry_msgs_Point32>` origin        # オリジン座標
+    :ref:`geometry_msgs/Vector3<msg_geometry_msgs_Vector3>` resolutions   # グリッド解像度
+    uint32 size_x                       # x軸データサイズ
+    uint32 size_y                       # y軸データサイズ
+    uint32 size_z                       # z軸データサイズ(最大16)
 
 |
 
 サービス型
 ************************************************************
 
+Empty型
+------------------------------------------------------------
+引数無し（コールのみ）のサービス型です。
+
 std_srvs/Empty
-set_map (nav_msgs/SetMap)
-static_map (nav_msgs/GetMap)
+
+.. parsed-literal:: 
+
+    ---
+
+|
+
+地図設定
+------------------------------------------------------------
+地図および初期位置を引き渡すためのサービス型です。
+
+nav_msgs/SetMap
+
+.. parsed-literal:: 
+
+    :ref:`nav_msgs/OccupancyGrid<msg_nav_msgs_OccupancyGrid>` map                            # 地図
+    :ref:`geometry_msgs/PoseWithCovarianceStamped<msg_geometry_msgs_PoseWithCovarianceStamped>` initial_pose  # 初期位置・姿勢
+    ---
+    bool success                                          # 処理結果
+
+|
+
+地図取得
+------------------------------------------------------------
+地図を取得するためのサービス型です。
+
+nav_msgs/GetMap
+
+.. parsed-literal:: 
+
+    ---
+    :ref:`nav_msgs/OccupancyGrid<msg_nav_msgs_OccupancyGrid>` map  # 地図
+
+|
+
+経路取得
+------------------------------------------------------------
+経路を取得するためのサービス型です。
+
+nav_msgs/GetPlan
+
+.. parsed-literal:: 
+
+    :ref:`geometry_msgs/PoseStamped<msg_geometry_msgs_PoseStamped>` start  # スタート位置・姿勢
+    :ref:`geometry_msgs/PoseStamped<msg_geometry_msgs_PoseStamped>` goal   # ゴール位置・姿勢
+    float32 tolerance                # ゴール許容誤差[m]
+    ---
+    :ref:`nav_msgs/Path<msg_nav_msgs_Path>` plan               # 経路
+
+|
+
+アクション型
+************************************************************
+
+MoveBaseアクション
+------------------------------------------------------------
+Navigationスタックへ、目標位置・姿勢を指定してロボットの移動を指示し、フィードバック（現在位置）および結果を受け取るためのアクションです。
+
+MoveBase.action
+
+.. parsed-literal:: 
+
+    # ゴール定義
+    :ref:`geometry_msgs/PoseStamped<msg_geometry_msgs_PoseStamped>` target_pose     # 目標位置・姿勢
+    ---
+    # 結果定義
+    ---
+    # フィードバック定義
+    :ref:`geometry_msgs/PoseStamped<msg_geometry_msgs_PoseStamped>` base_position   # 現在位置・姿勢
+
+|
+
 

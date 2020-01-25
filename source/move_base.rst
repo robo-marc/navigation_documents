@@ -231,10 +231,6 @@ move_base
    "~oscillation_distance", "スタック状態（有効な座標移動がない状態）ではないと見なされるためにロボットが移動しなければならない距離（メートル単位）。ここまで移動すると、タイマーのカウントがoscillation_timeoutまでリセットされます。 New in navigation 1.3.1", "double", "m", "0.5"
    "~planner_frequency", "グローバルプランニングループを実行する周期（Hz単位）。頻度が0.0に設定されている場合、グローバルプランナーは、新しい目標が受信されるか、ローカルプランナーがその経路がブロックされていると報告したときにのみ実行されます。New in navigation 1.6.0", "double", "Hz", "0.0"
    "~max_planning_retries", "リカバリ動作を実行する前に計画を再試行できる回数。-1.0の値は、無限に再試行します。", "int32_t", "－", "-1"
-   "~global_costmap/robot_base_frame", " :ref:`costmap2d参照<costmap2d_coordinate_frame_and_tf_parameters>` (ROSWikiに未記載のパラメータ)", "string", "－", "base_link"
-   "~global_costmap/global_frame", " :ref:`costmap2d参照<costmap2d_coordinate_frame_and_tf_parameters>` (ROSWikiに未記載のパラメータ)", "string","－","map"
-   "~local_costmap/inscribed_radius", "フットプリントの内接半径。(ROSWikiに未記載のパラメータ)", "double", "m", "0.325"
-   "~local_costmap/circumscribed_radius", "フットプリントの外接半径。 ~aggressive_reset/reset_distance( :ref:`clear_costmap_recovery参照<clear_cost_map_recovery_param>` )に、この設定値の4倍の値が設定される。(ROSWikiに未記載のパラメータ)","double", "m", "0.46"
    "~clearing_radius", "プランナーが使用するコストマップの更新時に、この半径の円に外接する矩形の領域をクリアします。(ROSWikiに未記載のパラメータ)", "double", "m", "~local_costmap/circumscribed_radiusで設定された値"
 
 |
