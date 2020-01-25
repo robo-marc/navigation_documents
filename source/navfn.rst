@@ -74,6 +74,7 @@ navfnは、グローバルコストマップおよびグローバルコストマ
 下の図で、赤いセルがポテンシャル値が大きい（高度が高い）セル、青に近づくほどポテンシャル値が小さく（高度が低く）なり、黒いセルが、ポテンシャル値ゼロ（ゴール地点）のセルになります。
 
 .. image:: images/OldNavFn.png
+   :width: 920
    :align: center
 
 出典：`http://wiki.ros.org/global_planner <http://wiki.ros.org/global_planner>`__
@@ -81,7 +82,7 @@ navfnは、グローバルコストマップおよびグローバルコストマ
 |
 
 .. |math_quadratic| image:: images/quadratic.png
-   :scale: 80
+   :width: 240
 
 ポテンシャルマップの生成は、以下のように行われます。
 
@@ -120,7 +121,7 @@ navfnは、グローバルコストマップおよびグローバルコストマ
 .. _nav_fn_algorithm_path:
 
 .. |CalcPath| image:: images/CalcPath.png
-   :scale: 50
+   :width: 335
 
 2.2. ポテンシャルマップ上での経路生成
 ************************************************************

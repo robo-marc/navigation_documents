@@ -13,7 +13,7 @@ Navigation Stackは、オドメトリ情報（ホイールエンコーダ等の�
 
 
 .. image:: /images/navigation_overview.png
-   :scale: 80
+   :width: 720
    :align: center
 
 
@@ -31,6 +31,7 @@ Transform Tree(TF)とは、ロボットが存在する空間およびロボッ�
 |
 
 .. image:: /images/simple_robot.png
+   :width: 794
    :align: center
 
 出典: http://wiki.ros.org/navigation/Tutorials/RobotSetup/TF
@@ -124,6 +125,7 @@ tf/tfMessage
 * intensitiesは、通常は反射強度を入れますが、Navigationスタックでは使われないので、何も入れなくても問題はありません。
 
 .. image:: /images/laser_scan.png
+   :width: 529
    :align: center
 
 メッセージ定義
@@ -165,7 +167,7 @@ sensor_msgs/LaserScan
 * channelsは、intensityやrgbなど点の付帯情報を入れるために定義されていますが、 Navigationスタックでは使われないので、何も入れなくても問題ありません。
 
 .. image:: /images/keypoints_small.png
-   :scale: 200
+   :width: 636
    :align: center
 
 出典: http://pointclouds.org/documentation/
@@ -234,6 +236,7 @@ sensor_msgs/PointCloud
 .. _odom_picture:
 
 .. image:: /images/base_local_planner_coord.png
+   :width: 442
    :align: center
 
 メッセージ定義
@@ -316,6 +319,7 @@ nav_msgs/Odometry
 地図情報は、解像度（セルの大きさ）、地図の大きさ（縦横のセル数）、オリジン（/map座標軸におけるセル(0,0)の位置）、そして各セルの占有率を保持した配列データから成ります。
 
 .. image:: /images/occupancy_grid_map.png
+   :width: 879
    :align: center
 
 メッセージ定義
