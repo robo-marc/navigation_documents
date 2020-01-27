@@ -70,9 +70,9 @@ geometry_msgs/Vector3
 
 .. parsed-literal:: 
 
-    float64 x   # x軸差異[m]または速度[m/s][rad/s]
-    float64 y   # y軸差異[m]または速度[m/s][rad/s]
-    float64 z   # z軸差異[m]または速度[m/s][rad/s]
+    float64 x   # x軸要素[m, m/s, rad/sなど]
+    float64 y   # y軸要素[m, m/s, rad/sなど]
+    float64 z   # z軸要素[m, m/s, rad/sなど]
 
 .. _msg_geometry_msgs_Quaternion:
 
@@ -364,7 +364,7 @@ nav_msgs/OccupancyGrid
 
 安全な経路を検索した結果として、Navigationスタックから駆動命令が出力されます。
 
-速度は、並進速度(x,y,z)および回転速度(x,y,z)で表現され、一般的な2輪差動型のロボットの場合は、x軸並進速度とz軸回転速度のみ指定されます。オムニホイールなど全方位移動型のロボットの場合は、y軸直線速度が追加で指定されます。
+速度は、並進速度(x,y,z)および回転速度(x,y,z)で表現され、一般的な2輪差動型のロボットの場合は、x軸並進速度とz軸回転速度のみ指定されます。オムニホイールなど全方位移動型のロボットの場合は、y軸並進速度が追加で指定されます。
 
 座標軸についての考え方は、:ref:`オドメトリ情報の現在速度<odom_picture>` と同じです。
 
