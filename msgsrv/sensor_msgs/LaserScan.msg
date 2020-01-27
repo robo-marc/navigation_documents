@@ -1,27 +1,27 @@
 #////////////////////////////////////////////////////////////////////////////////
 #/// @struct     sensor_msgs/LaserScan
-#/// @brief      ���[�U�[�X�L�����f�[�^
+#/// @brief      レーザースキャンデータ
 #///
-#/// ���[�U�[�X�L�����f�[�^�́A�X�L�����͈͓��̊e�X�L�����P�ʂɂ�����A��Q��
-#/// �܂ł̋�����ʒm���܂��B
-#/// �Ⴆ�΁A����͈͂�180�x�ő���P�ʂ�5�x�̃��[�U�[�Z���T�ł���΁A36�̋�
-#/// ���f�[�^(ranges)��ʒm���܂��B
-#/// ����͈͓��ɉ����Ȃ������ɂ��ẮA�����l(range_max�l�܂��͖�����)�����
-#/// �Ă����܂��B
-#/// ����p�x�́A�O�����ʂ�0[���W�A��]�ŁA�E�����}�C�i�X�l�A�������v���X�l�Ƃ�
-#/// ��܂��B
-#/// intensities�́A�ʏ�͔��ˋ��x�����܂����ANavigation�X�^�b�N�ł͎g����
-#/// ���̂ŁA��������Ȃ��Ă����͂���܂���B
+#/// レーザースキャンデータは、スキャン範囲内の各スキャン単位における、障害物
+#/// までの距離を通知します。
+#/// 例えば、測定範囲が180度で測定単位が5度のレーザーセンサであれば、36個の距
+#/// 離データ(ranges)を通知します。
+#/// 測定範囲内に何もない部分については、無効値(range_max値または無限大)を入れ
+#/// ておきます。
+#/// 測定角度は、前方正面が0[ラジアン]で、右側がマイナス値、左側がプラス値とな
+#/// ります。
+#/// intensitiesは、通常は反射強度を入れますが、Navigationスタックでは使われな
+#/// いので、何も入れなくても問題はありません。
 #///
 #////////////////////////////////////////////////////////////////////////////////
 
-Header header                #//!< �w�b�_
-float32 angle_min            #//!< ����J�n�p�x[���W�A��]
-float32 angle_max            #//!< ����I���p�x[���W�A��]
-float32 angle_increment      #//!< ����P��[���W�A��]
-float32 time_increment       #//!< ����P�ʊԂ̑��莞��[�b]
-float32 scan_time            #//!< �S����P�ʂ̑��莞��[�b]
-float32 range_min            #//!< ����ŏ�����[m]
-float32 range_max            #//!< ����ő勗��[m]
-float32[] ranges             #//!< ����f�[�^[m]
-float32[] intensities        #//!< ���ˋ��x�f�[�^[�P�ʂ̓f�o�C�X�ˑ�]
+Header header                #//!< ヘッダ
+float32 angle_min            #//!< 測定開始角度[ラジアン]
+float32 angle_max            #//!< 測定終了角度[ラジアン]
+float32 angle_increment      #//!< 測定単位[ラジアン]
+float32 time_increment       #//!< 測定単位間の測定時間[秒]
+float32 scan_time            #//!< 全測定単位の測定時間[秒]
+float32 range_min            #//!< 測定最小距離[m]
+float32 range_max            #//!< 測定最大距離[m]
+float32[] ranges             #//!< 測定データ[m]
+float32[] intensities        #//!< 反射強度データ[単位はデバイス依存]

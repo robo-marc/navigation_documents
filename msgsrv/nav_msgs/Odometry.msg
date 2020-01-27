@@ -1,14 +1,14 @@
 #////////////////////////////////////////////////////////////////////////////////
 #/// @struct     nav_msgs/Odometry
-#/// @brief      �I�h���g�����
+#/// @brief      オドメトリ情報
 #///
-#/// �I�h���g�����́A�W���I��Navigation�X�^�b�N�̍\���ł́Aodom���W���ɂ�����
-#/// ���{�b�g(base_link���W��)�̐��莩�Ȉʒu����ь��ݑ��x�i���i���x����щ�]
-#/// ���x�j��ʒm���܂��B
+#/// オドメトリ情報は、標準的なNavigationスタックの構成では、odom座標軸における
+#/// ロボット(base_link座標軸)の推定自己位置および現在速度（並進速度および回転
+#/// 速度）を通知します。
 #///
 #////////////////////////////////////////////////////////////////////////////////
 
-Header header                                #//!< �w�b�_
-string child_frame_id                        #//!< �q�t���[��ID
-geometry_msgs/PoseWithCovariance pose        #//!< ���莩�Ȉʒu
-geometry_msgs/TwistWithCovariance twist      #//!< ���ݑ��x
+Header header                                #//!< ヘッダ
+string child_frame_id                        #//!< 子フレームID
+geometry_msgs/PoseWithCovariance pose        #//!< 推定自己位置
+geometry_msgs/TwistWithCovariance twist      #//!< 現在速度

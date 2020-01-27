@@ -1,13 +1,13 @@
 #////////////////////////////////////////////////////////////////////////////////
 #/// @struct     nav_msgs/SetMap
-#/// @brief      ’n}İ’è
+#/// @brief      åœ°å›³è¨­å®š
 #///
-#/// ’n}‚¨‚æ‚Ñ‰ŠúˆÊ’u‚ğˆø‚«“n‚·‚½‚ß‚ÌƒT[ƒrƒXŒ^‚Å‚·B
+#/// åœ°å›³ãŠã‚ˆã³åˆæœŸä½ç½®ã‚’å¼•ãæ¸¡ã™ãŸã‚ã®ã‚µãƒ¼ãƒ“ã‚¹å‹ã§ã™ã€‚
 #///
 #////////////////////////////////////////////////////////////////////////////////
 
-nav_msgs/OccupancyGrid map                                #//!< ’n}
-geometry_msgs/PoseWithCovarianceStamped initial_pose      #//!< ‰ŠúˆÊ’uEp¨
+nav_msgs/OccupancyGrid map                                #//!< åœ°å›³
+geometry_msgs/PoseWithCovarianceStamped initial_pose      #//!< åˆæœŸä½ç½®ãƒ»å§¿å‹¢
 ---
-bool success                                              #//!< ˆ—Œ‹‰Ê
+bool success                                              #//!< å‡¦ç†çµæœ
 

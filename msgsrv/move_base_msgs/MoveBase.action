@@ -1,13 +1,13 @@
 #////////////////////////////////////////////////////////////////////////////////
 #/// @struct     move_base_msgs/MoveBase
-#/// @brief      MoveBase�A�N�V����
+#/// @brief      MoveBaseアクション
 #///
-#/// Navigation�X�^�b�N�ցA�ڕW�ʒu�E�p�����w�肵�ă��{�b�g�̈ړ����w�����A
-#/// �t�B�[�h�o�b�N�i���݈ʒu�j����ь��ʂ��󂯎�邽�߂̃A�N�V�����ł��B
+#/// Navigationスタックへ、目標位置・姿勢を指定してロボットの移動を指示し、
+#/// フィードバック（現在位置）および結果を受け取るためのアクションです。
 #///
 #////////////////////////////////////////////////////////////////////////////////
 
-geometry_msgs/PoseStamped target_pose        #//!< �ڕW�ʒu�E�p��
+geometry_msgs/PoseStamped target_pose        #//!< 目標位置・姿勢
 ---
 ---
-geometry_msgs/PoseStamped base_position      #//!< ���݈ʒu�E�p��
+geometry_msgs/PoseStamped base_position      #//!< 現在位置・姿勢

@@ -1,24 +1,24 @@
 #////////////////////////////////////////////////////////////////////////////////
 #/// @struct     sensor_msgs/PointCloud2
-#/// @brief      �|�C���g�N���E�h2
+#/// @brief      ポイントクラウド2
 #///
-#/// �|�C���g�N���E�h�̓_�Q�����ABLOB�f�[�^�ŕ\������f�[�^�^�ł��B
+#/// ポイントクラウドの点群情報を、BLOBデータで表現するデータ型です。
 #///
-#/// 1�̃f�[�^���ǂ̂悤�ȍ\���ɂȂ��Ă��邩��fields�Œ�`���܂��B�Ⴆ�΁A
-#/// "x","y","z"���W���AFLOAT32(7)��1�������Ă���Ƃ�������ł��B
-#/// �i�S����12byte�j����ɁA���ˋ��x�ȂǔC�ӂ̃t�B�[���h���`�ł��܂��B
-#/// ���̃f�[�^���Aheight * width���܂܂��`�ŁATOF�J�����̏o�͂̂悤�ȃC���[�W��
-#/// �f�[�^�`���ƂȂ�܂��B�i2D�摜�̊e�s�N�Z�����A3D���W���������Ă���悤��
-#/// �C���[�W�B�j
+#/// 1つのデータがどのような構成になっているかをfieldsで定義します。例えば、
+#/// "x","y","z"座標が、FLOAT32(7)で1つずつ入っているといった具合です。
+#/// （全部で12byte）さらに、反射強度など任意のフィールドを定義できます。
+#/// このデータが、height * width分含まれる形で、TOFカメラの出力のようなイメージの
+#/// データ形式となります。（2D画像の各ピクセルが、3D座標情報を持っているような
+#/// イメージ。）
 #///
 #////////////////////////////////////////////////////////////////////////////////
 
-Header header             #//!< �w�b�_
-uint32 height             #//!< �f�[�^�z��̍���
-uint32 width              #//!< �f�[�^�z��̕�
-PointField[] fields       #//!< �t�B�[���h��`
-bool    is_bigendian      #//!< �t�B�[���h�̃f�[�^�^���r�b�O�G���f�B�A�����ǂ���
-uint32  point_step        #//!< 1�f�[�^�̂�����̃o�C�g��
-uint32  row_step          #//!< 1�s������̃o�C�g��(point_step * width)
-uint8[] data              #//!< �f�[�^(�T�C�Y��row_step * height)
-bool is_dense             #//!< �f�[�^�����ׂėL���l���ǂ���
+Header header             #//!< ヘッダ
+uint32 height             #//!< データ配列の高さ
+uint32 width              #//!< データ配列の幅
+PointField[] fields       #//!< フィールド定義
+bool    is_bigendian      #//!< フィールドのデータ型がビッグエンディアンかどうか
+uint32  point_step        #//!< 1データのあたりのバイト数
+uint32  row_step          #//!< 1行あたりのバイト数(point_step * width)
+uint8[] data              #//!< データ(サイズはrow_step * height)
+bool is_dense             #//!< データがすべて有効値かどうか

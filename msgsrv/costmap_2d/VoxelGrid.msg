@@ -1,19 +1,19 @@
 #////////////////////////////////////////////////////////////////////////////////
 #/// @struct     costmap_2d/VoxelGrid
-#/// @brief      �{�N�Z���O���b�h
+#/// @brief      ボクセルグリッド
 #///
-#/// voxel_grip�p�b�P�[�W�̃f�[�^�����o�\�����邽�߂̃f�[�^�^�ł��B
-#/// 3D�O���b�h�̍������ő�16�i�K�Ƃ��A2D�Ō����e��̐�L�^�󂫂��A16�r�b�g
-#/// �f�[�^�̊e�r�b�g��1/0�ŕ\���������̂ł��B�i�u�s���v�́A�S�Ẵr�b�g��1��
-#/// ��Ƃ��Ă��܂��B�j
+#/// voxel_gripパッケージのデータを視覚表示するためのデータ型です。
+#/// 3Dグリッドの高さを最大16段階とし、2Dで見た各列の占有／空きを、16ビット
+#/// データの各ビットの1/0で表現したものです。（「不明」は、全てのビットが1の
+#/// 列としています。）
 #///
 #////////////////////////////////////////////////////////////////////////////////
 
-Header header                          #//!< �w�b�_
-uint32[] data                          #//!< �O���b�h��L�^�󂫃f�[�^
-geometry_msgs/Point32 origin           #//!< �I���W�����W
-geometry_msgs/Vector3 resolutions      #//!< �O���b�h�𑜓x
-uint32 size_x                          #//!< x���f�[�^�T�C�Y
-uint32 size_y                          #//!< y���f�[�^�T�C�Y
-uint32 size_z                          #//!< z���f�[�^�T�C�Y(�ő�16)
+Header header                          #//!< ヘッダ
+uint32[] data                          #//!< グリッド占有／空きデータ
+geometry_msgs/Point32 origin           #//!< オリジン座標
+geometry_msgs/Vector3 resolutions      #//!< グリッド解像度
+uint32 size_x                          #//!< x軸データサイズ
+uint32 size_y                          #//!< y軸データサイズ
+uint32 size_z                          #//!< z軸データサイズ(最大16)
 

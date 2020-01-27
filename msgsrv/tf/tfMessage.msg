@@ -1,10 +1,10 @@
 #////////////////////////////////////////////////////////////////////////////////
 #/// @struct     tf/tfMessage
-#/// @brief      TF���
+#/// @brief      TF情報
 #///
-#/// TF���i/tf�g�s�b�N�j�֑��o����郁�b�Z�[�W�^�ł��B
-#/// �ʏ�́A���̃��b�Z�[�W�𒼐ڕҏW���邱�Ƃ͂Ȃ��ATF API���g�p����TF���o�͂��܂��B
+#/// TF情報（/tfトピック）へ送出されるメッセージ型です。
+#/// 通常は、このメッセージを直接編集することはなく、TF APIを使用してTFを出力します。
 #///
 #////////////////////////////////////////////////////////////////////////////////
 
-geometry_msgs/TransformStamped[] transforms      #//!< TF��񃊃X�g
+geometry_msgs/TransformStamped[] transforms      #//!< TF情報リスト

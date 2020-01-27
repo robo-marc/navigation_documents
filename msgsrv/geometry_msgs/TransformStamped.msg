@@ -1,12 +1,12 @@
 #////////////////////////////////////////////////////////////////////////////////
 #/// @struct     geometry_msgs/TransformStamped
-#/// @brief      ���Έʒu�E�p���iTF���j
+#/// @brief      相対位置・姿勢（TF情報）
 #///
-#/// �����2�̍��W���i�t���[��ID�j�̊Ԃ̑��Έʒu�E�p�����ł��B
-#/// TF���Ɏg�p����܂��B
+#/// 特定の2つの座標軸（フレームID）の間の相対位置・姿勢情報です。
+#/// TF情報に使用されます。
 #///
 #////////////////////////////////////////////////////////////////////////////////
 
-Header header              #//!< �w�b�_�i�e�t���[��ID����у^�C���X�^���v���w��j
-string child_frame_id      #//!< �q�t���[��ID
-Transform transform        #//!< ���Έʒu�E�p��
+Header header              #//!< ヘッダ（親フレームIDおよびタイムスタンプを指定）
+string child_frame_id      #//!< 子フレームID
+Transform transform        #//!< 相対位置・姿勢

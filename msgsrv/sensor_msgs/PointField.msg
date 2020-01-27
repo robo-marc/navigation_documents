@@ -1,25 +1,25 @@
 #////////////////////////////////////////////////////////////////////////////////
 #/// @struct     sensor_msgs/PointField
-#/// @brief      �|�C���g�N���E�h2�p�t�B�[���h��`
+#/// @brief      ポイントクラウド2用フィールド定義
 #///
-#/// �|�C���g�N���E�h2�p�t�B�[���h��`�ł��B
+#/// ポイントクラウド2用フィールド定義です。
 #///
-#/// 1�̃f�[�^���ǂ̂悤�ȍ\���ɂȂ��Ă��邩���`���܂��B
-#/// �Ⴆ�΁A"x","y","z"���W���AFLOAT32(7)��1�������Ă���Ƃ�������ł��B
-#/// �i�S����12byte�j����ɁA���ˋ��x�ȂǔC�ӂ̃t�B�[���h���`�ł��܂��B
+#/// 1つのデータがどのような構成になっているかを定義します。
+#/// 例えば、"x","y","z"座標が、FLOAT32(7)で1つずつ入っているといった具合です。
+#/// （全部で12byte）さらに、反射強度など任意のフィールドを定義できます。
 #///
 #////////////////////////////////////////////////////////////////////////////////
 
-uint8 INT8    = 1    #//!< �f�[�^�^��`(INT8)
-uint8 UINT8   = 2    #//!< �f�[�^�^��`(UINT8)
-uint8 INT16   = 3    #//!< �f�[�^�^��`(INT16)
-uint8 UINT16  = 4    #//!< �f�[�^�^��`(UINT16)
-uint8 INT32   = 5    #//!< �f�[�^�^��`(INT32)
-uint8 UINT32  = 6    #//!< �f�[�^�^��`(UINT32)
-uint8 FLOAT32 = 7    #//!< �f�[�^�^��`(FLOAT32)
-uint8 FLOAT64 = 8    #//!< �f�[�^�^��`(FLOAT64)
+uint8 INT8    = 1    #//!< データ型定義(INT8)
+uint8 UINT8   = 2    #//!< データ型定義(UINT8)
+uint8 INT16   = 3    #//!< データ型定義(INT16)
+uint8 UINT16  = 4    #//!< データ型定義(UINT16)
+uint8 INT32   = 5    #//!< データ型定義(INT32)
+uint8 UINT32  = 6    #//!< データ型定義(UINT32)
+uint8 FLOAT32 = 7    #//!< データ型定義(FLOAT32)
+uint8 FLOAT64 = 8    #//!< データ型定義(FLOAT64)
 
-string name          #//!< �f�[�^���̃t�B�[���h�̖��O
-uint32 offset        #//!< ���̃t�B�[���h���f�[�^���̉��o�C�g�ڂ���n�܂邩
-uint8  datatype      #//!< ���̃t�B�[���h�̃f�[�^�^�i��̃f�[�^�^��`�̂����ꂩ�j
-uint32 count         #//!< ���̃t�B�[���h�̃f�[�^��
+string name          #//!< データ内のフィールドの名前
+uint32 offset        #//!< このフィールドがデータ内の何バイト目から始まるか
+uint8  datatype      #//!< このフィールドのデータ型（上のデータ型定義のいずれか）
+uint32 count         #//!< このフィールドのデータ数

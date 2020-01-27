@@ -1,14 +1,14 @@
 #////////////////////////////////////////////////////////////////////////////////
 #/// @struct     sensor_msgs/PointCloud
-#/// @brief      �|�C���g�N���E�h�f�[�^
+#/// @brief      ポイントクラウドデータ
 #///
-#/// �|�C���g�N���E�h�f�[�^�́A�_�Q�̊e�_�̍��W��ʒm���܂��B
-#/// points�Ɋe�_�̍��W��z��Ƃ��Ċi�[���܂��B
-#/// channels�́Aintensity��rgb�ȂǓ_�̕t�я������邽�߂ɒ�`����Ă��܂����A
-#/// Navigation�X�^�b�N�ł͎g���Ȃ��̂ŁA��������Ȃ��Ă���肠��܂���B
+#/// ポイントクラウドデータは、点群の各点の座標を通知します。
+#/// pointsに各点の座標を配列として格納します。
+#/// channelsは、intensityやrgbなど点の付帯情報を入れるために定義されていますが、
+#/// Navigationスタックでは使われないので、何も入れなくても問題ありません。
 #///
 #////////////////////////////////////////////////////////////////////////////////
 
-Header header                       #//!< �w�b�_
-geometry_msgs/Point32[] points      #//!< �_�Q�f�[�^
-ChannelFloat32[] channels           #//!< �`�����l���f�[�^�i�f�o�C�X�ˑ��j
+Header header                       #//!< ヘッダ
+geometry_msgs/Point32[] points      #//!< 点群データ
+ChannelFloat32[] channels           #//!< チャンネルデータ（デバイス依存）

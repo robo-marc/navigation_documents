@@ -1,13 +1,13 @@
 #////////////////////////////////////////////////////////////////////////////////
 #/// @struct     nav_msgs/GetPlan
-#/// @brief      Œo˜Hæ“¾
+#/// @brief      çµŒè·¯å–å¾—
 #///
-#/// Œo˜H‚ğæ“¾‚·‚é‚½‚ß‚ÌƒT[ƒrƒXŒ^‚Å‚·B
+#/// çµŒè·¯ã‚’å–å¾—ã™ã‚‹ãŸã‚ã®ã‚µãƒ¼ãƒ“ã‚¹å‹ã§ã™ã€‚
 #///
 #////////////////////////////////////////////////////////////////////////////////
 
-geometry_msgs/PoseStamped start      #//!< ƒXƒ^[ƒgˆÊ’uEp¨
-geometry_msgs/PoseStamped goal       #//!< ƒS[ƒ‹ˆÊ’uEp¨
-float32 tolerance                    #//!< ƒS[ƒ‹‹–—eŒë·[m]
+geometry_msgs/PoseStamped start      #//!< ã‚¹ã‚¿ãƒ¼ãƒˆä½ç½®ãƒ»å§¿å‹¢
+geometry_msgs/PoseStamped goal       #//!< ã‚´ãƒ¼ãƒ«ä½ç½®ãƒ»å§¿å‹¢
+float32 tolerance                    #//!< ã‚´ãƒ¼ãƒ«è¨±å®¹èª¤å·®[m]
 ---
-nav_msgs/Path plan                   #//!< Œo˜H
+nav_msgs/Path plan                   #//!< çµŒè·¯
