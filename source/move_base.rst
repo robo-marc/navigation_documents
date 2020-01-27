@@ -49,7 +49,6 @@ move_base
 ************************************************************
 
 .. image:: /images/navigation_overview_tf_small.png
-   :height: 319
    :width: 780
    :align: center
 
@@ -73,7 +72,6 @@ move_base
 |
 
 .. image:: /images/move_base_state.png
-   :height: 227
    :width: 554
    :align: center
 
@@ -99,7 +97,6 @@ move_base
 |
 
 .. image:: /images/move_base_recovery_behaviors.png
-   :height: 278
    :width: 711
    :align: center
 
@@ -254,7 +251,6 @@ move_base
 | 　クラス図を下に示す。
 
 .. image:: /images/move_base_class.png
-   :height: 368
    :width: 953
    :align: center
 

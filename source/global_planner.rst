@@ -106,6 +106,7 @@ use_dijkstra=True
 old_navfn_behavior=False
 
 .. image:: images/GlobalPlanner.png
+   :width: 920
    :align: center
 
 出典：`http://wiki.ros.org/global_planner <http://wiki.ros.org/global_planner>`__
@@ -123,6 +124,7 @@ use_grid_path=True
 グリッド経路は、現在位置の周囲のセル単位でポテンシャル値を評価し、その中でポテンシャル値が最小のものを経路として選択する動作を、目標位置が出現するまで繰り返します。セル単位での評価であるため、計算量は少なくなりますが、経路の軌跡の滑らかさに欠ける場合があります。
 
 .. image:: images/GridPath.png
+   :width: 920
    :align: center
 
 出典：`http://wiki.ros.org/global_planner <http://wiki.ros.org/global_planner>`__
@@ -143,6 +145,7 @@ use_quadratic=False
 
 
 .. image:: images/Nonquad.png
+   :width: 920
    :align: center
 
 出典：`http://wiki.ros.org/global_planner <http://wiki.ros.org/global_planner>`__
@@ -160,6 +163,7 @@ navfnの元のポテンシャル計算は2次方程式であることに注意�
 use_dijkstra=False
 
 .. image:: images/AStar.png
+   :width: 920
    :align: center
 
 
@@ -197,6 +201,7 @@ use_dijkstra=False
 
 
 .. image:: images/Dijkstra.png
+   :width: 920
    :align: center
 
 出典：`http://wiki.ros.org/global_planner <http://wiki.ros.org/global_planner>`__
@@ -221,6 +226,7 @@ use_dijkstra=False
 
 
 .. image:: images/AStar2.png
+   :width: 920
    :align: center
 
 出典：`http://wiki.ros.org/global_planner <http://wiki.ros.org/global_planner>`__
@@ -244,6 +250,7 @@ old_navfn_behavior=Trueが設定された際の動作の差異は以下の通り
 
 
 .. image:: images/OldNavFn.png
+   :width: 920
    :align: center
 
 出典：`http://wiki.ros.org/global_planner <http://wiki.ros.org/global_planner>`__
@@ -275,6 +282,7 @@ old_navfn_behavior=Trueが設定された際の動作の差異は以下の通り
 経路に沿った、進行方向を前向きは正のx軸方向、進行方向に向かって左向きは正のy軸方向とし、それぞれ後ろ向きは負のx軸方向、右向きは負のy軸方向とします。
 
 .. image:: images/xy_axis.png
+   :width: 242
    :align: center
 
 

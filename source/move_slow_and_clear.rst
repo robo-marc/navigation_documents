@@ -39,7 +39,6 @@ move_slow_and_clear
 #. グローバルコストマップとローカルコストマップのロボットの周辺のエリア（ロボットを中心とした1辺が :ref:`clearing_distance<move_slow_and_clear_ros_param>` * 2 の正方形 ）を空き（占有されていない）にします。
 
    .. image:: /images/move_slow_and_clear.png
-      :height: 194
       :width: 816
       :align: center
 

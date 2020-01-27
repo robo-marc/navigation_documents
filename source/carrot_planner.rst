@@ -25,6 +25,7 @@ carrot_planner
 carrot_planner :: CarrotPlannerは、 :doc:`nav_core <nav_core>` パッケージに含まれるnav_core :: BaseGlobalPlannerインターフェイスに準拠したシンプルなグローバルプランナーであり、:doc:`move_base <move_base>` ノードのグローバルプランナー `プラグイン <http://wiki.ros.org/pluginlib>`__ として使用できます。 Carrot Plannerは、現在位置(Robot)と目標位置(Original Goal)を受け取り、その間のベクトル上に障害物があるかどうかを判断します。障害物がある場合は、目標位置(Original Goal)からベクトルに沿って現在位置(Robot)側に後退して判断し、障害物がない地点(Feasible Goal)が見つかるまで繰り返します。この地点を次の目標位置としてローカルプランナーまたはコントローラーに渡します。 このようにして、Carrot Plannerは、ロボットがユーザー指定の目標地点(Original Goal)に可能な限り近づけることができます。
 
 .. image:: images/planner_overview.png
+   :width: 702
    :align: center
 
 出典：`http://wiki.ros.org/carrot_planner <http://wiki.ros.org/carrot_planner>`__

@@ -36,7 +36,6 @@ clear_costmap_recovery
 |
 
 .. image:: /images/clear_costmap_recovery_overview.png
-   :height: 194
    :width: 816
    :align: center
 

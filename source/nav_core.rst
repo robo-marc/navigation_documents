@@ -41,7 +41,6 @@ nav_core
 |
 
 .. image:: /images/nav_core_move_base_interfaces.png
-   :height: 578
    :width: 673
    :align: center
 

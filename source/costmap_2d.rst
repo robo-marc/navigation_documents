@@ -43,6 +43,7 @@ costmap_2d
 * ソース：git `https://github.com/ros-planning/navigation.git <https://github.com/ros-planning/navigation.git>`__ （ブランチ：melodic-devel）
 
 .. image:: images/costmap_rviz.png
+   :width: 818
    :align: center
 
 出典：`http://wiki.ros.org/costmap_2d <http://wiki.ros.org/costmap_2d>`__
@@ -54,6 +55,7 @@ costmap_2d
 costmap_2dパッケージは、ロボットが占有グリッドの形式でナビゲートする場所に関する情報を保持した設定可能な構造体を提供します。コストマップは、静的マップのセンサーデータと情報を使用して、costmap_2d :: Costmap2DROSオブジェクトを介して、空間の障害物に関する情報を保存および更新します。 costmap_2d :: Costmap2DROSオブジェクトは、純粋に2次元のインタフェースをユーザーに提供します。つまり、障害物の判定は"列"単位でのみ行うことができます。
 
 .. image:: images/costmap_voxel.png
+   :width: 554
    :align: center
 
 |
@@ -62,6 +64,7 @@ costmap_2dパッケージは、ロボットが占有グリッドの形式でナ�
 たとえば、XY平面で同じ位置にあるがZ位置が異なる"テーブル"と"靴"の場合、costmap_2d :: Costmap2DROSオブジェクトのコストマップの対応するセルのコスト値は同じになります(下図参照)。これは、平面空間での経路探索がしやすいように設計されています。
 
 .. image:: images/costmap_2d.png
+   :width: 446
    :align: center
 
 |
@@ -81,6 +84,7 @@ Hydroリリースの時点で、コストマップはレイヤー構造で、自
 コストマップは、ROSを介してセンサートピックを自動的にサブスクライブし、それに応じて更新されます。 各センサーは、マーク（障害物情報をコストマップに挿入）、クリア（障害物情報をコストマップから削除）、またはその両方に使用されます。 マーク操作は、セルのコストを変更するための配列への単なるインデックスです。 しかしながら、クリア操作は、レポートされる各観測について、センサーの原点から外側に向かってグリッドを通過するレイトレーシングで構成されます。 3次元構造を使用して障害物情報を保存する場合、各"列"からの障害物情報は、コストマップに配置されるときに2次元に投影されます。
 
 .. image:: images/marking_clearing.png
+   :width: 465
    :align: center
 
 |
@@ -113,6 +117,7 @@ Hydroリリースの時点で、コストマップはレイヤー構造で、自
 6. インフレーション
 ============================================================
 .. image:: images/costmapspec.png
+   :width: 904
    :align: center
 
 出典：`http://wiki.ros.org/costmap_2d <http://wiki.ros.org/costmap_2d>`__
@@ -321,6 +326,7 @@ costmap_2d :: Costmap2DROSクラスのC ++レベルAPIドキュメントにつ�
 8.2. レイヤー仕様
 ************************************************************
 .. image:: images/layer_specification.png
+   :width: 447
    :align: center
 
 |
