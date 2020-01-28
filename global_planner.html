@@ -1,0 +1,461 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3c.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <title>NavigationStack - global_planner</title>
+
+    <script src="_static/jquery-1.7.1.min.js"></script>
+    <script src="_static/bootstrap-modal.js"></script>
+    <script src="_static/bootstrap-collapse.js"></script>
+    <script src="_static/bootstrap-dropdown.js"></script>
+
+    <link rel="stylesheet" href="_static/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-responsive.css" type="text/css" />
+    <link rel="stylesheet" href="_static/template.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+
+</head>
+<body>
+    <div id="fb-root"></div>
+    
+    <div class="container-fluid">
+        <div class="hero-unit">
+            <div class="page-header">
+                <a href="index.html"><font color="#000000">Navigation Stack</font></a>
+                <br/>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span3">
+                <div class="well sidebar-nav">
+                    <ul class="nav nav-list">
+                        <h3>コンテンツ</h3>
+                        <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="navigation_overview.html">Navigation Stack概要</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="navigation_overview.html#id1">Navigation Stackとは</a></li>
+<li class="toctree-l2"><a class="reference internal" href="navigation_overview.html#id2">Navigation Stackの入出力</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#transform-tree">Transform Tree</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id4">測域センサ情報（レーザースキャン）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id6">測域センサ情報（ポイントクラウド）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id8">オドメトリ情報</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id10">地図</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id12">駆動（速度）命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id14">その他のメッセージ型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id22">サービス型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id26">アクション型</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="packages.html">各パッケージ仕様</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="packages.html#move-base">move_baseメイン</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="move_base.html">move_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nav_core.html">nav_core</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id2">自己位置推定関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="amcl.html">amcl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fake_localization.html">fake_localization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id3">地図配信</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="map_server.html">map_server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id4">コストマップ関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="costmap_2d.html">costmap_2d</a></li>
+<li class="toctree-l3"><a class="reference internal" href="voxel_grid.html">voxel_grid</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="packages.html#id5">グローバルプランナー関連</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="navfn.html">nav_fn</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">global_planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="carrot_planner.html">carrot_planner</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id6">ローカルプランナー関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="base_local_planner.html">base_local_planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dwa_local_planner.html">dwa_local_planner</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id7">リカバリー動作関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="clear_costmap_recovery.html">clear_costmap_recovery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rotate_recovery.html">rotate_recovery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="move_slow_and_clear.html">move_slow_and_clear</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="span8">
+<div class="section" id="global-planner">
+<h1>global_planner<a class="headerlink" href="#global-planner" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>目次</p>
+<div class="line-block">
+<div class="line">　1. <a class="reference internal" href="#globalplanner-overview"><span class="std std-ref">概要</span></a></div>
+<div class="line">　2. <a class="reference internal" href="#globalplanner-algorithm"><span class="std std-ref">アルゴリズム</span></a></div>
+<div class="line">　3. <a class="reference internal" href="#globalplanner-examples-of-different-parameterizations"><span class="std std-ref">パラメータの違いによる動作例</span></a></div>
+<div class="line">　　3.1. <a class="reference internal" href="#globalplanner-standard-behavior"><span class="std std-ref">標準動作</span></a></div>
+<div class="line">　　3.2. <a class="reference internal" href="#globalplanner-grid-path"><span class="std std-ref">グリッド経路</span></a></div>
+<div class="line">　　3.3. <a class="reference internal" href="#globalplanner-simple-potential-calculation"><span class="std std-ref">単純加算</span></a></div>
+<div class="line">　　3.4. <a class="reference internal" href="#globalplanner-a-star-path"><span class="std std-ref">A*経路</span></a></div>
+<div class="line">　　　3.4.1. <a class="reference internal" href="#globalplanner-dijkstra"><span class="std std-ref">ダイクストラ</span></a></div>
+<div class="line">　　　3.4.2. <a class="reference internal" href="#globalplanner-a-star"><span class="std std-ref">A*</span></a></div>
+<div class="line">　　3.5. <a class="reference internal" href="#globalplanner-old-navfn-behavior"><span class="std std-ref">古いNavfnの動作</span></a></div>
+<div class="line">　4. <a class="reference internal" href="#globalplanner-orientation-filter"><span class="std std-ref">オリエンテーションフィルター</span></a></div>
+<div class="line">　5. <a class="reference internal" href="#globalplanner-ros-api"><span class="std std-ref">ROS API</span></a></div>
+<div class="line">　　5.1. <a class="reference internal" href="#globalplanner-published-topics"><span class="std std-ref">パブリッシュトピック</span></a></div>
+<div class="line">　　5.2. <a class="reference internal" href="#globalplanner-parameters"><span class="std std-ref">パラメータ</span></a></div>
+<div class="line"><br /></div>
+</div>
+<div class="section" id="globalplanner-overview">
+<span id="id1"></span><h2>1. 概要<a class="headerlink" href="#globalplanner-overview" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>このパッケージは、ナビゲーション用の高速で補間されたグローバルプランナーの実装を提供します。nav_core :: BaseGlobalPlannerインタフェースに付随するクラスは、 <a class="reference internal" href="nav_core.html"><span class="doc">nav_core</span></a> パッケージに準拠しています。 これは、 <a class="reference external" href="http://cs.stanford.edu/group/manips/publications/pdfs/Brock_1999_ICRA.pdf">NF1</a> に基づいた <a class="reference internal" href="navfn.html"><span class="doc">navfn</span></a> パッケージの、より柔軟な代替パッケージとして構築されました。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul class="simple">
+<li>管理状態: 管理済み</li>
+<li>管理者: David V. Lu!! &lt;davidvlu AT gmail DOT com&gt;, Michael Ferguson &lt;mfergs7 AT gmail DOT com&gt;, Aaron Hoy &lt;ahoy AT fetchrobotics DOT com&gt;</li>
+<li>著者: David Lu!!</li>
+<li>ライセンス: BSD</li>
+<li>ソース: git <a class="reference external" href="https://github.com/ros-planning/navigation.git">https://github.com/ros-planning/navigation.git</a>  (branch: melodic-devel)</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="globalplanner-algorithm">
+<span id="id2"></span><h2>2. アルゴリズム<a class="headerlink" href="#globalplanner-algorithm" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>global_plannerは <a class="reference internal" href="navfn.html"><span class="doc">navfn</span></a> を元に構成されているため、基本的な処理の流れは同じです。</p>
+<p>global_plannerは、グローバルコストマップおよびグローバルコストマップ上の開始位置、目標位置を入力値として、経路を出力します。経路を出力するまでの過程は、以下のようになっています。</p>
+<ol class="arabic">
+<li><p class="first">ポテンシャル計算を行うセルの探索を行います。探索方式は、 <a class="reference internal" href="#globalplanner-parameters"><span class="std std-ref">use_dijkstraパラメータ</span></a> で、 <a class="reference internal" href="#globalplanner-dijkstra"><span class="std std-ref">ダイクストラ</span></a> か <a class="reference internal" href="#globalplanner-a-star"><span class="std std-ref">A*</span></a> のどちらかを選択できます。</p>
+</li>
+<li><p class="first">探索されたセルに対して、ポテンシャル計算を行います。ポテンシャル計算法は、 <a class="reference internal" href="#globalplanner-parameters"><span class="std std-ref">use_quadraticパラメータ</span></a> で、 <a class="reference internal" href="navfn.html#nav-fn-algorithm-potential-map"><span class="std std-ref">2次方程式</span></a> か <a class="reference internal" href="#globalplanner-simple-potential-calculation"><span class="std std-ref">単純加算</span></a> のどちらかを選択できます。</p>
+</li>
+<li><p class="first">ポテンシャル計算時に、 <a class="reference internal" href="#globalplanner-parameters"><span class="std std-ref">ニュートラルコスト値</span></a> で底上げし、ポテンシャルマップを作成します。ニュートラルコスト値の扱いは、ダイクストラとA*で異なります。それぞれの計算方法は下記の通りです。</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">ダイクストラ</p>
+<blockquote>
+<div><p>下記の条件のいずれかの時に、コスト値の底上げを行う。</p>
+<ul class="simple">
+<li>コスト値が  <a class="reference internal" href="#globalplanner-parameters"><span class="std std-ref">致命的コスト値</span></a>  - 1 より小さい</li>
+<li><a class="reference internal" href="#globalplanner-parameters"><span class="std std-ref">allow_unknownパラメータ</span></a> がtrue、且つ、コスト値が255</li>
+</ul>
+<p>底上げされたコスト値 = コスト値 × <a class="reference internal" href="#globalplanner-parameters"><span class="std std-ref">cost_factorパラメータ</span></a> + <a class="reference internal" href="#globalplanner-parameters"><span class="std std-ref">ニュートラルコスト値</span></a></p>
+<p>底上げされたコスト値が、 <a class="reference internal" href="#globalplanner-parameters"><span class="std std-ref">致命的コスト値</span></a> 以上となった場合は、 <a class="reference internal" href="#globalplanner-parameters"><span class="std std-ref">致命的コスト値</span></a>  - 1 を底上げされたコスト値とします。</p>
+</div></blockquote>
+</li>
+<li><p class="first">A*</p>
+<blockquote>
+<div><p>底上げされたコスト値 = コスト値 + <a class="reference internal" href="#globalplanner-parameters"><span class="std std-ref">ニュートラルコスト値</span></a></p>
+</div></blockquote>
+</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">目標位置が到達可能である場合は、ポテンシャルマップ上の開始位置から目標位置まで、経路を生成します。経路生成は、use_grid_pathパラメータで、 <a class="reference internal" href="#globalplanner-grid-path"><span class="std std-ref">グリッド経路</span></a> か <a class="reference internal" href="navfn.html#nav-fn-algorithm-path"><span class="std std-ref">傾斜経路</span></a> を選択できます。</p>
+</li>
+<li><p class="first">ポテンシャルマップから生成された経路の最後に、入力値をもとに目標位置を補正します。</p>
+</li>
+<li><p class="first">後処理として <a class="reference internal" href="#globalplanner-parameters"><span class="std std-ref">orientation_modeパラメータ</span></a> で、 <a class="reference internal" href="#globalplanner-orientation-filter"><span class="std std-ref">オリエンテーション</span></a> を追加することができます。</p>
+</li>
+</ol>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="globalplanner-examples-of-different-parameterizations">
+<span id="id3"></span><h2>3. パラメータの違いによる動作例<a class="headerlink" href="#globalplanner-examples-of-different-parameterizations" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>パラメータの設定値の違いによる、ポテンシャル計算及び経路の違いを以下に示します。
+後出の図は、ポテンシャルマップであり、緑点が目標位置、赤点が開始位置で、それを結ぶ緑線は探索結果の経路です。
+青色セルから赤色セルへのグラデーションは、経路探索のためにポテンシャル計算を行ったセルで、青色から赤色になるほどポテンシャル値が高くなります。灰色セルは、障害物又は経路探索の対象とならなかったセルです。経路は、ポテンシャル値の高いところ(開始位置)から低いところ(目標位置)に流れるようなイメージで、ポテンシャルマップ上に生成されます。</p>
+<div class="section" id="globalplanner-standard-behavior">
+<span id="id4"></span><h3>3.1. 標準動作<a class="headerlink" href="#globalplanner-standard-behavior" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>すべてのパラメータがデフォルトです。</p>
+<p>use_grid_path=False</p>
+<p>use_quadratic=True</p>
+<p>use_dijkstra=True</p>
+<p>old_navfn_behavior=False</p>
+<a class="reference internal image-reference" href="_images/GlobalPlanner.png"><img alt="_images/GlobalPlanner.png" class="align-center" src="_images/GlobalPlanner.png" style="width: 920px;" /></a>
+<p>出典：<a class="reference external" href="http://wiki.ros.org/global_planner">http://wiki.ros.org/global_planner</a></p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="globalplanner-grid-path">
+<span id="id5"></span><h3>3.2. グリッド経路<a class="headerlink" href="#globalplanner-grid-path" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>use_grid_path=True</p>
+<p>グリッド経路は、現在位置の周囲のセル単位でポテンシャル値を評価し、その中でポテンシャル値が最小のものを経路として選択する動作を、目標位置が出現するまで繰り返します。セル単位での評価であるため、計算量は少なくなりますが、経路の軌跡の滑らかさに欠ける場合があります。</p>
+<a class="reference internal image-reference" href="_images/GridPath.png"><img alt="_images/GridPath.png" class="align-center" src="_images/GridPath.png" style="width: 920px;" /></a>
+<p>出典：<a class="reference external" href="http://wiki.ros.org/global_planner">http://wiki.ros.org/global_planner</a></p>
+<p>経路はグリッド境界（セルの中心）をたどります。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="globalplanner-simple-potential-calculation">
+<span id="id6"></span><h3>3.3. 単純加算<a class="headerlink" href="#globalplanner-simple-potential-calculation" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>use_quadratic=False</p>
+<p>単純加算は、上下左右のセルのうちポテンシャル値が低いものを選択し、コスト値を加算します。2次方程式より計算量は少なくなりますが、斜め方向の評価が行われません。</p>
+<a class="reference internal image-reference" href="_images/Nonquad.png"><img alt="_images/Nonquad.png" class="align-center" src="_images/Nonquad.png" style="width: 920px;" /></a>
+<p>出典：<a class="reference external" href="http://wiki.ros.org/global_planner">http://wiki.ros.org/global_planner</a></p>
+<p>navfnの元のポテンシャル計算は2次方程式であることに注意してください。 2次方程式の計算については、 <a class="reference internal" href="navfn.html"><span class="doc">navfn</span></a> を参照してください。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="a">
+<span id="globalplanner-a-star-path"></span><h3>3.4. A*経路<a class="headerlink" href="#a" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>use_dijkstra=False</p>
+<a class="reference internal image-reference" href="_images/AStar.png"><img alt="_images/AStar.png" class="align-center" src="_images/AStar.png" style="width: 920px;" /></a>
+<p>出典：<a class="reference external" href="http://wiki.ros.org/global_planner">http://wiki.ros.org/global_planner</a></p>
+<p>ポテンシャル計算されたセルがはるかに少ないことに注目してください（色付きの領域で示されています）。これは、ダイクストラを使用するよりも確かに高速ですが、必ずしも同じ経路を生成するわけではありません。もう1つ注意すべき点は、A*の実装は、経路探索時は上下左右に隣接する4つのグリッドに対して計算し展開していきますが、目標位置発見時の開始位置までのトレース時には、上下左右と斜めを含む隣接する8つのグリッドを評価し、経路を生成します。
+したがって、A*で探索された経路は、必ずしも最短距離とならない場合があります。
+（A*の一般的な実装は、経路探索時にポテンシャル計算を行わなかったグリッドは不要なグリッドと判断し、目標位置発見時のトレースの対象になりません。）
+ダイクストラの動作とA*の動作の違いを確認するには、後述の例を参考にしてください。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="globalplanner-dijkstra">
+<span id="id7"></span><h4>3.4.1. ダイクストラ<a class="headerlink" href="#globalplanner-dijkstra" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>目標位置のセルから上下左右のセルに対してポテンシャル計算を行い対象となるセルを広げていき、各セルで同様にポテンシャル計算を順次行います。開始位置のセルが出現したら、探索を終了します。</p>
+<a class="reference internal image-reference" href="_images/Dijkstra.png"><img alt="_images/Dijkstra.png" class="align-center" src="_images/Dijkstra.png" style="width: 920px;" /></a>
+<p>出典：<a class="reference external" href="http://wiki.ros.org/global_planner">http://wiki.ros.org/global_planner</a></p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="globalplanner-a-star">
+<span id="id8"></span><h4>3.4.2. A*<a class="headerlink" href="#globalplanner-a-star" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>開始位置のセルから上下左右のセルに対してヒューリスティック関数による推定値を加味したポテンシャル計算を行い探索対象となるセルを展開し、その中でコスト値の小さいものからポテンシャル計算を行います。目標位置が出現したら、探索を終了します。グローバルプランナーに実装されているヒューリスティック関数は、下記のとおりです。</p>
+<p>　　ヒューリスティック関数 h(n) = 現在位置X座標と目標位置X座標の距離 + 現在位置Y座標と目標位置Y座標の距離</p>
+<a class="reference internal image-reference" href="_images/AStar2.png"><img alt="_images/AStar2.png" class="align-center" src="_images/AStar2.png" style="width: 920px;" /></a>
+<p>出典：<a class="reference external" href="http://wiki.ros.org/global_planner">http://wiki.ros.org/global_planner</a></p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="navfn">
+<span id="globalplanner-old-navfn-behavior"></span><h3>3.5. 古いNavfnの動作<a class="headerlink" href="#navfn" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>old_navfn_behavior=True　 <a class="reference internal" href="navfn.html"><span class="doc">NavFn</span></a> と同じように経路を再現します。</p>
+<p>old_navfn_behavior=Trueが設定された際の動作の差異は以下の通りです。</p>
+<ul class="simple">
+<li>経路の開始点の計算を正確に行いません。</li>
+<li>座標計算時にオフセットを使用しません。</li>
+<li>目標位置周辺の未計算セルのポテンシャル計算を行いません。</li>
+<li>ポテンシャルマップからの経路生成の最後に、入力値の目標位置情報を追加します。</li>
+</ul>
+<a class="reference internal image-reference" href="_images/OldNavFn.png"><img alt="_images/OldNavFn.png" class="align-center" src="_images/OldNavFn.png" style="width: 920px;" /></a>
+<p>出典：<a class="reference external" href="http://wiki.ros.org/global_planner">http://wiki.ros.org/global_planner</a></p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>注意：</p>
+<ul class="simple">
+<li>経路の開始点が実際の開始位置と一致しません。</li>
+<li>経路の最後がグリッド線に沿って移動します。</li>
+<li>すべての座標がグリッドセルの半分だけわずかにずれます。</li>
+</ul>
+</div>
+</div>
+<div class="section" id="globalplanner-orientation-filter">
+<span id="id9"></span><h2>4. オリエンテーションフィルター<a class="headerlink" href="#globalplanner-orientation-filter" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>後処理ステップとして、方向を経路上の通過点に追加できます。 ~orientation_modeパラメータ（動的再構成）を使用すると、次の方向モードを設定できます。</p>
+<ul class="simple">
+<li>None=0 （目標位置の向き以外の向きは追加されません）</li>
+<li>Forward=1 （目標位置の向きを除き、通過点での向きは経路に沿って正のx軸方向）</li>
+<li>Interpolate=2 （方向は開始姿勢と目標姿勢の線形混合です）</li>
+<li>ForwardThenInterpolate=3 （最後の直進まで順方向、その後目標姿勢まで線形混合）</li>
+<li>Backward=4 （目標位置の向きを除き、通過点での向きは経路に沿って負のx軸方向）</li>
+<li>Leftward=5 （目標位置の向きを除き、通過点での向きは経路に沿って正のy軸方向）</li>
+<li>Rightward=6 （目標位置の向きを除き、通過点での向きは経路に沿って負のy軸方向）</li>
+</ul>
+<p>経路に沿った、進行方向を前向きは正のx軸方向、進行方向に向かって左向きは正のy軸方向とし、それぞれ後ろ向きは負のx軸方向、右向きは負のy軸方向とします。</p>
+<a class="reference internal image-reference" href="_images/xy_axis.png"><img alt="_images/xy_axis.png" class="align-center" src="_images/xy_axis.png" style="width: 242px;" /></a>
+<p>経路のi番目の通過点の方向は、`i - orientation_window_size`番目の通過点の座標と `i + orientation_window_size` 番目の通過点の座標を使用して計算されます。 ウィンドウのサイズは方向の計算で、なめらかになるように変更できます。</p>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=NQ2z90i5V2I">Global planner ROS - Orientation filter</a></p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="ros-api">
+<span id="globalplanner-ros-api"></span><h2>5. ROS API<a class="headerlink" href="#ros-api" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="globalplanner-published-topics">
+<span id="id10"></span><h3>5.1. パブリッシュトピック<a class="headerlink" href="#globalplanner-published-topics" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">トピック名</th>
+<th class="head">型</th>
+<th class="head">内容</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>~&lt;name&gt;/plan</td>
+<td><a class="reference external" href="http://docs.ros.org/api/nav_msgs/html/msg/Path.html">nav_msgs/Path</a></td>
+<td>最後に計算された計画。プランナーが経路を計算するたびにパブリッシュされ、主に視覚化の目的で使用されます。</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="globalplanner-parameters">
+<span id="id11"></span><h3>5.2. パラメータ<a class="headerlink" href="#globalplanner-parameters" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="13%" />
+<col width="64%" />
+<col width="6%" />
+<col width="6%" />
+<col width="10%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">パラメータ名</th>
+<th class="head">内容</th>
+<th class="head">型</th>
+<th class="head">単位</th>
+<th class="head">デフォルト</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>~&lt;name&gt;/allow_unknown</td>
+<td>プランナーが未知スペースを横断する計画を作成できるようにするかどうかを指定します。注： <a class="reference external" href="http://wiki.ros.org/costmap_2d/hydro/obstacles">ボクセルまたは障害物レイヤー</a> でレイヤー化されたcostmap_2dコストマップを使用している場合、そのレイヤーのtrack_unknown_spaceパラメータもtrueに設定する必要があります。そうしないと、未知スペースがすべて空きに変換されます）。</td>
+<td>bool</td>
+<td>-</td>
+<td>true</td>
+</tr>
+<tr class="row-odd"><td>~&lt;name&gt;/default_tolerance</td>
+<td>プランナーの目標位置の許容値。プランナーは、指定された目標にできるだけ近いがdefault_toleranceを超えない計画を作成しようとします。</td>
+<td>double</td>
+<td>-</td>
+<td>0.0</td>
+</tr>
+<tr class="row-even"><td>~&lt;name&gt;/visualize_potential</td>
+<td>PointCloud2を介して計算されたポテンシャルエリアを視覚化するかどうかを指定します。</td>
+<td>bool</td>
+<td>-</td>
+<td>false</td>
+</tr>
+<tr class="row-odd"><td>~&lt;name&gt;/use_dijkstra</td>
+<td>trueの場合、ダイクストラのアルゴリズムを使用します。それ以外の場合、A*を使用します。</td>
+<td>bool</td>
+<td>-</td>
+<td>true</td>
+</tr>
+<tr class="row-even"><td>~&lt;name&gt;/use_quadratic</td>
+<td>trueの場合、ポテンシャルの2次方程式を使用します。それ以外の場合は、単純加算を使用します。</td>
+<td>bool</td>
+<td>-</td>
+<td>true</td>
+</tr>
+<tr class="row-odd"><td>~&lt;name&gt;/use_grid_path</td>
+<td>trueの場合、グリッドの境界をたどる経路を作成します。それ以外の場合は、勾配降下法を使用します。</td>
+<td>bool</td>
+<td>-</td>
+<td>false</td>
+</tr>
+<tr class="row-even"><td>~&lt;name&gt;/old_navfn_behavior</td>
+<td>何らかの理由でglobal_plannerに <a class="reference internal" href="navfn.html"><span class="doc">navfn</span></a> の動作を正確に反映させたい場合は、これをtrueに設定します（他のbool型パラメータはデフォルト値を設定します）</td>
+<td>bool</td>
+<td>-</td>
+<td>false</td>
+</tr>
+<tr class="row-odd"><td>~&lt;name&gt;/lethal_cost</td>
+<td>致命的コスト値（動的再構成）</td>
+<td>int</td>
+<td>-</td>
+<td>253</td>
+</tr>
+<tr class="row-even"><td>~&lt;name&gt;/neutral_cost</td>
+<td>ニュートラルコスト値（動的再構成）</td>
+<td>int</td>
+<td>-</td>
+<td>50</td>
+</tr>
+<tr class="row-odd"><td>~&lt;name&gt;/cost_factor</td>
+<td>コストマップの各コストに掛ける係数（動的再構成）</td>
+<td>double</td>
+<td>-</td>
+<td><ol class="first last arabic simple" start="3">
+<li></li>
+</ol>
+</td>
+</tr>
+<tr class="row-even"><td>~&lt;name&gt;/publish_potential</td>
+<td>trueの場合、ポテンシャル計算後のポテンシャルマップをパブリッシュします。（動的再構成）</td>
+<td>bool</td>
+<td>-</td>
+<td>true</td>
+</tr>
+<tr class="row-odd"><td>~&lt;name&gt;/orientation_mode</td>
+<td>各ポイントの方向を設定する方法（None=0、Forward=1、Interpolate=2、ForwardThenInterpolate=3、Backward=4、Leftward=5、Rightward=6）（動的再構成）</td>
+<td>int</td>
+<td>-</td>
+<td>0</td>
+</tr>
+<tr class="row-even"><td>~&lt;name&gt;/orientation_window_size</td>
+<td>orientation_modeに基づいて方向を決定するためのオリエンテーション計算時に使用するウィンドウ範囲（動的再構成）</td>
+<td>int</td>
+<td>-</td>
+<td>1</td>
+</tr>
+<tr class="row-odd"><td>~&lt;name&gt;/planner_window_x</td>
+<td>(ROSWiki未掲載)未使用</td>
+<td>double</td>
+<td>-</td>
+<td>0.0</td>
+</tr>
+<tr class="row-even"><td>~&lt;name&gt;/planner_window_y</td>
+<td>(ROSWiki未掲載)未使用</td>
+<td>double</td>
+<td>-</td>
+<td>0.0</td>
+</tr>
+<tr class="row-odd"><td>~&lt;name&gt;/publish_scale</td>
+<td>(ROSWiki未掲載)パブリッシュのスケール</td>
+<td>int</td>
+<td>-</td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+</div>
+
+
+            </div>
+        </div>
+        <div class='footer'>
+            <ul>
+            <li><div class="copyright align-left">This document is licensed under the <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0</a></div></li>
+            <li><div class="copyright align-right">Copyright © National Institute of Advanced Industrial Science and Technology （AIST）<br/> （Japan Corporate Number 7010005005425）. All rights reserved.</div></li>
+            </ul>
+            <br />
+        </div>
+    </div>
+</body>
+</html>

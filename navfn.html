@@ -1,0 +1,413 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3c.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <title>NavigationStack - nav_fn</title>
+
+    <script src="_static/jquery-1.7.1.min.js"></script>
+    <script src="_static/bootstrap-modal.js"></script>
+    <script src="_static/bootstrap-collapse.js"></script>
+    <script src="_static/bootstrap-dropdown.js"></script>
+
+    <link rel="stylesheet" href="_static/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-responsive.css" type="text/css" />
+    <link rel="stylesheet" href="_static/template.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+
+</head>
+<body>
+    <div id="fb-root"></div>
+    
+    <div class="container-fluid">
+        <div class="hero-unit">
+            <div class="page-header">
+                <a href="index.html"><font color="#000000">Navigation Stack</font></a>
+                <br/>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span3">
+                <div class="well sidebar-nav">
+                    <ul class="nav nav-list">
+                        <h3>コンテンツ</h3>
+                        <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="navigation_overview.html">Navigation Stack概要</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="navigation_overview.html#id1">Navigation Stackとは</a></li>
+<li class="toctree-l2"><a class="reference internal" href="navigation_overview.html#id2">Navigation Stackの入出力</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#transform-tree">Transform Tree</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id4">測域センサ情報（レーザースキャン）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id6">測域センサ情報（ポイントクラウド）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id8">オドメトリ情報</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id10">地図</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id12">駆動（速度）命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id14">その他のメッセージ型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id22">サービス型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id26">アクション型</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="packages.html">各パッケージ仕様</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="packages.html#move-base">move_baseメイン</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="move_base.html">move_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nav_core.html">nav_core</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id2">自己位置推定関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="amcl.html">amcl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fake_localization.html">fake_localization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id3">地図配信</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="map_server.html">map_server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id4">コストマップ関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="costmap_2d.html">costmap_2d</a></li>
+<li class="toctree-l3"><a class="reference internal" href="voxel_grid.html">voxel_grid</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="packages.html#id5">グローバルプランナー関連</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">nav_fn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="global_planner.html">global_planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="carrot_planner.html">carrot_planner</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id6">ローカルプランナー関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="base_local_planner.html">base_local_planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dwa_local_planner.html">dwa_local_planner</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id7">リカバリー動作関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="clear_costmap_recovery.html">clear_costmap_recovery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rotate_recovery.html">rotate_recovery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="move_slow_and_clear.html">move_slow_and_clear</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="span8">
+<div class="section" id="nav-fn">
+<h1>nav_fn<a class="headerlink" href="#nav-fn" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>目次</p>
+<div class="line-block">
+<div class="line">　1. <a class="reference internal" href="#nav-fn-overview"><span class="std std-ref">概要</span></a></div>
+<div class="line">　2. <a class="reference internal" href="#nav-fn-algorithm"><span class="std std-ref">アルゴリズム</span></a></div>
+<div class="line">　　2.1. <a class="reference internal" href="#nav-fn-algorithm-potential-map"><span class="std std-ref">ポテンシャルマップの生成</span></a></div>
+<div class="line">　　2.2. <a class="reference internal" href="#nav-fn-algorithm-path"><span class="std std-ref">ポテンシャルマップ上での経路生成</span></a></div>
+<div class="line">　3. <a class="reference internal" href="#nav-fn-navfnros"><span class="std std-ref">NavfnROS</span></a></div>
+<div class="line">　　3.1. <a class="reference internal" href="#nav-fn-ros-api-stability"><span class="std std-ref">APIの安定性</span></a></div>
+<div class="line">　　3.2. <a class="reference internal" href="#nav-fn-ros-api"><span class="std std-ref">ROS API</span></a></div>
+<div class="line">　　　2.2.1. <a class="reference internal" href="#nav-fn-published-topics"><span class="std std-ref">パブリッシュトピック</span></a></div>
+<div class="line">　　　2.2.2. <a class="reference internal" href="#nav-fn-parameters"><span class="std std-ref">パラメータ</span></a></div>
+<div class="line">　　3.3. <a class="reference internal" href="#nav-fn-ros-cpp-api"><span class="std std-ref">C++ API</span></a></div>
+<div class="line">　4. <a class="reference internal" href="#nav-fn-navfn"><span class="std std-ref">NavFN</span></a></div>
+<div class="line">　　4.1. <a class="reference internal" href="#nav-fn-api-stability"><span class="std std-ref">APIの安定性</span></a></div>
+<div class="line">　　4.2. <a class="reference internal" href="#nav-fn-cpp-api"><span class="std std-ref">C++ API</span></a></div>
+<div class="line">　5. <a class="reference internal" href="#sequence-navfn"><span class="std std-ref">内部処理手順</span></a></div>
+<div class="line">　　5.1. <a class="reference internal" href="#method-call-sequence-navfn"><span class="std std-ref">メソッドコールシーケンス</span></a></div>
+<div class="line"><br /></div>
+</div>
+<div class="section" id="nav-fn-overview">
+<span id="id1"></span><h2>1. 概要<a class="headerlink" href="#nav-fn-overview" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>navfnは、移動体の経路生成に使用可能な、高速で、補間されたナビゲーションを行う機能を、navfn::NavFnクラスで提供しています。
+このプランナーは、移動体として円形のロボットを想定しており、コストマップ上で、グリッド内の開始点から終了点を結ぶ最も低コストな経路を探索するための処理を行います。
+このナビゲーション機能は、ダイクストラ法を使用して経路計算を行っていますが、将来的にA*ヒューリスティクスが追加されるかもしれません。
+また、navfn::NavFnクラスのROSラッパーであるnavfn::NavfnROSオブジェクトも提供しています。navfn::NavfnROSオブジェクトは、 <a class="reference internal" href="nav_core.html"><span class="doc">nav_core</span></a> パッケージで定義されるnav_core :: BaseGlobalPlannerインターフェイスに準拠しており、move_baseノードからグローバルプランナープラグインとしても使用されています。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul class="simple">
+<li>管理状態: 管理済み</li>
+<li>管理者: David V. Lu!! &lt;davidvlu AT gmail DOT com&gt;, Michael Ferguson &lt;mfergs7 AT gmail DOT com&gt;, Aaron Hoy &lt;ahoy AT fetchrobotics DOT com&gt;</li>
+<li>著者: Kurt Konolige, Eitan Marder-Eppstein, <a class="reference external" href="mailto:contradict&#37;&#52;&#48;gmail&#46;com">contradict<span>&#64;</span>gmail<span>&#46;</span>com</a></li>
+<li>ライセンス: BSD</li>
+<li>ソース: git <a class="reference external" href="https://github.com/ros-planning/navigation.git">https://github.com/ros-planning/navigation.git</a> (branch: melodic-devel)</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="nav-fn-algorithm">
+<span id="id2"></span><h2>2. アルゴリズム<a class="headerlink" href="#nav-fn-algorithm" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>navfnは、グローバルコストマップおよびグローバルコストマップ上のスタート座標、ゴール座標を入力値として、経路を出力します。経路を出力するまでの過程は、以下のようになっています。</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">ポテンシャル計算のために、グローバルコストマップのコストニュートラル値（何もないセルのコスト値）を底上げします。具体的には、-1～254のコスト値を、50～254に変換します。（底上げ後の254が進入不可のセル）</p>
+<blockquote>
+<div><ul class="simple">
+<li>「致命的(Lethal)」コスト → COST_OBS(254)</li>
+<li>「内接半径(Inscribed)」コスト → COST_OBS(254)</li>
+<li>「未知(Unknown)」コスト → COST_OBS-1(253) ※<a class="reference internal" href="#nav-fn-parameters"><span class="std std-ref">allow_unknown</span></a> パラメーターがfalseの場合はCOST_OBS(254)</li>
+<li>その他のコスト → (コスト値 * 0.8) + 50</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">コスト値の底上げを行ったコストマップから、ポテンシャルマップを生成します。</p>
+</li>
+<li><p class="first">ポテンシャルマップ上で、<a class="reference internal" href="#nav-fn-parameters"><span class="std std-ref">default_tolerance</span></a> パラメーターに従ったゴール座標の補正を行います。ゴール座標が進入不可のセル内にある場合は、<a class="reference internal" href="#nav-fn-parameters"><span class="std std-ref">default_tolerance</span></a> パラメーターの範囲内で、進入可能なセル内の最も近い座標に補正されます。</p>
+</li>
+<li><p class="first">ゴール座標が到達可能である場合は、ポテンシャルマップ上のスタート座標からゴール座標まで、経路を生成します。</p>
+</li>
+</ol>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="nav-fn-algorithm-potential-map">
+<span id="id3"></span><h3>2.1. ポテンシャルマップの生成<a class="headerlink" href="#nav-fn-algorithm-potential-map" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>ポテンシャルマップとは、ゴール位置のセルが最も低く、スタート位置のセルが最も高い（進入不可のセルを除く）地形図のようなものを表現したグリッド地図で、スタート位置にボールを置いて、地形の傾斜に沿ってボールが転がり、最後にゴール位置に到達するというようなイメージで、ポテンシャルマップ上に経路が生成されます。</p>
+<p>下の図で、赤いセルがポテンシャル値が大きい（高度が高い）セル、青に近づくほどポテンシャル値が小さく（高度が低く）なり、黒いセルが、ポテンシャル値ゼロ（ゴール地点）のセルになります。</p>
+<a class="reference internal image-reference" href="_images/OldNavFn.png"><img alt="_images/OldNavFn.png" class="align-center" src="_images/OldNavFn.png" style="width: 920px;" /></a>
+<p>出典：<a class="reference external" href="http://wiki.ros.org/global_planner">http://wiki.ros.org/global_planner</a></p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>ポテンシャルマップの生成は、以下のように行われます。</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">グローバルコストマップと同じサイズのグリッド地図を生成し、最初に、全てのセルをPOT_HIGH（ポテンシャル値未設定）で埋めます。</p>
+</li>
+<li><p class="first">ゴール位置のセルにポテンシャル値0を設定し、その上下左右の4つのセルを、ポテンシャル値の計算の対象セルに加えます。</p>
+</li>
+<li><p class="first">対象セルの位置のコスト値がCOST_OBS(254)である場合は、ポテンシャル値の計算を行わずPOT_HIGHのままとし、次の対象セルの計算に進みます。</p>
+</li>
+<li><p class="first">対象セルのポテンシャル値（P(x)とします）の計算は、対象セルに対して、上下のセルの小さいほうのポテンシャル値（P(v)とします）、左右のセルの小さいほうのポテンシャル値（P(h)とします）および自セルのコスト値(cとします）を使って計算します。</p>
+<ul>
+<li><p class="first">P(v)がPOT_HIGHである場合は、P(h)にcを足し合わせて、P(x)とします。P(h)がPOT_HIGHである場合は、その逆です。</p>
+</li>
+<li><p class="first">P(v)、P(h)ともに有効なポテンシャル値である場合は、下記の数式を満足するようなP(x)を求めます。ただし、P(v)とP(h)の差がc以上の場合は、下記を満足する解がないため、P(v)とP(h)の小さいほうにcを足し合わせてP(x)とします。</p>
+<blockquote>
+<div><p><a class="reference internal" href="_images/quadratic.png"><img alt="math_quadratic" src="_images/quadratic.png" style="width: 240px;" /></a></p>
+</div></blockquote>
+</li>
+</ul>
+</li>
+<li><p class="first">対象セルのポテンシャル値を計算したら、その上下左右のセルのうち、まだPOT_HIGHとなっているセルを、次の計算対象に加えます。この時、追加元のセルのポテンシャル値がより低いものを、次に優先的に計算します。</p>
+</li>
+<li><p class="first">このように、ゴール位置のセルからポテンシャル値計算を広げていき、スタート位置のセルに到達したら、ポテンシャルマップ生成完了とします。</p>
+</li>
+</ol>
+</div></blockquote>
+<p>なお、上述の2次方程式は、実際には下記のような近似計算を行っています。:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span> <span class="nb">float</span> <span class="n">d</span> <span class="o">=</span> <span class="n">fabs</span><span class="p">(</span><span class="n">P</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">-</span> <span class="n">P</span><span class="p">(</span><span class="n">h</span><span class="p">))</span> <span class="o">/</span> <span class="n">c</span><span class="p">;</span>
+<span class="mi">2</span> <span class="nb">float</span> <span class="n">v</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.2301</span><span class="o">*</span><span class="n">d</span><span class="o">*</span><span class="n">d</span> <span class="o">+</span> <span class="mf">0.5307</span><span class="o">*</span><span class="n">d</span> <span class="o">+</span> <span class="mf">0.7040</span><span class="p">;</span>
+<span class="mi">3</span> <span class="n">P</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">P</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="n">h</span><span class="p">))</span> <span class="o">+</span> <span class="p">(</span><span class="n">c</span> <span class="o">*</span> <span class="n">v</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>このような2次方程式を使わずに、単純に、P(v)とP(h)の小さい方をcに足していけばよいようにも見えますが、単純な足し算だと、あるセルに対して、直線で2つ向こう側にあるセルと斜めにあるセルとで、ポテンシャル値が同等になってしまいます。（実際には、斜めにあるセルの方が近いにも関わらず。）</p>
+<p>斜めにあるセルのポテンシャル値を、より適切な値にするために、上述の2次方程式が使用されています。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="nav-fn-algorithm-path">
+<span id="id4"></span><h3>2.2. ポテンシャルマップ上での経路生成<a class="headerlink" href="#nav-fn-algorithm-path" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>ポテンシャルマップ上で、スタート位置にボールを置いて、地形の傾斜に沿ってボールが転がり、最後にゴール位置に到達するというようなイメージで、ポテンシャルマップ上に経路を生成します。</p>
+<p>経路の生成は、以下のように行われます。</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">スタート座標を最初の現在位置として、経路に追加します。</p>
+</li>
+<li><p class="first">ポテンシャルマップ上で、スタート座標が含まれるセルと、その右隣り、下、右下の4枚のセルを取り出します。</p>
+<blockquote>
+<div><p><a class="reference internal" href="_images/CalcPath.png"><img alt="CalcPath" src="_images/CalcPath.png" style="width: 335px;" /></a></p>
+</div></blockquote>
+</li>
+<li><p class="first">それぞれのセルについて、x軸方向の傾きとy軸方向の傾きを求めます。セルの傾きは、対象セルの左右のセルとのポテンシャル値の差からx軸方向の傾きを求め、対象セルの上下のセルとのポテンシャル値の差からy軸方向の傾きを求めます。（ポテンシャル値がより小さいほうに傾けます。）</p>
+</li>
+<li><p class="first">4枚のセルの傾きから、x軸方向、y軸方向それぞれの加重平均を求めます。加重平均の重みは、現在座標がセル上のどの位置にいるかで決まります。</p>
+<p>セル上で、現在位置がより右側にある場合は、右隣りおよび右下のセルの重みが大きくなります。また、現在位置がより下側にある場合は、下および右下のセルの重みが大きくなります</p>
+</li>
+<li><p class="first">求めた傾きの加重平均の分、現在位置をポテンシャルマップ上で移動させ、この座標を経路に追加します。</p>
+</li>
+<li><p class="first">移動後の現在位置に対して、同じ傾き計算および座標移動、経路への追加を繰り返します。現在座標がゴール位置のセルに入るかまたは近接したら、最後にゴール座標を経路に追加します。</p>
+</li>
+</ol>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="navfnros">
+<span id="nav-fn-navfnros"></span><h2>3. NavfnROS<a class="headerlink" href="#navfnros" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>navfn::NavfnROSオブジェクトは、その機能を <a class="reference external" href="http://wiki.ros.org/navigation/ROS_Wrappers">C ++ ROSラッパー</a> として公開します。 これは、初期化時に指定されたROS名前空間（以降、nameとする）内で動作します。 <a class="reference internal" href="nav_core.html"><span class="doc">nav_core</span></a> パッケージにあるnav_core :: BaseGlobalPlannerインターフェイスに準拠しています。</p>
+<p>navfn::NavfnROSオブジェクトの作成例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">1</span> <span class="c1">#include &lt;tf/transform_listener.h&gt;</span>
+ <span class="mi">2</span> <span class="c1">#include &lt;costmap_2d/costmap_2d_ros.h&gt;</span>
+ <span class="mi">3</span> <span class="c1">#include &lt;navfn/navfn_ros.h&gt;</span>
+ <span class="mi">4</span>
+ <span class="mi">5</span> <span class="o">...</span>
+ <span class="mi">6</span>
+ <span class="mi">7</span> <span class="n">tf</span><span class="p">::</span><span class="n">TransformListener</span> <span class="n">tf</span><span class="p">(</span><span class="n">ros</span><span class="p">::</span><span class="n">Duration</span><span class="p">(</span><span class="mi">10</span><span class="p">));</span>
+ <span class="mi">8</span> <span class="n">costmap_2d</span><span class="p">::</span><span class="n">Costmap2DROS</span> <span class="n">costmap</span><span class="p">(</span><span class="s2">&quot;my_costmap&quot;</span><span class="p">,</span> <span class="n">tf</span><span class="p">);</span>
+ <span class="mi">9</span>
+<span class="mi">10</span> <span class="n">navfn</span><span class="p">::</span><span class="n">NavfnROS</span> <span class="n">navfn</span><span class="p">;</span>
+<span class="mi">11</span> <span class="n">navfn</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="s2">&quot;my_navfn_planner&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">costmap</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="api">
+<span id="nav-fn-ros-api-stability"></span><h3>3.1. APIの安定性<a class="headerlink" href="#api" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li>ROS APIは安定しています。</li>
+<li>C++ APIは安定しています。</li>
+</ul>
+</div>
+<div class="section" id="ros-api">
+<span id="nav-fn-ros-api"></span><h3>3.2. ROS API<a class="headerlink" href="#ros-api" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="nav-fn-published-topics">
+<span id="id5"></span><h4>3.2.1. パブリッシュトピック<a class="headerlink" href="#nav-fn-published-topics" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">トピック名</th>
+<th class="head">型</th>
+<th class="head">内容</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>~&lt;name&gt;/plan</td>
+<td><a class="reference external" href="http://docs.ros.org/api/nav_msgs/html/msg/Path.html">nav_msgs/Path</a></td>
+<td>最後に計算された計画。プランナーが経路を計算するたびにパブリッシュされ、主に視覚化の目的で使用されます。</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="nav-fn-parameters">
+<span id="id6"></span><h4>3.2.2. パラメータ<a class="headerlink" href="#nav-fn-parameters" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="13%" />
+<col width="64%" />
+<col width="6%" />
+<col width="6%" />
+<col width="10%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">パラメータ名</th>
+<th class="head">内容</th>
+<th class="head">型</th>
+<th class="head">単位</th>
+<th class="head">デフォルト</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>~&lt;name&gt;/allow_unknown</td>
+<td>プランナが不明スペースを横断する計画を作成できるようにするかどうかを指定します。注： <a class="reference internal" href="obstacles.html"><span class="doc">障害物マップレイヤー</span></a> を使用している場合、そのレイヤーのtrack_unknown_spaceパラメーターもtrueに設定する必要があります。そうしないと、コストマップ上で、不明スペースがすべて空きスペースに変換されますので、本パラメータが意味をなさなくなります。</td>
+<td>bool</td>
+<td>-</td>
+<td>true</td>
+</tr>
+<tr class="row-odd"><td>~&lt;name&gt;/planner_window_x</td>
+<td>プランナーの探索範囲を限定するためのパラメータとして定義されていますが、現状は参照されていません。。</td>
+<td>double</td>
+<td>-</td>
+<td>0.0</td>
+</tr>
+<tr class="row-even"><td>~&lt;name&gt;/planner_window_y</td>
+<td>プランナーの探索範囲を限定するためのパラメータとして定義されていますが、現状は参照されていません。。</td>
+<td>double</td>
+<td>-</td>
+<td>0.0</td>
+</tr>
+<tr class="row-odd"><td>~&lt;name&gt;/default_tolerance</td>
+<td>プランナーの目標位置の許容値。プランナーは、指定された目標にできるだけ近いがdefault_toleranceを超えない計画を作成しようとします。</td>
+<td>double</td>
+<td>-</td>
+<td>0.0</td>
+</tr>
+<tr class="row-even"><td>~&lt;name&gt;/visualize_potential</td>
+<td>計算されたポテンシャルマップを視覚化するかどうかを指定します。trueに設定された場合は、PointCloud2形式のデータでポテンシャルマップをパブリッシュします。</td>
+<td>bool</td>
+<td>-</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="c-api">
+<span id="nav-fn-ros-cpp-api"></span><h3>3.3. C++ API<a class="headerlink" href="#c-api" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>navfn::NavfnROSは、<a class="reference internal" href="nav_core.html"><span class="doc">nav_core</span></a> パッケージにあるnav_core :: BaseGlobalPlannerインターフェイスに準拠しています。 詳細については、<a class="reference external" href="http://www.ros.org/doc/api/navfn/html/classnavfn_1_1NavfnROS.html">NavfnROS C++のドキュメント</a> をご覧ください。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="navfn">
+<span id="nav-fn-navfn"></span><h2>4. NavFN<a class="headerlink" href="#navfn" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>navfn::NavFnオブジェクトは、上述のナビゲーション機能の実装を提供します。自由に利用して構いませんが、APIの安定性が保証されないことに留意してください。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="nav-fn-api-stability">
+<span id="id7"></span><h3>4.1. APIの安定性<a class="headerlink" href="#nav-fn-api-stability" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li>C++ APIは安定していません。いつでも変更の可能性があります。</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="nav-fn-cpp-api">
+<span id="id8"></span><h3>4.2. C++ API<a class="headerlink" href="#nav-fn-cpp-api" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>詳細については、<a class="reference external" href="http://www.ros.org/doc/api/navfn/html/classnavfn_1_1NavFn.html">navfn::NavFnクラスの C++ APIドキュメント</a> をご覧ください。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="sequence-navfn">
+<span id="id9"></span><h2>5. 内部処理手順<a class="headerlink" href="#sequence-navfn" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="method-call-sequence-navfn">
+<span id="id10"></span><h3>5.1　メソッドコールシーケンス<a class="headerlink" href="#method-call-sequence-navfn" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>NavfnROS→NavFnへは、スタート／ゴールを逆に設定して、NavFnが生成した経路を、最後に逆順に入れ替えるという処理になっています。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/navfn_sequence.png"><img alt="_images/navfn_sequence.png" class="align-center" src="_images/navfn_sequence.png" style="width: 65%;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+</div>
+
+
+            </div>
+        </div>
+        <div class='footer'>
+            <ul>
+            <li><div class="copyright align-left">This document is licensed under the <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0</a></div></li>
+            <li><div class="copyright align-right">Copyright © National Institute of Advanced Industrial Science and Technology （AIST）<br/> （Japan Corporate Number 7010005005425）. All rights reserved.</div></li>
+            </ul>
+            <br />
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,245 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3c.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <title>NavigationStack - nav_core</title>
+
+    <script src="_static/jquery-1.7.1.min.js"></script>
+    <script src="_static/bootstrap-modal.js"></script>
+    <script src="_static/bootstrap-collapse.js"></script>
+    <script src="_static/bootstrap-dropdown.js"></script>
+
+    <link rel="stylesheet" href="_static/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-responsive.css" type="text/css" />
+    <link rel="stylesheet" href="_static/template.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+
+</head>
+<body>
+    <div id="fb-root"></div>
+    
+    <div class="container-fluid">
+        <div class="hero-unit">
+            <div class="page-header">
+                <a href="index.html"><font color="#000000">Navigation Stack</font></a>
+                <br/>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span3">
+                <div class="well sidebar-nav">
+                    <ul class="nav nav-list">
+                        <h3>コンテンツ</h3>
+                        <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="navigation_overview.html">Navigation Stack概要</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="navigation_overview.html#id1">Navigation Stackとは</a></li>
+<li class="toctree-l2"><a class="reference internal" href="navigation_overview.html#id2">Navigation Stackの入出力</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#transform-tree">Transform Tree</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id4">測域センサ情報（レーザースキャン）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id6">測域センサ情報（ポイントクラウド）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id8">オドメトリ情報</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id10">地図</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id12">駆動（速度）命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id14">その他のメッセージ型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id22">サービス型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id26">アクション型</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="packages.html">各パッケージ仕様</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="packages.html#move-base">move_baseメイン</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="move_base.html">move_base</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">nav_core</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id2">自己位置推定関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="amcl.html">amcl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fake_localization.html">fake_localization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id3">地図配信</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="map_server.html">map_server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id4">コストマップ関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="costmap_2d.html">costmap_2d</a></li>
+<li class="toctree-l3"><a class="reference internal" href="voxel_grid.html">voxel_grid</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id5">グローバルプランナー関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="navfn.html">nav_fn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="global_planner.html">global_planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="carrot_planner.html">carrot_planner</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id6">ローカルプランナー関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="base_local_planner.html">base_local_planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dwa_local_planner.html">dwa_local_planner</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id7">リカバリー動作関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="clear_costmap_recovery.html">clear_costmap_recovery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rotate_recovery.html">rotate_recovery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="move_slow_and_clear.html">move_slow_and_clear</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="span8">
+<div class="section" id="nav-core">
+<h1>nav_core<a class="headerlink" href="#nav-core" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>目次</p>
+<div class="line-block">
+<div class="line">　1. <a class="reference internal" href="#nav-core-overview"><span class="std std-ref">概要</span></a></div>
+<div class="line">　2. <a class="reference internal" href="#nav-core-nav-core-overview"><span class="std std-ref">nav_coreの概要</span></a></div>
+<div class="line">　3. <a class="reference internal" href="#nav-core-base-global-planner"><span class="std std-ref">BaseGlobalPlanner</span></a></div>
+<div class="line">　　3.1 <a class="reference internal" href="#nav-core-base-global-planner-api"><span class="std std-ref">APIの安定性</span></a></div>
+<div class="line">　　3.2 <a class="reference internal" href="#nav-core-base-global-planner-cpp-api"><span class="std std-ref">BaseGlobalPlanner C++ API</span></a></div>
+<div class="line">　4. <a class="reference internal" href="#nav-core-base-local-planner"><span class="std std-ref">BaseLocalPlanner</span></a></div>
+<div class="line">　　4.1 <a class="reference internal" href="#nav-core-base-local-planner-api"><span class="std std-ref">APIの安定性</span></a></div>
+<div class="line">　　4.2 <a class="reference internal" href="#nav-core-base-local-planner-cpp-api"><span class="std std-ref">BaseLocalPlanner C++ API</span></a></div>
+<div class="line">　5. <a class="reference internal" href="#nav-core-recovery"><span class="std std-ref">RecoveryBehavior</span></a></div>
+<div class="line">　　5.1 <a class="reference internal" href="#nav-core-recovery-api"><span class="std std-ref">APIの安定性</span></a></div>
+<div class="line">　　5.2 <a class="reference internal" href="#nav-core-recovery-cpp-api"><span class="std std-ref">RecoveryBehavior C++ API</span></a></div>
+<div class="line"><br /></div>
+</div>
+<div class="section" id="nav-core-overview">
+<span id="id1"></span><h2>1. 概要<a class="headerlink" href="#nav-core-overview" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">　このパッケージは、ナビゲーション固有のロボット動作の共通インタフェースを提供します。 現在、このパッケージはBaseGlobalPlanner、BaseLocalPlanner、RecoveryBehaviorインタフェースを提供します。これらのインタフェースを使用して、同じインタフェースに準拠する新しいバージョンのプランナー、ローカルコントローラー、またはリカバリ動作を簡単に交換できるアクションを構築できます。</div>
+<div class="line"><br /></div>
+</div>
+<ul class="simple">
+<li>管理状態：管理済み</li>
+<li>管理者：David V. Lu!! &lt;davidvlu AT gmail DOT com&gt;, Michael Ferguson &lt;mfergs7 AT gmail DOT com&gt;, Aaron Hoy &lt;ahoy AT fetchrobotics DOT com&gt;</li>
+<li>著者：Eitan Marder-Eppstein, <a class="reference external" href="mailto:contradict&#37;&#52;&#48;gmail&#46;com">contradict<span>&#64;</span>gmail<span>&#46;</span>com</a></li>
+<li>ライセンス：BSD</li>
+<li>ソース：git <a class="reference external" href="https://github.com/ros-planning/navigation.git">https://github.com/ros-planning/navigation.git</a> (branch: melodic-devel)</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="nav-core-nav-core-overview">
+<span id="id2"></span><h2>2. nav_coreの概要<a class="headerlink" href="#nav-core-nav-core-overview" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">　nav_coreパッケージには、Navigationスタックの主要なインタフェースが含まれています。 <a class="reference internal" href="move_base.html"><span class="doc">move_base</span></a> ノードで <a class="reference external" href="http://wiki.ros.org/pluginlib">プラグイン</a> として使用する全てのプランナーとリカバリ動作は、これらのインタフェースに従う必要があります。</div>
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/nav_core_move_base_interfaces.png"><img alt="_images/nav_core_move_base_interfaces.png" class="align-center" src="_images/nav_core_move_base_interfaces.png" style="width: 673px;" /></a>
+<p>出典: <a class="reference external" href="http://wiki.ros.org/nav_core">http://wiki.ros.org/nav_core</a></p>
+</div>
+<div class="section" id="baseglobalplanner">
+<span id="nav-core-base-global-planner"></span><h2>3. BaseGlobalPlanner<a class="headerlink" href="#baseglobalplanner" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">　nav_core::BaseGlobalPlannerは、ナビゲーションで使用されるグローバルプランナーのためのインタフェースを提供します。 <a class="reference internal" href="move_base.html"><span class="doc">move_base</span></a> ノードのプラグインとして記述されたすべてのグローバルプランナーは、このインタフェースに従う必要があります。nav_core::BaseGlobalPlannerインタフェースを使用する現在のグローバルプランナーは次のとおりです。</div>
+<div class="line"><br /></div>
+</div>
+<ul class="simple">
+<li><a class="reference internal" href="global_planner.html"><span class="doc">global_planner</span></a> - navfnのより柔軟な代替として構築された、高速で補間されたグローバルプランナー。（pluginlib名： &quot;global_planner/GlobalPlanner&quot;）</li>
+<li><a class="reference internal" href="navfn.html"><span class="doc">navfn</span></a> - ナビゲーション機能を使用してロボットのパスを計算するグリッドベースのグローバルプランナー。（pluginlib名： &quot;navfn/NavfnROS&quot;）</li>
+<li><a class="reference internal" href="carrot_planner.html"><span class="doc">carrot_planner</span></a> - ユーザー指定の目標点を取得し、その目標点が障害物にある場合でも、ロボットをできるだけ近くに移動しようとする単純なグローバルプランナー。（pluginlib名： &quot;carrot_planner/CarrotPlanner&quot;）</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="api">
+<span id="nav-core-base-global-planner-api"></span><h3>3.1 APIの安定性<a class="headerlink" href="#api" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="line-block">
+<div class="line">　C++ API が安定しています。</div>
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="baseglobalplanner-c-api">
+<span id="nav-core-base-global-planner-cpp-api"></span><h3>3.2 BaseGlobalPlanner C++ API<a class="headerlink" href="#baseglobalplanner-c-api" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="line-block">
+<div class="line">　nav_core :: BaseGlobalPlannerのC ++ APIに関するドキュメントは、 <a class="reference external" href="http://www.ros.org/doc/api/nav_core/html/classnav__core_1_1BaseGlobalPlanner.html">BaseGlobalPlannerのドキュメント</a> にあります。</div>
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="baselocalplanner">
+<span id="nav-core-base-local-planner"></span><h2>4. BaseLocalPlanner<a class="headerlink" href="#baselocalplanner" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">　nav_core :: BaseLocalPlannerは、ナビゲーションで使用されるローカルプランナーのためのインタフェースを提供します。 <a class="reference internal" href="move_base.html"><span class="doc">move_base</span></a> ノードのプラグインとして記述されたすべてのローカルプランナーは、このインタフェースに従う必要があります。nav_core :: BaseLocalPlannerインターフェースを使用する現在のローカルプランナーは次のとおりです。</div>
+<div class="line"><br /></div>
+</div>
+<ul class="simple">
+<li><a class="reference internal" href="base_local_planner.html"><span class="doc">base_local_planner</span></a> - ローカルコントロールへの Dynamic Window Approach（DWA）およびTrajectory Rollout Approachの実装を提供します。</li>
+<li><a class="reference internal" href="dwa_local_planner.html"><span class="doc">dwa_local_planner</span></a> - <a class="reference internal" href="base_local_planner.html"><span class="doc">base_local_planner</span></a> のDWAよりもクリーンで理解しやすいインタフェースを備え、より柔軟性の高いホロノミックロボット用のy軸変数を備えたモジュール式DWA実装です。</li>
+<li><a class="reference external" href="http://wiki.ros.org/eband_local_planner">eband_local_planner</a> - SE2マニホールドでのElastic Bandメソッドを実装します。</li>
+<li><a class="reference external" href="http://wiki.ros.org/teb_local_planner">teb_local_planner</a> - オンライン軌道最適化のためのTimed-Elastic-Bandメソッドを実装します。</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="nav-core-base-local-planner-api">
+<span id="id5"></span><h3>4.1 APIの安定性<a class="headerlink" href="#nav-core-base-local-planner-api" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="line-block">
+<div class="line">　C++ API が安定しています。</div>
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="baselocalplanner-c-api">
+<span id="nav-core-base-local-planner-cpp-api"></span><h3>4.2 BaseLocalPlanner C++ API<a class="headerlink" href="#baselocalplanner-c-api" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="line-block">
+<div class="line">　nav_core :: BaseLocalPlannerのC ++ APIに関するドキュメントは、 <a class="reference external" href="http://www.ros.org/doc/api/nav_core/html/classnav__core_1_1BaseLocalPlanner.html">BaseLocalPlannerドキュメント</a> にあります。</div>
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="recoverybehavior">
+<span id="nav-core-recovery"></span><h2>5. RecoveryBehavior<a class="headerlink" href="#recoverybehavior" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">　nav_core::RecoveryBehaviorは、ナビゲーションで使用されるリカバリ動作のインタフェースを提供します。 <a class="reference internal" href="move_base.html"><span class="doc">move_base</span></a> ノードのプラグインとして記述されたすべてのリカバリ動作は、このインタフェースに準拠する必要があります。nav_core::RecoveryBehaviorインタフェースを使用した現在のリカバリ動作は次のとおりです。</div>
+<div class="line"><br /></div>
+</div>
+<ul class="simple">
+<li><a class="reference internal" href="clear_costmap_recovery.html"><span class="doc">clear_costmap_recovery</span></a> - move_baseが使用するコストマップを、ユーザーが指定した範囲の外側について、静的マップの値に戻すリカバリ動作。</li>
+<li><a class="reference internal" href="rotate_recovery.html"><span class="doc">rotate_recovery</span></a> - ロボットを360度回転させてスペースをクリアすることを試みるリカバリ動作。</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="nav-core-recovery-api">
+<span id="id7"></span><h3>5.1 APIの安定性<a class="headerlink" href="#nav-core-recovery-api" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="line-block">
+<div class="line">　C++ API が安定しています。</div>
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="recoverybehavior-c-api">
+<span id="nav-core-recovery-cpp-api"></span><h3>5.2 RecoveryBehavior C++ API<a class="headerlink" href="#recoverybehavior-c-api" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="line-block">
+<div class="line">　nav_core :: RecoveryBehaviorのC ++ APIに関するドキュメントは、 <a class="reference external" href="http://www.ros.org/doc/api/nav_core/html/classnav__core_1_1RecoveryBehavior.html">RecoveryBehaviorのドキュメント</a> にあります。</div>
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+</div>
+
+
+            </div>
+        </div>
+        <div class='footer'>
+            <ul>
+            <li><div class="copyright align-left">This document is licensed under the <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0</a></div></li>
+            <li><div class="copyright align-right">Copyright © National Institute of Advanced Industrial Science and Technology （AIST）<br/> （Japan Corporate Number 7010005005425）. All rights reserved.</div></li>
+            </ul>
+            <br />
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,223 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3c.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <title>NavigationStack - staticmap</title>
+
+    <script src="_static/jquery-1.7.1.min.js"></script>
+    <script src="_static/bootstrap-modal.js"></script>
+    <script src="_static/bootstrap-collapse.js"></script>
+    <script src="_static/bootstrap-dropdown.js"></script>
+
+    <link rel="stylesheet" href="_static/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-responsive.css" type="text/css" />
+    <link rel="stylesheet" href="_static/template.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+
+</head>
+<body>
+    <div id="fb-root"></div>
+    
+    <div class="container-fluid">
+        <div class="hero-unit">
+            <div class="page-header">
+                <a href="index.html"><font color="#000000">Navigation Stack</font></a>
+                <br/>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span3">
+                <div class="well sidebar-nav">
+                    <ul class="nav nav-list">
+                        <h3>コンテンツ</h3>
+                        <ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="navigation_overview.html">Navigation Stack概要</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="navigation_overview.html#id1">Navigation Stackとは</a></li>
+<li class="toctree-l2"><a class="reference internal" href="navigation_overview.html#id2">Navigation Stackの入出力</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#transform-tree">Transform Tree</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id4">測域センサ情報（レーザースキャン）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id6">測域センサ情報（ポイントクラウド）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id8">オドメトリ情報</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id10">地図</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id12">駆動（速度）命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id14">その他のメッセージ型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id22">サービス型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id26">アクション型</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="packages.html">各パッケージ仕様</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#move-base">move_baseメイン</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="move_base.html">move_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nav_core.html">nav_core</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id2">自己位置推定関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="amcl.html">amcl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fake_localization.html">fake_localization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id3">地図配信</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="map_server.html">map_server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id4">コストマップ関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="costmap_2d.html">costmap_2d</a></li>
+<li class="toctree-l3"><a class="reference internal" href="voxel_grid.html">voxel_grid</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id5">グローバルプランナー関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="navfn.html">nav_fn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="global_planner.html">global_planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="carrot_planner.html">carrot_planner</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id6">ローカルプランナー関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="base_local_planner.html">base_local_planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dwa_local_planner.html">dwa_local_planner</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id7">リカバリー動作関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="clear_costmap_recovery.html">clear_costmap_recovery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rotate_recovery.html">rotate_recovery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="move_slow_and_clear.html">move_slow_and_clear</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="span8">
+<div class="section" id="staticmap">
+<h1>staticmap<a class="headerlink" href="#staticmap" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>目次</p>
+<div class="line-block">
+<div class="line">　1. <a class="reference internal" href="#staticmap-overview"><span class="std std-ref">概要</span></a></div>
+<div class="line">　　1.1. <a class="reference internal" href="#staticmap-subscribed-topics"><span class="std std-ref">サブスクライブトピック</span></a></div>
+<div class="line">　　1.2. <a class="reference internal" href="#staticmap-parameters"><span class="std std-ref">パラメータ</span></a></div>
+<div class="line"><br /></div>
+</div>
+<div class="section" id="staticmap-overview">
+<span id="id1"></span><h2>1. 概要<a class="headerlink" href="#staticmap-overview" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>静的マップには、外部ソースからのほとんど変更されないデータが組み込まれています（マップの構築に関するドキュメントについては、 <a class="reference internal" href="map_server.html"><span class="doc">map_server</span></a> パッケージを参照してください）。</p>
+<div class="section" id="staticmap-subscribed-topics">
+<span id="id2"></span><h3>1.1. サブスクライブトピック<a class="headerlink" href="#staticmap-subscribed-topics" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">トピック名</th>
+<th class="head">型</th>
+<th class="head">内容</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>map</td>
+<td><a class="reference external" href="http://docs.ros.org/api/nav_msgs/html/msg/OccupancyGrid.html">nav_msgs/OccupancyGrid</a></td>
+<td>コストマップには、ユーザー生成の静的マップから初期化するオプションがあります（ <a class="reference internal" href="#staticmap-parameters"><span class="std std-ref">static_map</span></a> パラメーターを参照）。 このオプションが選択されている場合、コストマップはこのマップを取得するために <a class="reference internal" href="map_server.html"><span class="doc">map_server</span></a> のサービスを使用します。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="staticmap-parameters">
+<span id="id3"></span><h3>1.2. パラメータ<a class="headerlink" href="#staticmap-parameters" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="13%" />
+<col width="64%" />
+<col width="6%" />
+<col width="6%" />
+<col width="10%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">パラメータ名</th>
+<th class="head">内容</th>
+<th class="head">型</th>
+<th class="head">単位</th>
+<th class="head">デフォルト</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>unknown_cost_value</td>
+<td>マップサーバーからマップを読み込むときに、コストを未知スペースと見なす値。コストマップが未知スペースを追跡していない場合、この値のコストは占有と見なされます。値がゼロの場合も、このパラメーターは使用されません。</td>
+<td>int</td>
+<td>-</td>
+<td>-1</td>
+</tr>
+<tr class="row-odd"><td>lethal_cost_threshold</td>
+<td>マップサーバーからマップを読み込むときに致命的コストとみなすしきい値。</td>
+<td>int</td>
+<td>-</td>
+<td>100</td>
+</tr>
+<tr class="row-even"><td>map_topic</td>
+<td>コストマップが静的マップをサブスクライブするトピック名。このパラメーターは、異なる静的マップを使用する単一のノード内に複数のコストマップインスタンスがある場合に役立ちます。 - <em>ナビゲーション1.3.1の新機能</em></td>
+<td>string</td>
+<td>-</td>
+<td>map</td>
+</tr>
+<tr class="row-odd"><td>first_map_only</td>
+<td>trueの場合、マップトピックの最初のメッセージのみをサブスクライブし、後続のすべてのメッセージを無視します</td>
+<td>bool</td>
+<td>-</td>
+<td>false</td>
+</tr>
+<tr class="row-even"><td>subscribe_to_updates</td>
+<td>trueの場合、map_topicに加えて、map_topic + &quot;_updates&quot;もサブスクライブします</td>
+<td>bool</td>
+<td>-</td>
+<td>false</td>
+</tr>
+<tr class="row-odd"><td>track_unknown_space</td>
+<td>trueの場合、マップメッセージ内の未知スペース値はレイヤーに直接変換されます。それ以外の場合、マップメッセージの未知スペース値は、レイヤーでFREE_SPACEとして変換されます。</td>
+<td>bool</td>
+<td>-</td>
+<td>true</td>
+</tr>
+<tr class="row-even"><td>use_maximum</td>
+<td>静的レイヤーが最下層でない場合にのみ重要です。 trueの場合、最大値のみがマスターコストマップに書き込まれます。</td>
+<td>bool</td>
+<td>-</td>
+<td>false</td>
+</tr>
+<tr class="row-odd"><td>trinary_costmap</td>
+<td>trueの場合、すべてのマップメッセージ値をNO_INFORMATION / FREE_SPACE / LETHAL_OBSTACLE（3つの値）に変換します。 falseの場合、中間値を含む全範囲の値が使用可能です。</td>
+<td>bool</td>
+<td>-</td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+</div>
+
+
+            </div>
+        </div>
+        <div class='footer'>
+            <ul>
+            <li><div class="copyright align-left">This document is licensed under the <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0</a></div></li>
+            <li><div class="copyright align-right">Copyright © National Institute of Advanced Industrial Science and Technology （AIST）<br/> （Japan Corporate Number 7010005005425）. All rights reserved.</div></li>
+            </ul>
+            <br />
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,245 @@
+﻿
+/* Override some defaults */
+
+.footer {
+  margin-top: 17px;
+  padding-left: 50px;
+  padding-right: 50px;
+  border-top: 10px solid #135CAF;
+}
+
+.footer p {
+  text-align: center;
+  line-height: 30pt;
+  vertical-align: middle;
+}
+
+.footer ul {
+  list-style:none!important;
+  display:flex!important;
+  flex-wrap:nowrap!important;
+  justify-content: space-between;
+}
+
+/* Page header tweaks */
+.page-header {
+  border-top: 10px solid #135CAF;
+  font-size: 25px;
+  position: relative;
+  background-repeat: no-repeat;
+  background-color: #FFFFFF;
+  text-align: right;
+  height: 66px;
+  padding: 20px 20px 10px;
+  margin: 0px 0px 10px;
+}
+.page-header a {
+  line-height: 22px;
+}
+
+/* トップ画像 */
+.hero-unit {
+  margin-top: 50px;
+  margin-bottom: 0px;
+  padding: 0px;
+}
+.container-fluid {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.row-fluid {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.navbar-inner .container-fluid {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.navbar-inner {
+    padding: 0 0 0 ;
+    border-bottom: 10px solid #135CAF;
+    //border-bottom: 2px solid #E0E0E0;
+    background-color: #E8E8E8;
+    background-image: none;
+    box-shadow: none;
+}
+
+.navbar .nav {
+    margin-left: 20px;
+    //float: right;
+    margin-top: 20px;
+}
+.navbar .btn, .navbar .btn-group {
+    margin-top: 20px;
+}
+.navbar .nav > li > a {
+    color: #000000;
+}
+
+.navbar .nav > li > a:hover {
+  color: #999999;
+}
+.dropdown.open .dropdown-toggle {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.3);
+    color: #111111;
+}
+
+.navbar .nav .dropdown-toggle .caret, .navbar .nav .open.dropdown .caret {
+    border-top-color: #111111;
+}
+.navbar .nav > li > a, .navbar .dropdown-menu a {
+    color: #111111;
+}
+
+.btn-navbar {
+    background-color: #DCDCDC;
+    background-image: none;
+}
+.btn-navbar:hover {
+    background-color: #DCDCDC;
+}
+.btn-navbar .icon-bar {
+    background-color: #050505;
+}
+.well {
+  padding: 12px;
+}
+
+.span3 {
+  padding-left: 20px;
+  margin-right: 0;
+}
+.span8 {
+  padding-right: 20px;
+  margin-left: 0;
+  padding-left: 19px;
+  border-left: 1px solid #eee;
+}
+
+
+.topbar .fill {
+  background-color: #FF0000;
+  background-image: -moz-linear-gradient(center top , #FFFFFF, #EEEEEE);
+}
+
+.topbar .btn {
+  border: 0;
+}
+
+h1 {
+ font-size: 180%;
+ color: #135CAF;
+}
+h2 {
+ color: #135CAF;
+ border-bottom: 1px solid #135CAF;
+ border-left: 6px solid #135CAF;
+ font-size: 120%;
+ margin-top: 5px;
+ margin-bottom: 5px;
+ padding-left: 5px;
+ padding-top: 0px;
+ padding-bottom: 0px;
+ width:98%;
+}
+h3 {
+ color: #135CAF;
+ border-bottom: 1px dashed #135CAF;
+ font-size: 100%;
+ width:98%;
+ padding-left: 5px;
+ margin-bottom: .5em;
+}
+
+p {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/* 色が薄くなるのを戻す */
+li {
+ color: #000000;
+}
+
+/* 左端に棒が出てくるのを消す */
+blockquote {
+ border-left: 0px;
+ margin-bottom: 5px;
+}
+
+blockquote p{
+  font-size: 13px;
+}
+
+/* 見出しの横のパーマリンクを削除 */
+a.headerlink {
+    visibility: hidden;
+}
+
+/* 画面幅が狭くなったときに、ナビゲーションバーと画像の間に隙間ができないようにする */
+@media (max-width: 980px) {
+  .navbar-fixed-top {
+    position: static;
+    margin-bottom: 0px;
+  }
+}
+
+img.align-left, .figure.align-left, object.align-left {
+    clear: left;
+    float: left;
+    margin-right: 1em;
+}
+
+img.align-right, .figure.align-right, object.align-right {
+    clear: right;
+    float: right;
+    margin-left: 1em;
+}
+
+img.align-center, .figure.align-center, object.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.align-left {
+    text-align: left;
+}
+
+.align-center {
+    clear: both;
+    text-align: center;
+}
+
+.align-right {
+    text-align: right;
+}
+button.align-right {
+    clear: right;
+    float: right;
+    margin-left: 1em;
+}
+
+
+div.admonition {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 7px;
+}
+
+div.admonition dt {
+    font-weight: bold;
+}
+
+div.admonition dl {
+    margin-bottom: 0;
+}
+
+p.admonition-title {
+    margin: 0px 10px 5px 0px;
+    font-weight: bold;
+}
+
+table, td, th, tr, tbody {
+    border: 1px #000000 solid;
+}

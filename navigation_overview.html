@@ -1,0 +1,595 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3c.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <title>NavigationStack - Navigation Stack概要</title>
+
+    <script src="_static/jquery-1.7.1.min.js"></script>
+    <script src="_static/bootstrap-modal.js"></script>
+    <script src="_static/bootstrap-collapse.js"></script>
+    <script src="_static/bootstrap-dropdown.js"></script>
+
+    <link rel="stylesheet" href="_static/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-responsive.css" type="text/css" />
+    <link rel="stylesheet" href="_static/template.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+
+</head>
+<body>
+    <div id="fb-root"></div>
+    
+    <div class="container-fluid">
+        <div class="hero-unit">
+            <div class="page-header">
+                <a href="index.html"><font color="#000000">Navigation Stack</font></a>
+                <br/>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span3">
+                <div class="well sidebar-nav">
+                    <ul class="nav nav-list">
+                        <h3>コンテンツ</h3>
+                        <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">はじめに</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Navigation Stack概要</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Navigation Stackとは</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Navigation Stackの入出力</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#transform-tree">Transform Tree</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">測域センサ情報（レーザースキャン）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">測域センサ情報（ポイントクラウド）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">オドメトリ情報</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">地図</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">駆動（速度）命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">その他のメッセージ型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id22">サービス型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id26">アクション型</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="packages.html">各パッケージ仕様</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#move-base">move_baseメイン</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="move_base.html">move_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nav_core.html">nav_core</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id2">自己位置推定関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="amcl.html">amcl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fake_localization.html">fake_localization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id3">地図配信</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="map_server.html">map_server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id4">コストマップ関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="costmap_2d.html">costmap_2d</a></li>
+<li class="toctree-l3"><a class="reference internal" href="voxel_grid.html">voxel_grid</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id5">グローバルプランナー関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="navfn.html">nav_fn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="global_planner.html">global_planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="carrot_planner.html">carrot_planner</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id6">ローカルプランナー関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="base_local_planner.html">base_local_planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dwa_local_planner.html">dwa_local_planner</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id7">リカバリー動作関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="clear_costmap_recovery.html">clear_costmap_recovery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rotate_recovery.html">rotate_recovery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="move_slow_and_clear.html">move_slow_and_clear</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="span8">
+<div class="section" id="navigation-stack">
+<h1>Navigation Stack概要<a class="headerlink" href="#navigation-stack" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="id1">
+<h2>Navigation Stackとは<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Navigation Stackは、オドメトリ情報（ホイールエンコーダ等の内界センサーによる推定自己位置および現在速度）、および、測域センサ情報（障害物までの距離情報）を入力値として、与えられた目標地点／姿勢に到達するための安全な駆動（速度）命令を出力するソフトウェアです。</p>
+<ul class="simple">
+<li>測域センサ情報は、平面レーザーによる2Dレーザースキャンまたは3Dデプスカメラ等によるポイントクラウドを利用可能です。</li>
+<li>TF(Transform tree)と呼ばれる座標軸の相対位置情報を与える必要があります。</li>
+<li>オプションで、Navigationスタックに対して地図を与えることができます。地図を与えることで、Navigationスタックは、より効率的に移動経路の検索を行うことができます。</li>
+</ul>
+<a class="reference internal image-reference" href="_images/navigation_overview.png"><img alt="_images/navigation_overview.png" class="align-center" src="_images/navigation_overview.png" style="width: 720px;" /></a>
+</div>
+<div class="section" id="id2">
+<h2>Navigation Stackの入出力<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="transform-tree">
+<h3>Transform Tree<a class="headerlink" href="#transform-tree" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Transform Tree(TF)とは、ロボットが存在する空間およびロボットの構成要素がそれぞれ持っている座標軸ごとのずれ（x,y,zの相対位置および相対姿勢）がどの程度であるかを、親子関係のツリー構造で表現したものです。</p>
+<p>例えば、障害物からの距離情報は、ロボット上に設置されたレーザーから取得されますが、ロボットの障害物回避を考える場合は、ロボットの基準面の位置で考える必要があります。 そのため、下図のように、レーザーの中心からの距離情報を、ロボット基準面からの距離情報に変換する必要があります。これを求めるために、基準面の座標軸とレーザーの座標軸とのずれを、Navigationスタックに入力する必要があります。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/simple_robot.png"><img alt="_images/simple_robot.png" class="align-center" src="_images/simple_robot.png" style="width: 794px;" /></a>
+<p>出典: <a class="reference external" href="http://wiki.ros.org/navigation/Tutorials/RobotSetup/TF">http://wiki.ros.org/navigation/Tutorials/RobotSetup/TF</a></p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>各座標軸は、フレームIDと呼ばれる文字列により識別されます。Navigationスタックが動作するには、基本的な構成の場合は、mapフレーム → odomフレーム → base_linkフレーム → laserフレーム（または cameraフレーム）の4つの構成要素の相対位置／姿勢（3つのTransform Tree情報）が必要です。</p>
+<ul class="simple">
+<li>mapフレームは、Trensform Treeの頂点座標軸で、ロボットが移動する空間で固定となる絶対座標軸です。</li>
+<li>odomフレームは、ロボットのオドメトリ（内界センサーによる推定自己位置）を表すための座標軸です。mapフレームと同じ空間固定座標軸であり、車輪の空転やロボットの横滑り、オドメトリの計算誤差がないならば、mapフレームとのずれは理論上常にゼロとなります。（実際には計算誤差やスリップなどがあるため、mapフレームとのずれは時間とともに拡大していきます。）</li>
+<li>base_linkフレームは、ロボット基準面の中心を原点とする座標軸です。ロボットの移動に伴い、odomフレームとの相対位置／姿勢が変化していきます。</li>
+<li>laserフレームおよびcameraフレームは、ロボット上の測域センサの基準点を原点とする座標軸です。一般的には、測域センサはロボット上に固定据付されるため、base_linkフレームとの相対位置／姿勢は固定値となります。</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">実際には、例えば、レーザーセンサーを前後に2個搭載するなど、ロボットの構成などに合わせて、適宜TFツリーを構成します。この場合は、map → odom → base_link → laser_front, laser_back のようにするかもしれません。</p>
+</div>
+<p>TFの出力は、<a class="reference internal" href="#msg-tf-tfmessage"><span class="std std-ref">tf/tfMessage</span></a> 型のメッセージを、/tfトピックへ送出することで行います。通常は、 <a class="reference external" href="http://wiki.ros.org/ja/tf">TF API</a> を使用してTFを出力します。</p>
+<div class="section" id="id3">
+<h4>メッセージ定義<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p id="msg-std-msgs-header">std_msgs/Header</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">uint32</span> <span class="n">seq</span>       <span class="c1"># シーケンス番号</span>
+<span class="n">time</span> <span class="n">stamp</span>       <span class="c1"># タイムスタンプ</span>
+<span class="n">string</span> <span class="n">frame_id</span>  <span class="c1"># 親フレームID</span>
+</pre></div>
+</div>
+<p id="msg-geometry-msgs-vector3">geometry_msgs/Vector3</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">float64</span> <span class="n">x</span>   <span class="c1"># x軸要素[m, m/s, rad/sなど]</span>
+<span class="n">float64</span> <span class="n">y</span>   <span class="c1"># y軸要素[m, m/s, rad/sなど]</span>
+<span class="n">float64</span> <span class="n">z</span>   <span class="c1"># z軸要素[m, m/s, rad/sなど]</span>
+</pre></div>
+</div>
+<p id="msg-geometry-msgs-quaternion">geometry_msgs/Quaternion</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">float64</span> <span class="n">x</span>   <span class="c1"># クォータニオンx</span>
+<span class="n">float64</span> <span class="n">y</span>   <span class="c1"># クォータニオンy</span>
+<span class="n">float64</span> <span class="n">z</span>   <span class="c1"># クォータニオンz</span>
+<span class="n">float64</span> <span class="n">w</span>   <span class="c1"># クォータニオンw</span>
+</pre></div>
+</div>
+<p id="msg-geometry-msgs-transform">geometry_msgs/Transform</p>
+<pre class="literal-block">
+<a class="reference internal" href="#msg-geometry-msgs-vector3"><span class="std std-ref">geometry_msgs/Vector3</span></a> translation  # 相対位置
+<a class="reference internal" href="#msg-geometry-msgs-quaternion"><span class="std std-ref">geometry_msgs/Quaternion</span></a> rotation  # 相対姿勢（クォータニオン）
+</pre>
+<p id="msg-geometry-msgs-transformstamped">geometry_msgs/TransformStamped</p>
+<pre class="literal-block">
+<a class="reference internal" href="#msg-std-msgs-header"><span class="std std-ref">std_msgs/Header</span></a> header
+string child_frame_id              # 子フレームID
+<a class="reference internal" href="#msg-geometry-msgs-transform"><span class="std std-ref">geometry_msgs/Transform</span></a> transform  # TF情報
+</pre>
+<p id="msg-tf-tfmessage">tf/tfMessage</p>
+<pre class="literal-block">
+<a class="reference internal" href="#msg-geometry-msgs-transformstamped"><span class="std std-ref">geometry_msgs/TransformStamped</span></a> [] transforms  # TF情報リスト
+</pre>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="id4">
+<h3>測域センサ情報（レーザースキャン）<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>レーザースキャンデータは、laser座標軸における、スキャン範囲内の各スキャン単位における、障害物までの距離を通知します。</p>
+<ul class="simple">
+<li>例えば、測定範囲が180度で測定単位が5度のレーザーセンサであれば、36個の距離データ(ranges)を通知します。</li>
+<li>測定範囲内に何もない部分については、無効値(range_max値または無限大)を入れておきます。</li>
+<li>測定角度は、前方正面が0[ラジアン]で、右側がマイナス値、左側がプラス値となります。</li>
+<li>intensitiesは、通常は反射強度を入れますが、Navigationスタックでは使われないので、何も入れなくても問題はありません。</li>
+</ul>
+<a class="reference internal image-reference" href="_images/laser_scan.png"><img alt="_images/laser_scan.png" class="align-center" src="_images/laser_scan.png" style="width: 529px;" /></a>
+<div class="section" id="id5">
+<h4>メッセージ定義<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p id="msg-std-msgs-header2">std_msgs/Header</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">uint32</span> <span class="n">seq</span>       <span class="c1"># シーケンス番号</span>
+<span class="n">time</span> <span class="n">stamp</span>       <span class="c1"># タイムスタンプ</span>
+<span class="n">string</span> <span class="n">frame_id</span>  <span class="c1"># フレームID（通常はlaser）</span>
+</pre></div>
+</div>
+<p>sensor_msgs/LaserScan</p>
+<pre class="literal-block">
+<a class="reference internal" href="#msg-std-msgs-header2"><span class="std std-ref">std_msgs/Header</span></a> header
+float32 angle_min         # 測定開始角度[ラジアン]
+float32 angle_max         # 測定終了角度[ラジアン]
+float32 angle_increment   # 測定単位[ラジアン]
+float32 time_increment    # 測定単位間の測定時間[秒]
+float32 scan_time         # 全測定単位の測定時間[秒]
+float32 range_min         # 測定最小距離[m]
+float32 range_max         # 測定最大距離[m]
+float32[] ranges          # 測定データ[m]
+float32[] intensities     # 反射強度データ[単位はデバイス依存]
+</pre>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3>測域センサ情報（ポイントクラウド）<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>ポイントクラウドデータは、camera座標軸における、点群の各点の座標を通知します。</p>
+<ul class="simple">
+<li>pointsに各点の座標を配列として格納します。</li>
+<li>channelsは、intensityやrgbなど点の付帯情報を入れるために定義されていますが、 Navigationスタックでは使われないので、何も入れなくても問題ありません。</li>
+</ul>
+<a class="reference internal image-reference" href="_images/keypoints_small.png"><img alt="_images/keypoints_small.png" class="align-center" src="_images/keypoints_small.png" style="width: 636px;" /></a>
+<p>出典: <a class="reference external" href="http://pointclouds.org/documentation/">http://pointclouds.org/documentation/</a></p>
+<div class="section" id="id7">
+<h4>メッセージ定義<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p id="msg-std-msgs-header3">std_msgs/Header</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">uint32</span> <span class="n">seq</span>       <span class="c1"># シーケンス番号</span>
+<span class="n">time</span> <span class="n">stamp</span>       <span class="c1"># タイムスタンプ</span>
+<span class="n">string</span> <span class="n">frame_id</span>  <span class="c1"># フレームID（通常はcamera）</span>
+</pre></div>
+</div>
+<p id="msg-geometry-msgs-point32">geometry_msgs/Point32</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">float32</span> <span class="n">x</span>   <span class="c1"># x座標[m]</span>
+<span class="n">float32</span> <span class="n">y</span>   <span class="c1"># y座標[m]</span>
+<span class="n">float32</span> <span class="n">z</span>   <span class="c1"># z座標[m]</span>
+</pre></div>
+</div>
+<p id="msg-sensor-msgs-channelfloat32">sensor_msgs/ChannelFloat32</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">string</span> <span class="n">name</span>        <span class="c1"># チャンネルデータ名称</span>
+<span class="n">float32</span><span class="p">[]</span> <span class="n">values</span>   <span class="c1"># チャンネルデータ値</span>
+</pre></div>
+</div>
+<p>sensor_msgs/PointCloud</p>
+<pre class="literal-block">
+<a class="reference internal" href="#msg-std-msgs-header3"><span class="std std-ref">std_msgs/Header</span></a> header
+<a class="reference internal" href="#msg-geometry-msgs-point32"><span class="std std-ref">geometry_msgs/Point32</span></a> [] points         # 点群データ
+<a class="reference internal" href="#msg-sensor-msgs-channelfloat32"><span class="std std-ref">sensor_msgs/ChannelFloat32</span></a> [] channels  # チャンネルデータ（デバイス依存）
+</pre>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="id8">
+<h3>オドメトリ情報<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>オドメトリ情報は、odom座標軸におけるロボット(base_link座標軸)の推定自己位置および現在速度（並進速度および回転速度）を通知します。</p>
+<blockquote>
+<div><ul>
+<li><p class="first">推定自己位置は、多くの場合、車輪駆動を制御するノードが、車輪回転量から推定される自己位置情報を通知します。（IMUなど、車輪回転量とは別の何らかの手段を組み合わせて、オドメトリ情報の精度を上げることも可能です。）</p>
+</li>
+<li><p class="first">現在速度は、2Dのナビゲーションでは、x軸並進速度およびz軸回転速度が設定されます。（全方位移動型のロボットであれば、y軸並進速度も設定されます。）</p>
+<p>座標軸の考え方は、下図の通りで、ロボット前方がx軸正方向、ロボット左方向がy軸正方向となります。z軸回転速度は、左回転が正方向です。</p>
+</li>
+<li><p class="first">odomとbase_linkの相対位置については、TFでも全く同じ内容が通知されます。Navigationスタックは、TFで通知される位置情報を見ており、オドメトリ情報側の自己位置情報は、実際には参照されていません。</p>
+</li>
+<li><p class="first">位置・姿勢の共分散については、x,y,z軸位置およびx,y,z軸姿勢の6つの要素について、推定値と実際の値との掛け合わせの相関関係を、6x6の行列データとして設定します。（つまり、推定の確からしさを設定します。）</p>
+<p>通常、x軸位置とy軸位置など、異なる要素は相関関係がないため、行列の対角成分のみ値が設定され、それ以外は0となります。</p>
+<p>Navigationスタックでは、共分散情報を参照していないため、設定していなくても、Navigationスタックの動作に支障はありません。</p>
+</li>
+<li><p class="first">速度の共分散についても、同様に、x,y,z軸並進速度およびx,y,z軸回転速度の6つの要素について、推定値と実際の値との掛け合わせの相関関係を、6x6の行列データとして設定します。
+こちらも、Navigationスタックでは参照されていません。</p>
+</li>
+</ul>
+</div></blockquote>
+<a class="reference internal image-reference" href="_images/base_local_planner_coord.png" id="odom-picture"><img alt="_images/base_local_planner_coord.png" class="align-center" id="odom-picture" src="_images/base_local_planner_coord.png" style="width: 442px;" /></a>
+<div class="section" id="id9">
+<h4>メッセージ定義<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p id="msg-std-msgs-header4">std_msgs/Header</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">uint32</span> <span class="n">seq</span>       <span class="c1"># シーケンス番号</span>
+<span class="n">time</span> <span class="n">stamp</span>       <span class="c1"># タイムスタンプ</span>
+<span class="n">string</span> <span class="n">frame_id</span>  <span class="c1"># 親フレームID（通常はodom）</span>
+</pre></div>
+</div>
+<p id="msg-geometry-msgs-point">geometry_msgs/Point</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">float64</span> <span class="n">x</span>  <span class="c1"># x座標[m]</span>
+<span class="n">float64</span> <span class="n">y</span>  <span class="c1"># y座標[m]</span>
+<span class="n">float64</span> <span class="n">z</span>  <span class="c1"># z座標[m]</span>
+</pre></div>
+</div>
+<p id="msg-geometry-msgs-pose">geometry_msgs/Pose</p>
+<pre class="literal-block">
+<a class="reference internal" href="#msg-geometry-msgs-point"><span class="std std-ref">geometry_msgs/Point</span></a> position           # 位置
+<a class="reference internal" href="#msg-geometry-msgs-quaternion"><span class="std std-ref">geometry_msgs/Quaternion</span></a> orientation   # 姿勢（クォータニオン）
+</pre>
+<p id="msg-geometry-msgs-posewithcovariance">geometry_msgs/PoseWithCovariance</p>
+<pre class="literal-block">
+<a class="reference internal" href="#msg-geometry-msgs-pose"><span class="std std-ref">geometry_msgs/Pose</span></a> pose # 推定自己位置
+float64[36] covariance  # 位置・姿勢の共分散
+</pre>
+<p id="msg-geometry-msgs-twist">geometry_msgs/Twist</p>
+<pre class="literal-block">
+<a class="reference internal" href="#msg-geometry-msgs-vector3"><span class="std std-ref">geometry_msgs/Vector3</span></a> linear   # 並進速度
+<a class="reference internal" href="#msg-geometry-msgs-vector3"><span class="std std-ref">geometry_msgs/Vector3</span></a> angular  # 回転速度
+</pre>
+<p id="msg-geometry-msgs-twistwithcovariance">geometry_msgs/TwistWithCovariance</p>
+<pre class="literal-block">
+<a class="reference internal" href="#msg-geometry-msgs-twist"><span class="std std-ref">geometry_msgs/Twist</span></a> twist  # 速度
+float64[36] covariance     # 速度の共分散
+</pre>
+<p>nav_msgs/Odometry</p>
+<pre class="literal-block">
+<a class="reference internal" href="#msg-std-msgs-header4"><span class="std std-ref">std_msgs/Header</span></a> header
+string child_frame_id                   # 子フレームID（通常はbase_link）
+<a class="reference internal" href="#msg-geometry-msgs-posewithcovariance"><span class="std std-ref">geometry_msgs/PoseWithCovariance</span></a> pose   # 推定自己位置
+<a class="reference internal" href="#msg-geometry-msgs-twistwithcovariance"><span class="std std-ref">geometry_msgs/TwistWithCovariance</span></a> twist # 速度
+</pre>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="id10">
+<h3>地図<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>オプションとして、Navigationスタックに地図を与えることで、測距センサで見えていない後方や遠方、死角の情報も加味して経路検索を行うことができます。</p>
+<p>地図は、OccupancyGridというデータ形式で表現します。5cm四方など、決まったサイズのセルで地図を区切り、各セルを、「占有されたセル(100)」、「占有されていないセル(0)」、「未知のセル(-1)」の3つで区分して地図を表現します。</p>
+<p>地図情報は、解像度（セルの大きさ）、地図の大きさ（縦横のセル数）、オリジン（/map座標軸におけるセル(0,0)の位置）、そして各セルの占有率を保持した配列データから成ります。</p>
+<a class="reference internal image-reference" href="_images/occupancy_grid_map.png"><img alt="_images/occupancy_grid_map.png" class="align-center" src="_images/occupancy_grid_map.png" style="width: 879px;" /></a>
+<div class="section" id="id11">
+<h4>メッセージ定義<a class="headerlink" href="#id11" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p id="msg-std-msgs-header5">std_msgs/Header</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">uint32</span> <span class="n">seq</span>       <span class="c1"># シーケンス番号</span>
+<span class="n">time</span> <span class="n">stamp</span>       <span class="c1"># タイムスタンプ</span>
+<span class="n">string</span> <span class="n">frame_id</span>  <span class="c1"># フレームID（通常はmap）</span>
+</pre></div>
+</div>
+<p id="msg-nav-msgs-mapmetadata">nav_msgs/MapMetaData</p>
+<pre class="literal-block">
+time map_load_time          # 地図ロード時間（参照されない。header.stampと同値を入れておけばよい。）
+float32 resolution          # 地図解像度[m]
+uint32 width                # 地図横サイズ[セル数]
+uint32 height               # 地図縦サイズ[セル数]
+<a class="reference internal" href="#msg-geometry-msgs-pose"><span class="std std-ref">geometry_msgs/Pose</span></a> origin   # オリジン座標
+</pre>
+<p id="msg-nav-msgs-occupancygrid">nav_msgs/OccupancyGrid</p>
+<pre class="literal-block">
+<a class="reference internal" href="#msg-std-msgs-header5"><span class="std std-ref">std_msgs/Header</span></a> header
+nav_msgs/MapMetaData info   # 地図付帯情報
+int8[] data                 # 地図データ
+</pre>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="id12">
+<h3>駆動（速度）命令<a class="headerlink" href="#id12" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>安全な経路を検索した結果として、Navigationスタックから駆動命令が出力されます。</p>
+<p>速度は、並進速度(x,y,z)および回転速度(x,y,z)で表現され、一般的な2輪差動型のロボットの場合は、x軸並進速度とz軸回転速度のみ指定されます。オムニホイールなど全方位移動型のロボットの場合は、y軸並進速度が追加で指定されます。</p>
+<p>座標軸についての考え方は、<a class="reference internal" href="#odom-picture"><span class="std std-ref">オドメトリ情報の現在速度</span></a> と同じです。</p>
+<div class="section" id="id13">
+<h4>メッセージ定義<a class="headerlink" href="#id13" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>geometry_msgs/Twist</p>
+<pre class="literal-block">
+<a class="reference internal" href="#msg-geometry-msgs-vector3"><span class="std std-ref">geometry_msgs/Vector3</span></a> linear   # 並進速度
+<a class="reference internal" href="#msg-geometry-msgs-vector3"><span class="std std-ref">geometry_msgs/Vector3</span></a> angular  # 回転速度
+</pre>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="id14">
+<h3>その他のメッセージ型<a class="headerlink" href="#id14" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id15">
+<h4>共分散・タイムスタンプ付き位置・姿勢<a class="headerlink" href="#id15" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>オドメトリ情報と同じ共分散付き位置・姿勢データにヘッダが付与されたメッセージ型です。ロボット自己位置の初期設定等に使用されます。</p>
+<p id="msg-std-msgs-header-com">std_msgs/Header</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">uint32</span> <span class="n">seq</span>       <span class="c1"># シーケンス番号</span>
+<span class="n">time</span> <span class="n">stamp</span>       <span class="c1"># タイムスタンプ</span>
+<span class="n">string</span> <span class="n">frame_id</span>  <span class="c1"># フレームID</span>
+</pre></div>
+</div>
+<p id="msg-geometry-msgs-posewithcovariancestamped">geometry_msgs/PoseWithCovarianceStamped</p>
+<pre class="literal-block">
+<a class="reference internal" href="#msg-std-msgs-header-com"><span class="std std-ref">std_msgs/Header</span></a> header
+<a class="reference internal" href="#msg-geometry-msgs-posewithcovariance"><span class="std std-ref">geometry_msgs/PoseWithCovariance</span></a> pose   # 位置・姿勢
+</pre>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id16">
+<h4>位置・姿勢配列<a class="headerlink" href="#id16" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>位置・姿勢データの配列です。パーティクル分散の視覚情報等に使用されます。</p>
+<p id="msg-geometry-msgs-posearray">geometry_msgs/PoseArray</p>
+<pre class="literal-block">
+<a class="reference internal" href="#msg-std-msgs-header-com"><span class="std std-ref">std_msgs/Header</span></a> header
+<a class="reference internal" href="#msg-geometry-msgs-pose"><span class="std std-ref">geometry_msgs/Pose</span></a> [] poses   # 位置・姿勢配列
+</pre>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id17">
+<h4>経路情報<a class="headerlink" href="#id17" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>経路情報です。位置・姿勢データの配列で表現されます。経路の視覚情報等に使用されます。</p>
+<p id="msg-geometry-msgs-posestamped">geometry_msgs/PoseStamped</p>
+<pre class="literal-block">
+<a class="reference internal" href="#msg-std-msgs-header-com"><span class="std std-ref">std_msgs/Header</span></a> header
+<a class="reference internal" href="#msg-geometry-msgs-pose"><span class="std std-ref">geometry_msgs/Pose</span></a> pose   # 位置・姿勢
+</pre>
+<p id="msg-nav-msgs-path">nav_msgs/Path</p>
+<pre class="literal-block">
+<a class="reference internal" href="#msg-std-msgs-header-com"><span class="std std-ref">std_msgs/Header</span></a> header
+<a class="reference internal" href="#msg-geometry-msgs-posestamped"><span class="std std-ref">geometry_msgs/PoseStamped</span></a> [] poses   # 位置・姿勢配列
+</pre>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id18">
+<h4>ポイントクラウド2<a class="headerlink" href="#id18" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>ポイントクラウドの点群情報を、BLOBデータで表現するデータ型です。</p>
+<p>1つのデータがどのような構成になっているかをfieldsで定義します。例えば、&quot;x&quot;,&quot;y&quot;,&quot;z&quot;座標が、FLOAT32(7)で1つずつ入っているといった具合です。（全部で12byte）さらに、反射強度など任意のフィールドを定義できます。
+このデータが、height * width分含まれる形で、TOFカメラの出力のようなイメージのデータ形式となります。（2D画像の各ピクセルが、3D座標情報を持っているようなイメージ。）</p>
+<p id="msg-sensor-msgs-pointfield">sensor_msgs/PointField</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">uint8</span> <span class="n">INT8</span>    <span class="o">=</span> <span class="mi">1</span>
+<span class="n">uint8</span> <span class="n">UINT8</span>   <span class="o">=</span> <span class="mi">2</span>
+<span class="n">uint8</span> <span class="n">INT16</span>   <span class="o">=</span> <span class="mi">3</span>
+<span class="n">uint8</span> <span class="n">UINT16</span>  <span class="o">=</span> <span class="mi">4</span>
+<span class="n">uint8</span> <span class="n">INT32</span>   <span class="o">=</span> <span class="mi">5</span>
+<span class="n">uint8</span> <span class="n">UINT32</span>  <span class="o">=</span> <span class="mi">6</span>
+<span class="n">uint8</span> <span class="n">FLOAT32</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="n">uint8</span> <span class="n">FLOAT64</span> <span class="o">=</span> <span class="mi">8</span>
+
+<span class="n">string</span> <span class="n">name</span>      <span class="c1"># データ内のフィールドの名前</span>
+<span class="n">uint32</span> <span class="n">offset</span>    <span class="c1"># このフィールドがデータ内の何バイト目から始まるか</span>
+<span class="n">uint8</span>  <span class="n">datatype</span>  <span class="c1"># このフィールドのデータ型（上記のいずれか）</span>
+<span class="n">uint32</span> <span class="n">count</span>     <span class="c1"># このフィールドのデータ数</span>
+</pre></div>
+</div>
+<p id="msg-sensor-msgs-pointcloud2">sensor_msgs/PointCloud2</p>
+<pre class="literal-block">
+<a class="reference internal" href="#msg-std-msgs-header-com"><span class="std std-ref">std_msgs/Header</span></a> header
+uint32 height                     # データ配列の高さ
+uint32 width                      # データ配列の幅
+<a class="reference internal" href="#msg-sensor-msgs-pointfield"><span class="std std-ref">sensor_msgs/PointField</span></a> [] fields  # フィールド定義
+bool is_bigendian                 # フィールドのデータ型がビッグエンディアンかどうか
+uint32 point_step                 # 1データのあたりのバイト数
+uint32 row_step                   # 1行あたりのバイト数(point_step * width)
+uint8[] data                      # データ(サイズはrow_step * height)
+bool is_dense                     # データがすべて有効値かどうか
+</pre>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id19">
+<h4>多角形<a class="headerlink" href="#id19" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>多角形の頂点座標配列です。ロボットのフットプリント表現などに使用されます。</p>
+<p>geometry_msgs/Polygon</p>
+<pre class="literal-block">
+<a class="reference internal" href="#msg-geometry-msgs-point32"><span class="std std-ref">geometry_msgs/Point32</span></a> [] points         # 頂点座標配列
+</pre>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id20">
+<h4>占有グリッド更新情報<a class="headerlink" href="#id20" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p><a class="reference internal" href="#msg-nav-msgs-occupancygrid"><span class="std std-ref">nav_msgs/OccupancyGrid</span></a> のデータを部分更新するためのデータ型です。</p>
+<p>map_msgs/OccupancyGridUpdate</p>
+<pre class="literal-block">
+<a class="reference internal" href="#msg-std-msgs-header-com"><span class="std std-ref">std_msgs/Header</span></a> header
+int32 x        # 始点x座標[m]
+int32 y        # 始点y座標[m]
+uint32 width   # 幅[m]
+uint32 height  # 高さ[m]
+int8[] data    # 更新データ
+</pre>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id21">
+<h4>ボクセルグリッド情報<a class="headerlink" href="#id21" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p><a class="reference internal" href="voxel_grid.html"><span class="doc">voxel_grid</span></a> のデータを視覚表示するためのデータ型です。</p>
+<p>3Dグリッドの高さを最大16段階とし、2Dで見た各列の占有／空きを、16ビットデータの各ビットの1/0で表現したものです。（「不明」は、全てのビットが1の列としています。）</p>
+<p>costmap_2d/VoxelGrid</p>
+<pre class="literal-block">
+<a class="reference internal" href="#msg-std-msgs-header-com"><span class="std std-ref">std_msgs/Header</span></a> header
+uint32[] data                       # グリッド占有／空きデータ
+<a class="reference internal" href="#msg-geometry-msgs-point32"><span class="std std-ref">geometry_msgs/Point32</span></a> origin        # オリジン座標
+<a class="reference internal" href="#msg-geometry-msgs-vector3"><span class="std std-ref">geometry_msgs/Vector3</span></a> resolutions   # グリッド解像度
+uint32 size_x                       # x軸データサイズ
+uint32 size_y                       # y軸データサイズ
+uint32 size_z                       # z軸データサイズ(最大16)
+</pre>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="id22">
+<h3>サービス型<a class="headerlink" href="#id22" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="empty">
+<h4>Empty型<a class="headerlink" href="#empty" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>引数無し（コールのみ）のサービス型です。</p>
+<p>std_srvs/Empty</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id23">
+<h4>地図設定<a class="headerlink" href="#id23" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>地図および初期位置を引き渡すためのサービス型です。</p>
+<p>nav_msgs/SetMap</p>
+<pre class="literal-block">
+<a class="reference internal" href="#msg-nav-msgs-occupancygrid"><span class="std std-ref">nav_msgs/OccupancyGrid</span></a> map                            # 地図
+<a class="reference internal" href="#msg-geometry-msgs-posewithcovariancestamped"><span class="std std-ref">geometry_msgs/PoseWithCovarianceStamped</span></a> initial_pose  # 初期位置・姿勢
+---
+bool success                                          # 処理結果
+</pre>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id24">
+<h4>地図取得<a class="headerlink" href="#id24" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>地図を取得するためのサービス型です。</p>
+<p>nav_msgs/GetMap</p>
+<pre class="literal-block">
+---
+<a class="reference internal" href="#msg-nav-msgs-occupancygrid"><span class="std std-ref">nav_msgs/OccupancyGrid</span></a> map  # 地図
+</pre>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id25">
+<h4>経路取得<a class="headerlink" href="#id25" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>経路を取得するためのサービス型です。</p>
+<p>nav_msgs/GetPlan</p>
+<pre class="literal-block">
+<a class="reference internal" href="#msg-geometry-msgs-posestamped"><span class="std std-ref">geometry_msgs/PoseStamped</span></a> start  # スタート位置・姿勢
+<a class="reference internal" href="#msg-geometry-msgs-posestamped"><span class="std std-ref">geometry_msgs/PoseStamped</span></a> goal   # ゴール位置・姿勢
+float32 tolerance                # ゴール許容誤差[m]
+---
+<a class="reference internal" href="#msg-nav-msgs-path"><span class="std std-ref">nav_msgs/Path</span></a> plan               # 経路
+</pre>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="id26">
+<h3>アクション型<a class="headerlink" href="#id26" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="movebase">
+<h4>MoveBaseアクション<a class="headerlink" href="#movebase" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>Navigationスタックへ、目標位置・姿勢を指定してロボットの移動を指示し、フィードバック（現在位置）および結果を受け取るためのアクションです。</p>
+<p>MoveBase.action</p>
+<pre class="literal-block">
+# ゴール定義
+<a class="reference internal" href="#msg-geometry-msgs-posestamped"><span class="std std-ref">geometry_msgs/PoseStamped</span></a> target_pose     # 目標位置・姿勢
+---
+# 結果定義
+---
+# フィードバック定義
+<a class="reference internal" href="#msg-geometry-msgs-posestamped"><span class="std std-ref">geometry_msgs/PoseStamped</span></a> base_position   # 現在位置・姿勢
+</pre>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+            </div>
+        </div>
+        <div class='footer'>
+            <ul>
+            <li><div class="copyright align-left">This document is licensed under the <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0</a></div></li>
+            <li><div class="copyright align-right">Copyright © National Institute of Advanced Industrial Science and Technology （AIST）<br/> （Japan Corporate Number 7010005005425）. All rights reserved.</div></li>
+            </ul>
+            <br />
+        </div>
+    </div>
+</body>
+</html>

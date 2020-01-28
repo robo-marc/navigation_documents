@@ -1,0 +1,247 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3c.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <title>NavigationStack - move_slow_and_clear</title>
+
+    <script src="_static/jquery-1.7.1.min.js"></script>
+    <script src="_static/bootstrap-modal.js"></script>
+    <script src="_static/bootstrap-collapse.js"></script>
+    <script src="_static/bootstrap-dropdown.js"></script>
+
+    <link rel="stylesheet" href="_static/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-responsive.css" type="text/css" />
+    <link rel="stylesheet" href="_static/template.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+
+</head>
+<body>
+    <div id="fb-root"></div>
+    
+    <div class="container-fluid">
+        <div class="hero-unit">
+            <div class="page-header">
+                <a href="index.html"><font color="#000000">Navigation Stack</font></a>
+                <br/>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span3">
+                <div class="well sidebar-nav">
+                    <ul class="nav nav-list">
+                        <h3>コンテンツ</h3>
+                        <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="navigation_overview.html">Navigation Stack概要</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="navigation_overview.html#id1">Navigation Stackとは</a></li>
+<li class="toctree-l2"><a class="reference internal" href="navigation_overview.html#id2">Navigation Stackの入出力</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#transform-tree">Transform Tree</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id4">測域センサ情報（レーザースキャン）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id6">測域センサ情報（ポイントクラウド）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id8">オドメトリ情報</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id10">地図</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id12">駆動（速度）命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id14">その他のメッセージ型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id22">サービス型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id26">アクション型</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="packages.html">各パッケージ仕様</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="packages.html#move-base">move_baseメイン</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="move_base.html">move_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nav_core.html">nav_core</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id2">自己位置推定関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="amcl.html">amcl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fake_localization.html">fake_localization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id3">地図配信</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="map_server.html">map_server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id4">コストマップ関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="costmap_2d.html">costmap_2d</a></li>
+<li class="toctree-l3"><a class="reference internal" href="voxel_grid.html">voxel_grid</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id5">グローバルプランナー関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="navfn.html">nav_fn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="global_planner.html">global_planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="carrot_planner.html">carrot_planner</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id6">ローカルプランナー関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="base_local_planner.html">base_local_planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dwa_local_planner.html">dwa_local_planner</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="packages.html#id7">リカバリー動作関連</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="clear_costmap_recovery.html">clear_costmap_recovery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rotate_recovery.html">rotate_recovery</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">move_slow_and_clear</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="span8">
+<div class="section" id="move-slow-and-clear">
+<h1>move_slow_and_clear<a class="headerlink" href="#move-slow-and-clear" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>目次</p>
+<div class="line-block">
+<div class="line">　1. <a class="reference internal" href="#move-slow-and-clear-overview"><span class="std std-ref">概要</span></a></div>
+<div class="line">　2. <a class="reference internal" href="#move-slow-and-clear-move-slow-and-clear-overview"><span class="std std-ref">move_slow_and_clearの概要</span></a></div>
+<div class="line">　3. <a class="reference internal" href="#move-slow-and-clear-move-slow-and-clear"><span class="std std-ref">MoveSlowAndClear</span></a></div>
+<div class="line">　　3.1 <a class="reference internal" href="#move-slow-and-clear-api"><span class="std std-ref">APIの安定性</span></a></div>
+<div class="line">　　3.2 <a class="reference internal" href="#move-slow-and-clear-ros-param"><span class="std std-ref">ROSパラメータ</span></a></div>
+<div class="line">　　3.3 <a class="reference internal" href="#move-slow-and-clear-cpp-api"><span class="std std-ref">C++ API</span></a></div>
+<div class="line"><br /></div>
+</div>
+<div class="section" id="move-slow-and-clear-overview">
+<span id="id1"></span><h2>1. 概要<a class="headerlink" href="#move-slow-and-clear-overview" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">　このパッケージは、<a class="reference internal" href="costmap_2d.html"><span class="doc">コストマップ</span></a> 内の情報をクリアし、ロボットの速度を制限する単純なリカバリ動作を提供します。</div>
+<div class="line"><br /></div>
+</div>
+<ul class="simple">
+<li>管理状態：管理済み</li>
+<li>管理者：David V. Lu!! &lt;davidvlu AT gmail DOT com&gt;, Michael Ferguson &lt;mfergs7 AT gmail DOT com&gt;, Aaron Hoy &lt;ahoy AT fetchrobotics DOT com&gt;</li>
+<li>著者：Eitan Marder-Eppstein, <a class="reference external" href="mailto:contradict&#37;&#52;&#48;gmail&#46;com">contradict<span>&#64;</span>gmail<span>&#46;</span>com</a></li>
+<li>ライセンス：BSD</li>
+<li>ソース：git <a class="reference external" href="https://github.com/ros-planning/navigation.git">https://github.com/ros-planning/navigation.git</a> (branch: melodic-devel)</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="move-slow-and-clear-move-slow-and-clear-overview">
+<span id="id2"></span><h2>2. move_slow_and_clearの概要<a class="headerlink" href="#move-slow-and-clear-move-slow-and-clear-overview" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">　move_slow_and_clear::MoveSlowAndClearは、 <a class="reference internal" href="costmap_2d.html"><span class="doc">コストマップ</span></a> 内の情報をクリアし、ロボットの速度を制限する単純なリカバリ動作です。このリカバリ動作は真に安全ではないことに注意してください。ユーザーが指定した速度で動くだけで、ロボットが物にぶつかる可能性があります。また、このリカバリ動作は、 <a class="reference internal" href="dwa_local_planner.html"><span class="doc">dwa_local_planner</span></a> などの <a class="reference external" href="http://wiki.ros.org/dynamic_reconfigure">dynamic_reconfigure</a> を介して最大速度を設定できるローカルプランナーとのみ互換性があります。</div>
+<div class="line"><br /></div>
+<div class="line">　以下の手順でリカバリを行います。</div>
+<div class="line"><br /></div>
+</div>
+<ol class="arabic">
+<li><p class="first">グローバルコストマップとローカルコストマップのロボットの周辺のエリア（ロボットを中心とした1辺が <a class="reference internal" href="#move-slow-and-clear-ros-param"><span class="std std-ref">clearing_distance</span></a> * 2 の正方形 ）を空き（占有されていない）にします。</p>
+<a class="reference internal image-reference" href="_images/move_slow_and_clear.png"><img alt="_images/move_slow_and_clear.png" class="align-center" src="_images/move_slow_and_clear.png" style="width: 816px;" /></a>
+</li>
+<li><p class="first"><a class="reference internal" href="#move-slow-and-clear-ros-param"><span class="std std-ref">planner_name_space</span></a> で示したプランナーのmax_trans_velとmax_rot_velパラメータを、<a class="reference internal" href="#move-slow-and-clear-ros-param"><span class="std std-ref">limited_trans_speed</span></a> と <a class="reference internal" href="#move-slow-and-clear-ros-param"><span class="std std-ref">limited_rot_speed</span></a> パラメータで指定した速度に更新します。</p>
+</li>
+<li><p class="first">0.1秒周期で、グローバルコストマップ上の移動距離をチェックします。</p>
+<ul class="simple">
+<li>指定した距離（ <a class="reference internal" href="#move-slow-and-clear-ros-param"><span class="std std-ref">limited_distance</span></a> ） ≦ 速度制限開始位置と現在位置の距離 : 移動距離のチェックを終了し、max_trans_velとmax_rot_velを元の速度に戻します。</li>
+</ul>
+</li>
+</ol>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="moveslowandclear">
+<span id="move-slow-and-clear-move-slow-and-clear"></span><h2>3. MoveSlowAndClear<a class="headerlink" href="#moveslowandclear" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">　move_slow_and_clear::MoveSlowAndClearオブジェクトは、その機能を <a class="reference external" href="http://wiki.ros.org/navigation/ROS_Wrappers">C++ ROSラッパー</a> として公開します。これは、初期化時に指定されたROS名前空間（以降、<em>name</em>と仮表記）内で動作します。 <a class="reference internal" href="nav_core.html"><span class="doc">nav_core</span></a> パッケージにあるnav_core::RecoveryBehaviorインタフェースに準拠しています。</div>
+<div class="line"><br /></div>
+</div>
+<div class="section" id="api">
+<span id="move-slow-and-clear-api"></span><h3>3.1 APIの安定性<a class="headerlink" href="#api" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li>C++ APIは安定しています。</li>
+<li>ROS APIは安定しています。</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="ros">
+<span id="move-slow-and-clear-ros-param"></span><h3>3.2 ROSパラメータ<a class="headerlink" href="#ros" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="7%" />
+<col width="68%" />
+<col width="7%" />
+<col width="7%" />
+<col width="11%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">パラメータ名</th>
+<th class="head">内容</th>
+<th class="head">型</th>
+<th class="head">単位</th>
+<th class="head">デフォルト</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>~&lt;name&gt;/clearing_distance</td>
+<td>障害物が除去されるロボットからの半径（メートル単位）。この半径の内部の障害物がクリアされます。</td>
+<td>double</td>
+<td>m</td>
+<td>0.5</td>
+</tr>
+<tr class="row-odd"><td>~&lt;name&gt;/limited_trans_speed</td>
+<td>このリカバリ動作の実行中にロボットが制限される並進速度（メートル/秒単位）。</td>
+<td>double</td>
+<td>m/sec</td>
+<td>0.25</td>
+</tr>
+<tr class="row-even"><td>~&lt;name&gt;/limited_rot_speed</td>
+<td>このリカバリ動作の実行中にロボットが制限される回転速度（ラジアン/秒単位）。</td>
+<td>double</td>
+<td>rad/sec</td>
+<td>0.45</td>
+</tr>
+<tr class="row-odd"><td>~&lt;name&gt;/limited_distance</td>
+<td>速度制限が解除される前にロボットが移動しなければならない距離（メートル単位）。</td>
+<td>double</td>
+<td>m</td>
+<td>0.3</td>
+</tr>
+<tr class="row-even"><td>~&lt;name&gt;/planner_namespace</td>
+<td>パラメータを再構成するプランナーの名前。特に、max_trans_velおよびmax_rot_velパラメータは、この名前空間内で再構成されます。</td>
+<td>string</td>
+<td>－</td>
+<td>&quot;DWAPlannerROS&quot;</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="c-api">
+<span id="move-slow-and-clear-cpp-api"></span><h3>3.3 C++ API<a class="headerlink" href="#c-api" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="line-block">
+<div class="line">　C ++ move_slow_and_clear::MoveSlowAndClearクラスは、 <a class="reference internal" href="nav_core.html"><span class="doc">nav_core</span></a> パッケージにあるnav_core::RecoveryBehaviorインタフェースに準拠しています。詳細なドキュメントについては、 <a class="reference external" href="http://www.ros.org/doc/api/move_slow_and_clear/html/">MoveSlowAndClearドキュメント</a> を参照してください。</div>
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+</div>
+
+
+            </div>
+        </div>
+        <div class='footer'>
+            <ul>
+            <li><div class="copyright align-left">This document is licensed under the <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0</a></div></li>
+            <li><div class="copyright align-right">Copyright © National Institute of Advanced Industrial Science and Technology （AIST）<br/> （Japan Corporate Number 7010005005425）. All rights reserved.</div></li>
+            </ul>
+            <br />
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,843 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3c.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <title>NavigationStack - amcl</title>
+
+    <script src="_static/jquery-1.7.1.min.js"></script>
+    <script src="_static/bootstrap-modal.js"></script>
+    <script src="_static/bootstrap-collapse.js"></script>
+    <script src="_static/bootstrap-dropdown.js"></script>
+
+    <link rel="stylesheet" href="_static/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-responsive.css" type="text/css" />
+    <link rel="stylesheet" href="_static/template.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+
+</head>
+<body>
+    <div id="fb-root"></div>
+    
+    <div class="container-fluid">
+        <div class="hero-unit">
+            <div class="page-header">
+                <a href="index.html"><font color="#000000">Navigation Stack</font></a>
+                <br/>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span3">
+                <div class="well sidebar-nav">
+                    <ul class="nav nav-list">
+                        <h3>コンテンツ</h3>
+                        <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="navigation_overview.html">Navigation Stack概要</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="navigation_overview.html#id1">Navigation Stackとは</a></li>
+<li class="toctree-l2"><a class="reference internal" href="navigation_overview.html#id2">Navigation Stackの入出力</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#transform-tree">Transform Tree</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id4">測域センサ情報（レーザースキャン）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id6">測域センサ情報（ポイントクラウド）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id8">オドメトリ情報</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id10">地図</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id12">駆動（速度）命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id14">その他のメッセージ型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id22">サービス型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id26">アクション型</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="packages.html">各パッケージ仕様</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="packages.html#move-base">move_baseメイン</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="move_base.html">move_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nav_core.html">nav_core</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="packages.html#id2">自己位置推定関連</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">amcl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fake_localization.html">fake_localization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id3">地図配信</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="map_server.html">map_server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id4">コストマップ関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="costmap_2d.html">costmap_2d</a></li>
+<li class="toctree-l3"><a class="reference internal" href="voxel_grid.html">voxel_grid</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id5">グローバルプランナー関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="navfn.html">nav_fn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="global_planner.html">global_planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="carrot_planner.html">carrot_planner</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id6">ローカルプランナー関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="base_local_planner.html">base_local_planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dwa_local_planner.html">dwa_local_planner</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id7">リカバリー動作関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="clear_costmap_recovery.html">clear_costmap_recovery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rotate_recovery.html">rotate_recovery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="move_slow_and_clear.html">move_slow_and_clear</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="span8">
+<div class="section" id="amcl">
+<h1>amcl<a class="headerlink" href="#amcl" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<blockquote>
+<div>目次</div></blockquote>
+<div class="line-block">
+<div class="line">　1. <a class="reference internal" href="#overview"><span class="std std-ref">概要</span></a></div>
+<div class="line">　2. <a class="reference internal" href="#algorithm"><span class="std std-ref">アルゴリズム</span></a></div>
+<div class="line">　　2.1 <a class="reference internal" href="#particle-filter"><span class="std std-ref">パーティクルフィルタ</span></a></div>
+<div class="line">　　　2.1.1 <a class="reference internal" href="#predict"><span class="std std-ref">予測</span></a></div>
+<div class="line">　　　2.1.2 <a class="reference internal" href="#likelihood"><span class="std std-ref">尤度の計算</span></a></div>
+<div class="line">　　　2.1.3 <a class="reference internal" href="#resampling"><span class="std std-ref">リサンプリング</span></a></div>
+<div class="line">　　2.2 <a class="reference internal" href="#amcl-particle-filter"><span class="std std-ref">amclにおけるパーティクルフィルタ</span></a></div>
+<div class="line">　　　2.2.1 <a class="reference internal" href="#sample-motion-model-odometry"><span class="std std-ref">オドメトリによる予測</span></a></div>
+<div class="line">　　　2.2.2 <a class="reference internal" href="#range-finder-model"><span class="std std-ref">レーザーによる尤度計算</span></a></div>
+<div class="line">　　　2.2.3 <a class="reference internal" href="#sampling"><span class="std std-ref">サンプリング</span></a></div>
+<div class="line">　3. <a class="reference internal" href="#node"><span class="std std-ref">ノード</span></a></div>
+<div class="line">　　3.1. <a class="reference internal" href="#subscribed"><span class="std std-ref">Subscribeトピック</span></a></div>
+<div class="line">　　3.2. <a class="reference internal" href="#published"><span class="std std-ref">Publisheトピック</span></a></div>
+<div class="line">　　3.3. <a class="reference internal" href="#service"><span class="std std-ref">サービス</span></a></div>
+<div class="line">　　3.4. <a class="reference internal" href="#servicecall"><span class="std std-ref">サービスコール</span></a></div>
+<div class="line">　　3.5. <a class="reference internal" href="#parameter"><span class="std std-ref">パラメーター</span></a></div>
+<div class="line">　　　3.5.1. <a class="reference internal" href="#all-param"><span class="std std-ref">フィルター全体のパラメーター</span></a></div>
+<div class="line">　　　3.5.2. <a class="reference internal" href="#laser-param"><span class="std std-ref">レーザーモデルパラメーター</span></a></div>
+<div class="line">　　　3.5.3. <a class="reference internal" href="#odom-param"><span class="std std-ref">オドメトリモデルのパラメーター</span></a></div>
+<div class="line">　　3.6. <a class="reference internal" href="#transform"><span class="std std-ref">tfメッセージ</span></a></div>
+<div class="line">　4. <a class="reference internal" href="#internal-processing"><span class="std std-ref">内部構成手順</span></a></div>
+<div class="line">　　4.1. <a class="reference internal" href="#sequence"><span class="std std-ref">レーザ入力時のシーケンス</span></a></div>
+<div class="line"><br /></div>
+</div>
+<div class="section" id="overview">
+<span id="id1"></span><h2>1       概要<a class="headerlink" href="#overview" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>　amcl(adaptive Monte Carlo localization)は、2Dで移動するロボットのための確率的な位置推定システムです。 パーティクルフィルタ（またはKLDサンプリング）を使用したモンテカルロ法を用いて、既知のマップに対するロボットの姿勢の追跡を行います。このノードは、Andrew Howardの「amcl」ドライバーから派生したものとなります。</p>
+<ul class="simple">
+<li>管理状態：管理済み</li>
+<li>管理者：David V. Lu&lt;davidvlu AT gmail DOT com&gt;、Michael Ferguson&lt;mfergs7 AT gmail DOT com&gt;、 Aaron Hoy&lt;ahoy AT fetchrobotics DOT com&gt;</li>
+<li>著者：Brian P. Gerkey、<a class="reference external" href="mailto:contradict&#37;&#52;&#48;gmail&#46;com">contradict<span>&#64;</span>gmail<span>&#46;</span>com</a></li>
+<li>ライセンス：LGPL</li>
+<li>ソース：git <a class="reference external" href="https://github.com/ros-planning/navigation.git">https://github.com/ros-planning/navigation.git</a> （ブランチ：melodic-devel）</li>
+</ul>
+</div>
+<div class="section" id="algorithm">
+<span id="id2"></span><h2>2       アルゴリズム<a class="headerlink" href="#algorithm" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>　アルゴリズムとそのパラメーターの多くは、 Thrun・Burgard・Foxによる本「Probabilistic Robotics」から採用しています。 詳細を確認することをお勧めします。その本から以下のアルゴリズムを採用しています。</p>
+<ul class="simple">
+<li>sample_motion_model_odometry</li>
+<li>beam_range_finder_model</li>
+<li>likelihood_field_range_finder_model</li>
+<li>Augmented_MCL</li>
+<li>KLD_Sampling_MCL</li>
+</ul>
+<p>　このノードはレーザースキャンとレーザーで作成したマップの他に、センサーデータで取得したオドメトリと連携するように拡張されています。</p>
+<p>　トピック名がbase_scanのレーザーデータを使用して実行するには以下のようにscanにトピック名を指定します。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>amcl scan:=base_scan
+</pre></div>
+</div>
+<p>　amclで自己位置推定に使用しているパーティクルフィルタについて説明を行います。</p>
+<div class="section" id="particle-filter">
+<span id="id3"></span><h3>2.1 パーティクルフィルタ<a class="headerlink" href="#particle-filter" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>　パーティクルフィルタは逐次モンテカルロ法とも呼ばれ、逐次ベイズ推定の一種で、現在の状態から想定される多数の次状態を、多数（数百or数千）のパーティクルに見立て、全パーティクルの尤度に基づいた重みつき平均を次状態として予測しながら追跡を行っていくアルゴリズムです。パーティクルの移動の予測や外れてしまったパーティクルのリサンプリングを行うことで、ガウス性のないノイズにも強い手法となっています。</p>
+<p>　パーティクルフィルタは基本的に以下3つのサイクルを繰り返し実行することで推定を行います。予測を何回か行うごとにリサンプリングを行います。</p>
+<ul class="simple">
+<li>予測</li>
+<li>尤度の計算</li>
+<li>リサンプリング</li>
+</ul>
+<div class="section" id="predict">
+<span id="id4"></span><h4>2.1.1 予測<a class="headerlink" href="#predict" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>　動作モデルから求められた運動量を基に、それぞれのパーティクルを次のタイミングのパーティクルの位置に移動させます。各パーティクルで任意のノイズを仮定して，もとあった領域よりも広い領域に粒子をばら撒いていきます。各パーティクルは，「運動モデルによって想定されるロボットの位置」という状態値の仮説を表しています。</p>
+<a class="reference internal image-reference" href="_images/amcl_predict.png"><img alt="_images/amcl_predict.png" class="align-center" src="_images/amcl_predict.png" style="width: 400px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="likelihood">
+<span id="id5"></span><h4>2.1.2 尤度の計算<a class="headerlink" href="#likelihood" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>　観測データにより、各パーティクルにおける尤度を計算します。それぞれのパーティクルがどのくらい正解に近いかを観測データで決定し、実際の位置の重み付き平均やリサンプリング時の優先度等に使用します。レーザーセンサの場合、各パーティクルでのレーザーセンサの位置と壁の位置によってそのパーティクルの尤度を計算します。</p>
+<a class="reference internal image-reference" href="_images/amcl_likelihood.png"><img alt="_images/amcl_likelihood.png" class="align-center" src="_images/amcl_likelihood.png" style="width: 800px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="resampling">
+<span id="id6"></span><h4>2.1.3 リサンプリング<a class="headerlink" href="#resampling" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>　予測を繰り返すとパーティクルが広い領域に広がってしまうため、尤度の高いパーティクルはそのまま残して、尤度の低いパーティクルを尤度の高いパーティクルの周りにの周りに再配置します。全てのパーティクルを尤度の高いパーティクルの周囲に配置した場合、局所解に陥ったりノイズ等に対応しにくくなるため、一部パーティクルはランダムで配置します。</p>
+<a class="reference internal image-reference" href="_images/amcl_resampling.png"><img alt="_images/amcl_resampling.png" class="align-center" src="_images/amcl_resampling.png" style="width: 400px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="amcl-particle-filter">
+<span id="id7"></span><h3>2.2 amclにおけるパーティクルフィルタ<a class="headerlink" href="#amcl-particle-filter" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>　amclでパーティクルフィルタの工夫している箇所について以下で説明します。</p>
+<div class="section" id="sample-motion-model-odometry">
+<span id="id8"></span><h4>2.2.1 オドメトリによる予測<a class="headerlink" href="#sample-motion-model-odometry" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>　ひとつ前のパーティクルの位置姿勢に対し、現在のオドメトリ情報により、現在のパーティクルの位置姿勢を予測します。運動モデルのタイプは&quot;diff&quot;、&quot;omni&quot;、&quot;diff-corrected&quot;、&quot;omni-corrected&quot;の4つがあります。&quot;diff&quot;、&quot;omni&quot;では、ガウシアンノイズの計算部分にバグがあったため、修正版が作成されましたが、既存のシステムに対して修正版を実行するとパラメータの調整が必要なため、バグ版も残してあります。バグ修正版ではノイズの負荷方法が異なり、元のモデルに対してルートをかけたノイズの値になります。
+ここでは&quot;diff&quot;、&quot;omni&quot;の2つのモデルについて説明を行います。</p>
+<div class="section" id="diff">
+<span id="id9"></span><h5>2.2.1.1 diff<a class="headerlink" href="#diff" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<p>　diffモデルでは、オドメトリの並進速度に対する、各パーティクルへの回転速度・並進速度へのノイズ、オドメトリの回転速度に対する、各パーティクルへの回転速度・並進速度へのノイズが設定できます。前後にのみ移動するロボットに対するモデルになっているため、それ以外の方向にも移動できるロボットの場合はomniにモデルを使用したほうが良いです。</p>
+<p>　具体的な計算方法は、以下のようになります。</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>前回のamclでのヨー角に対する現在のオドメトリの移動方向の角度の差分を始点角度差分とする。</li>
+<li>オドメトリの移動方向の角度と現在のオドメトリの回転速度の差分を終点角度差分とする。</li>
+<li>始点角度差分・終点角度差分・並進速度に対してガウシアンノイズを追加する。</li>
+<li>各パーティクルにおいて、パーティクルのヨー角に始点角度差分を足した角度を移動方向とする。</li>
+<li>移動方向に対して並進速度の移動量を足して、現在のパーティクルの位置姿勢を求める。</li>
+</ol>
+</div></blockquote>
+<a class="reference internal image-reference" href="_images/amcl_odometry_rot.png"><img alt="_images/amcl_odometry_rot.png" class="align-center" src="_images/amcl_odometry_rot.png" style="width: 480px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="omni">
+<span id="id10"></span><h5>2.2.1.2 omni<a class="headerlink" href="#omni" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<p>　omniモデルは、オムニホイール等を使用した前後以外にも進むことのできるロボットに対応した運動モデルになります。diffで設定できるノイズの他にオドメトリの並進速度に対する、各パーティクルへの進行方向と垂直な成分のノイズが設定できます。</p>
+<p>　具体的な計算方法は、以下のようになります。</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>前回のamclでのヨー角に対する移動方向を求めるために、前回のamclでのヨー角に対する現在のオドメトリの移動方向の角度の差分を計算する。</li>
+<li>角度の差分を各パーティクルのヨー角に加算して、それぞれのパーティクルでの移動方向を推定する。</li>
+<li>現在のオドメトリの並進速度・回転速度から各ノイズの大きさをガウシアンフィルタを用いて計算する。</li>
+<li>オドメトリの値・移動方向に対する並進のノイズ・回転のノイズによって、現在のパーティクルの位置姿勢を求める。</li>
+</ol>
+</div></blockquote>
+<div class="line-block">
+<div class="line">　diffによるモデルとは、各パーティクルの移動方向計算時には、ガウシアンノイズを加えず、進行方向と垂直なノイズを計算するという違いがあります。</div>
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="range-finder-model">
+<span id="id11"></span><h4>2.2.2 レーザーによる尤度計算<a class="headerlink" href="#range-finder-model" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>　外れたパーティクルの尤度が低すぎる場合は、リサンプリング時に外れたパーティクルが削除されすぎるため、パーティクルフィルタの安定性がなくなります。そのため、ガウシアンモデル以外のノイズも用いてレーザーの値が壁と離れている場合でも尤度を持たせています。
+　amclではレーザーの尤度計算にビームモデルと尤度モデルを用いた推定の2種類が選択できます。ビームモデルと尤度モデルについて説明を行います。</p>
+<div class="section" id="beam-range-finder-model">
+<span id="id12"></span><h5>2.2.2.1 ビームモデルを用いたレーザー<a class="headerlink" href="#beam-range-finder-model" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<p>　ビームモデルでは、「ガウシアンノイズ」と「障害物対策ノイズ」「センサの最大距離ノイズ」「ランダムノイズ」の組み合わせで使用しています。
+　それぞれのパーティクルの位置で各レーザの方向に伸ばしていき、マップ上で壁に当たる距離を計算し、その距離と実際のレンジの値によって尤度を計算します。そのレーザーが返ってくると期待される値によって尤度を求めていきます。壁に当たる位置はレーザーごとに異なるため、「パーティクル数」×「レーザー数」分、マップ上で壁に当たる位置を計算する必要があります。</p>
+</div>
+<div class="section" id="id13">
+<h5>ガウシアンノイズ<a class="headerlink" href="#id13" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<p>　ガウシアンノイズは、マップ上で壁に当たる距離(レーザーで期待される値)の周辺では尤度が高くなるようになります。</p>
+<a class="reference internal image-reference" href="_images/amcl_range_gaussian.png"><img alt="_images/amcl_range_gaussian.png" class="align-center" src="_images/amcl_range_gaussian.png" style="width: 340px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id14">
+<h5>障害物対策ノイズ<a class="headerlink" href="#id14" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<p>　地図上のレーザーが当たる地点より前に、地図にない障害物がありレンジの値が小さくなる場合があります。その際の尤度を大きくするため。障害物対策のノイズでは、想定されるレンジより小さな値には尤度を少し上げるようなノイズを追加します。</p>
+<a class="reference internal image-reference" href="_images/amcl_range_obstract.png"><img alt="_images/amcl_range_obstract.png" class="align-center" src="_images/amcl_range_obstract.png" style="width: 340px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id15">
+<h5>センサの最大距離ノイズ<a class="headerlink" href="#id15" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<p>　乱反射等によりレーザーがセンサに帰ってこなかった場合、レンジの距離はセンサの最大値が設定される場合があります。その際の尤度を大きくするため。センサの最大距離ノイズでは、センサの最大距離部分では尤度が高くなるようなノイズを追加します。</p>
+<a class="reference internal image-reference" href="_images/amcl_range_max.png"><img alt="_images/amcl_range_max.png" class="align-center" src="_images/amcl_range_max.png" style="width: 340px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id16">
+<h5>ランダムノイズ<a class="headerlink" href="#id16" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<p>　パーティクルフィルタで安定して動作させるため、ある程度外れてしまっているパーティクルがすべて削除されることがないように、想定されるレンジの値に関わらず尤度を持たせます。ランダムノイズでは、すべての距離で一律の尤度を持たせるようなノイズを追加します。</p>
+<a class="reference internal image-reference" href="_images/amcl_range_random.png"><img alt="_images/amcl_range_random.png" class="align-center" src="_images/amcl_range_random.png" style="width: 340px;" /></a>
+</div>
+<div class="section" id="id17">
+<h5>全ノイズの合成<a class="headerlink" href="#id17" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<p>　総合した尤度のモデルは以下のようになります。各レーザーごとに以下のモデルで尤度を計算していきます。</p>
+<a class="reference internal image-reference" href="_images/amcl_range_beam.png"><img alt="_images/amcl_range_beam.png" class="align-center" src="_images/amcl_range_beam.png" style="width: 340px;" /></a>
+<p>　各ノイズの重みは、以下のパラメータで設定できます。実行する状況に合わせてノイズの重みを変更することができます。各重みの和が1になるようにする必要があります。</p>
+<ul class="simple">
+<li>ガウシアンノイズの重み：laser_z_hit</li>
+<li>障害物対策ノイズの重み：laser_z_short</li>
+<li>センサの最大距離ノイズの重み：laser_z_max</li>
+<li>ランダムノイズの重み：laser_z_rand</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="likelihood-field-range-finder-model">
+<span id="id18"></span><h5>2.2.2.2 尤度モデルを用いたレーザー<a class="headerlink" href="#likelihood-field-range-finder-model" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<p>　尤度モデルでは、「ガウシアンノイズ」と「ランダムノイズ」の組み合わせで使用しています。マップの座標ごとにガウシアンノイズが決定するため、ビームモデルと異なり各レーザーごと壁に当たる位置を判定する必要はなく、レーザーの当たっている位置を求めるだけでよくなります。</p>
+</div>
+<div class="section" id="id19">
+<h5>ガウシアンノイズ<a class="headerlink" href="#id19" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<p>　ガウシアンノイズは、レーザーモデルとは異なり、壁からの距離で求める。</p>
+<a class="reference internal image-reference" href="_images/amcl_range_likelihood_gaussian.png"><img alt="_images/amcl_range_likelihood_gaussian.png" class="align-center" src="_images/amcl_range_likelihood_gaussian.png" style="width: 240px;" /></a>
+<p>　壁に近いほうが尤度が高くなる。レーザーが当たった座標の尤度を使用する。</p>
+<a class="reference internal image-reference" href="_images/amcl_range_likelihood_model.png"><img alt="_images/amcl_range_likelihood_model.png" class="align-center" src="_images/amcl_range_likelihood_model.png" style="width: 310px;" /></a>
+</div>
+<div class="section" id="id20">
+<h5>ランダムノイズ<a class="headerlink" href="#id20" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<p>　ランダムノイズはビームモデルと同じで、パーティクルフィルタで安定して動作させるため、ある程度外れてしまっているパーティクルがすべて削除されることがないように、想定されるレンジの値に関わらず尤度を持たせます。ランダムノイズでは、すべての距離で一律の尤度を持たせるようなノイズを追加します。</p>
+<a class="reference internal image-reference" href="_images/amcl_range_likelihood_random.png"><img alt="_images/amcl_range_likelihood_random.png" class="align-center" src="_images/amcl_range_likelihood_random.png" style="width: 310px;" /></a>
+<p>　下記マップのレーザーの座標の尤度の和がパーティクルの尤度になる。尤度マップを計算した後は、各レーザーの尤度はパーティクルの位置姿勢とレーザーの値から求められる座標の尤度を参照するだけため、計算量がビームモデルに対して小さくなる。</p>
+<a class="reference internal image-reference" href="_images/amcl_range_likelihood.png"><img alt="_images/amcl_range_likelihood.png" class="align-center" src="_images/amcl_range_likelihood.png" style="width: 310px;" /></a>
+<p>　各ノイズの重みは、以下のパラメータで設定できます。実行する状況に合わせてノイズの重みを変更することができます。各重みの和が1になるようにする必要があります。</p>
+<ul class="simple">
+<li>ガウシアンノイズの重み：laser_z_hit</li>
+<li>ランダムノイズの重み：laser_z_rand</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id21">
+<h5>2.2.2.3 ビームモデルと尤度モデルの違い<a class="headerlink" href="#id21" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<p>　ビームモデルは各レーザーごとに計算を行い処理に時間がかかるため、レーザー数・パーティクル数が多い状態でリアルタイムに実行したい場合は尤度モデルを使用するのが良いです。また、尤度モデルでは、障害物対策ノイズ等が使用されないため、人が多い等でマップと異なる障害物が多い場合は、ビームモデルが良いと思われます。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="sampling">
+<span id="id22"></span><h4>2.2.3 サンプリング<a class="headerlink" href="#sampling" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>　amclで工夫されている&quot;Augmented_MCL&quot;、&quot;KLD_Sampling_MCL&quot;について説明を行います。</p>
+<div class="section" id="augmented-mcl">
+<span id="id23"></span><h5>2.2.3.1 Augmented_MCL<a class="headerlink" href="#augmented-mcl" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<p>　Augmented MCLとは、 位置推定がうまくいっている「安定状態」と誘拐ロボット問題を含む位置を見失っている「誘拐状態」によってランダムにパーティクルを配置する割合を調整する処理です。</p>
+<p>　ロボットの状態を認識するためには、各パーティクルの尤度の平均を使用します。位置推定がうまくいっている場合は、ロボットの付近にパーティクルが多く配置されて、尤度平均は大きくなります。ロボットが想定の位置にいない場合は、多くのパーティクルがロボットの付近にいなくなるため、尤度平均は小さくなります。</p>
+<a class="reference internal image-reference" href="_images/amcl_sampling_state.png"><img alt="_images/amcl_sampling_state.png" class="align-center" src="_images/amcl_sampling_state.png" style="width: 800px;" /></a>
+<p>　Augmented MCLでは尤度平均が小さくなると、ランダムに配置するパーティクルの数を増やします。具体的には、前回より尤度平均が小さくなった段階で、2種類の平滑化係数(recovery_alpha_slow, recovery_alpha_fast)で指数移動平均を求め、その割合でランダムパーティクルの割合が決定します。指数移動平均とは、ひとつ前の重みに定数をかけることで、指数関数的に減少させる手法で、下記のように2種類の重み(weight_slow, weight_fast)を指数移動平均で求め、平滑化係数の違いによって収束速度が異なり、値の差によってランダムパーティクルの割合を決定します。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>weight_slow = (1 - recovery_alpha_slow) * weight_slow + recovery_alpha_slow * (尤度平均)
+weight_fast = (1 - recovery_alpha_fast) * weight_fast + recovery_alpha_fast * (尤度平均)
+(ランダムパーティクルの割合) = 1 - (weight_fast / weight_slow)
+</pre></div>
+</div>
+<p>　weight_fastがweight_slowより大きくなった段階で、重みをすべてリセットするためランダムパーティクルの割合が負の値になることはありません。平滑化係数は大きくするほど最初の値の影響は小さくなるため、尤度が下がった際のランダムパーティクル割合はrecovery_alpha_fast、recovery_alpha_slowの値によって制御できます。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="kld-sampling-mcl">
+<span id="id24"></span><h5>2.2.3.2 KLD_Sampling_MCL<a class="headerlink" href="#kld-sampling-mcl" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<p>　KLD Sampling(Kullback-Leibler Divergence Sampling)とは，パーティクルの分布状況に合わせて，数を動的に決定するものです。分布が広範囲の場合パーティクル数を増やし、狭い範囲の場合パーティクル数を減らします。実際には、地図を格子状に分割して、パーティクルがある領域の数により全体のパーティクル数を決定します。ランダムなパーティクルが多くなるとパーティクルのある領域も増えてパーティクル数が多くなります。</p>
+<a class="reference internal image-reference" href="_images/amcl_sampling_kld.png"><img alt="_images/amcl_sampling_kld.png" class="align-center" src="_images/amcl_sampling_kld.png" style="width: 800px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="node">
+<span id="id25"></span><h2>3       ノード<a class="headerlink" href="#node" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>　amclは、レーザーマップ、レーザースキャンデータ、および位置姿勢情報を取り込み、姿勢推定値を出力します。 起動時に、 amclは設定されたパラメーターに従ってパーティクルフィルターの初期化を行います。 パラメーターが設定されていない場合、初期フィルター状態は、（0,0,0）を中心とする中程度のサイズのパーティクル群になります。</p>
+<div class="section" id="subscribe">
+<span id="subscribed"></span><h3>3.1     Subscribeトピック<a class="headerlink" href="#subscribe" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="22%" />
+<col width="67%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">トピック名</th>
+<th class="head">型</th>
+<th class="head">内容</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>scan</td>
+<td><a class="reference external" href="http://docs.ros.org/api/sensor_msgs/html/msg/LaserScan.html">sensor_msgs/LaserScan</a></td>
+<td>レーザースキャンデータ</td>
+</tr>
+<tr class="row-odd"><td>tf</td>
+<td><a class="reference external" href="http://docs.ros.org/api/tf/html/msg/tfMessage.html">tf/tfMessage</a></td>
+<td>位置姿勢情報</td>
+</tr>
+<tr class="row-even"><td>initialpose</td>
+<td><a class="reference external" href="http://docs.ros.org/api/geometry_msgs/html/msg/PoseWithCovarianceStamped.html">geometry_msgs/PoseWithCovarianceStamped</a></td>
+<td>パーティクルフィルタを(再)初期化する際の平均と共分散</td>
+</tr>
+<tr class="row-odd"><td>map</td>
+<td><a class="reference external" href="http://docs.ros.org/api/nav_msgs/html/msg/OccupancyGrid.html">nav_msgs/OccupancyGrid</a></td>
+<td>パラメータ「use_map_topic」にtrueが設定されると、 AMCLはこのトピックをサブスクライブして、レーザーベースの位置推定に使用するマップを取得します。</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="publishe">
+<span id="published"></span><h3>3.2     Publisheトピック<a class="headerlink" href="#publishe" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="22%" />
+<col width="67%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">トピック名</th>
+<th class="head">型</th>
+<th class="head">内容</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>amcl_pose</td>
+<td><a class="reference external" href="http://docs.ros.org/api/geometry_msgs/html/msg/PoseWithCovarianceStamped.html">geometry_msgs/PoseWithCovarianceStamped</a></td>
+<td>マップ内のロボットの推定ポーズと共分散</td>
+</tr>
+<tr class="row-odd"><td>particlecloud</td>
+<td><a class="reference external" href="http://docs.ros.org/api/geometry_msgs/html/msg/PoseArray.html">geometry_msgs/PoseArray</a></td>
+<td>推定を行っているパーティクル群</td>
+</tr>
+<tr class="row-even"><td>tf</td>
+<td><a class="reference external" href="http://docs.ros.org/api/tf/html/msg/tfMessage.html">tf/tfMessage</a></td>
+<td>「odom」から「map」への位置情報</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="service">
+<span id="id28"></span><h3>3.3     サービス<a class="headerlink" href="#service" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="22%" />
+<col width="67%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">トピック名</th>
+<th class="head">型</th>
+<th class="head">内容</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>global_localization</td>
+<td><a class="reference external" href="http://docs.ros.org/api/std_srvs/html/srv/Empty.html">std_srvs/Empty</a></td>
+<td>全体的な位置推定を行う。すべてのパーティクルはマップ内の空きスペースにランダムに分散されます。</td>
+</tr>
+<tr class="row-odd"><td>request_nomotion_update</td>
+<td><a class="reference external" href="http://docs.ros.org/api/std_srvs/html/srv/Empty.html">std_srvs/Empty</a></td>
+<td>パーティクルフィルタ更新を手動で実行し、更新されたパーティクルをPublishします。</td>
+</tr>
+<tr class="row-even"><td>set_map</td>
+<td><a class="reference external" href="http://docs.ros.org/api/nav_msgs/html/srv/SetMap.html">nav_msgs/SetMap</a></td>
+<td>手動で新しいマップとポーズを設定します。</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="servicecall">
+<span id="id30"></span><h3>3.4     サービスコール<a class="headerlink" href="#servicecall" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="22%" />
+<col width="67%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">トピック名</th>
+<th class="head">型</th>
+<th class="head">内容</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>static_map</td>
+<td><a class="reference external" href="http://docs.ros.org/api/nav_msgs/html/srv/GetMap.html">nav_msgs/GetMap</a></td>
+<td>このサービスを呼び出しすことにより、レーザーベースの位置推定に使用されるマップが取得できます。 スタートアップ時は、このサービスからマップを取得します。</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="parameter">
+<span id="id31"></span><h3>3.5     パラメーター<a class="headerlink" href="#parameter" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>　amclノードの構成に使用できるROS パラメーターには、フィルター全体、レーザーモデル、オドメトリモデルの3つのカテゴリがあります。</p>
+<div class="section" id="all-param">
+<span id="id32"></span><h4>3.5.1   フィルター全体のパラメーター<a class="headerlink" href="#all-param" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="7%" />
+<col width="68%" />
+<col width="7%" />
+<col width="7%" />
+<col width="11%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">パラメータ名</th>
+<th class="head">内容</th>
+<th class="head">型</th>
+<th class="head">単位</th>
+<th class="head">デフォルト</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>~min_particles</td>
+<td>パーティクルの最小数</td>
+<td>int</td>
+<td>－</td>
+<td>100</td>
+</tr>
+<tr class="row-odd"><td>~max_particles</td>
+<td>パーティクルの最大数。パーティクル数は精度に大きな影響を与えるが、最大数を大きくしすぎた場合CPUの負荷の問題が発生する場合があります。</td>
+<td>int</td>
+<td>－</td>
+<td>5000</td>
+</tr>
+<tr class="row-even"><td>~kld_err</td>
+<td>推定位置の誤差の度合い。大きくするとパーティクル数が少なくなります。倍にするとパーティクル数が約半分になります。</td>
+<td>double</td>
+<td>－</td>
+<td>0.01</td>
+</tr>
+<tr class="row-odd"><td>~kld_z</td>
+<td>上側標準正規分位数。kdl_zとセットで用いられる推定計算係数。大きくするとパーティクル数が少し多くなります。</td>
+<td>double</td>
+<td>－</td>
+<td>0.99</td>
+</tr>
+<tr class="row-even"><td>~update_min_d</td>
+<td>パーティクルフィルタの更新(予測)を実行するかを判定する移動距離の閾値。更新時、ある程度の前回との差分がないと予測が収束してしまい、間違った観察位置で固定されてしまいます。オドメトリトピックの発信頻度が高ければ(30Hzくらいあれば)デフォルトの値で問題ありません、低い場合は値を大きくします。</td>
+<td>double</td>
+<td>m</td>
+<td>0.2</td>
+</tr>
+<tr class="row-odd"><td>~update_min_a</td>
+<td>パーティクルフィルタの更新(予測)を実行するかを判定する回転角度の差の閾値。更新時、ある程度の前回との差分がないと予測が収束してしまい、間違った観察位置で固定されてしまいます。オドメトリトピックの発信頻度が高ければ(30Hzくらいあれば)デフォルトの値で問題ありません、低い場合は値を大きくします。</td>
+<td>double</td>
+<td>rad</td>
+<td>π/ 6.0</td>
+</tr>
+<tr class="row-even"><td>~resample_interval</td>
+<td>リサンプリングを行うかを判定するパーティクルフィルタが更新(予測)された回数。オドメトリの精度がよい場合は予測の精度がよくなるため、値を大きくしても問題ありません。</td>
+<td>int</td>
+<td>－</td>
+<td>2</td>
+</tr>
+<tr class="row-odd"><td>~transform_tolerance</td>
+<td>入力となるトピック群の時間誤差の許容値。各センサデータの間隔が長い場合はこの値を伸ばして調整する必要があります。センサ側の性能を調整するほうが方向性としては正しいです。</td>
+<td>double</td>
+<td>s</td>
+<td>0.1</td>
+</tr>
+<tr class="row-even"><td>~recovery_alpha_slow</td>
+<td>リサンプリング時のランダムパーティクルの割合計算に使用する低速指数移動平均の平滑化係数。無効にする場合は0.0を指定します。指定する場合、適切な値は0.001です。</td>
+<td>double</td>
+<td>－</td>
+<td>0.0</td>
+</tr>
+<tr class="row-odd"><td>~recovery_alpha_fast</td>
+<td>リサンプリング時のランダムパーティクルの割合計算に使用する高速指数移動平均の平滑化係数。無効にする場合は0.0を指定します。指定する場合、 適切な値は0.1です。</td>
+<td>double</td>
+<td>－</td>
+<td>0.0</td>
+</tr>
+<tr class="row-even"><td>~initial_pose_x</td>
+<td>ガウス分布でフィルターを初期化するために使用する初期x座標平均。実行する際の初期値を設定します。</td>
+<td>double</td>
+<td>m</td>
+<td>0.0</td>
+</tr>
+<tr class="row-odd"><td>~initial_pose_y</td>
+<td>ガウス分布でフィルターを初期化するために使用する初期y座標平均。実行する際の初期値を設定します。</td>
+<td>double</td>
+<td>m</td>
+<td>0.0</td>
+</tr>
+<tr class="row-even"><td>~initial_pose_a</td>
+<td>ガウス分布でフィルターを初期化するために使用する初期ヨー角平均。実行する際の初期値を設定します。</td>
+<td>double</td>
+<td>rad</td>
+<td>0.0</td>
+</tr>
+<tr class="row-odd"><td>~initial_cov_xx</td>
+<td>ガウス分布でフィルターを初期化するために使用する初期x座標共分散。基本的にデフォルト値で問題ありません。</td>
+<td>double</td>
+<td>m^2</td>
+<td>0.5*0.5</td>
+</tr>
+<tr class="row-even"><td>~initial_cov_yy</td>
+<td>ガウス分布でフィルターを初期化するために使用する初期y座標共分散。基本的にデフォルト値で問題ありません。</td>
+<td>double</td>
+<td>m^2</td>
+<td>0.5*0.5</td>
+</tr>
+<tr class="row-odd"><td>~initial_cov_aa</td>
+<td>ガウス分布でフィルターを初期化するために使用する初期ヨー角共分散。基本的にデフォルト値で問題ありません。</td>
+<td>double</td>
+<td>rad^2</td>
+<td>(π/12)*(π/12)</td>
+</tr>
+<tr class="row-even"><td>~gui_publish_rate</td>
+<td>視覚化のためにスキャン結果と軌跡がPublishされる最大レート。無効にする場合は-1.0を指定します。視覚化の要素のため精度には影響しません。</td>
+<td>double</td>
+<td>Hz</td>
+<td>-1.0</td>
+</tr>
+<tr class="row-odd"><td>~save_pose_rate</td>
+<td>変数initial_pose_*およびinitial_cov_*に対して、サーバーへの最後の推定ポーズと共分散を保存する最大レート。この保存されたポーズは、以降の実行でフィルターを初期化するために使用されます。無効にする場合は-1.0を指定します。</td>
+<td>double</td>
+<td>Hz</td>
+<td>0.5</td>
+</tr>
+<tr class="row-even"><td>~use_map_topic</td>
+<td>trueに設定すると、起動時にマップを読み込むのではなく、Subscribeしたマップを使用します。システム起動中に地図切替を行いたい場合はtrueにします。</td>
+<td>bool</td>
+<td>－</td>
+<td>false</td>
+</tr>
+<tr class="row-odd"><td>~first_map_only</td>
+<td>trueに設定すると、Subscribeするたびに新しいマップに更新するのではなく、最初のマップのみを使用します。</td>
+<td>bool</td>
+<td>－</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="laser-param">
+<span id="id33"></span><h4>3.5.2   レーザーモデルパラメーター<a class="headerlink" href="#laser-param" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>　重みの合計は1になるようにしてください。ビームモデルでは、z_hit、z_short、z_max、z_randのすべての重みを使用します。 尤度モデルは、z_hitとz_randのみを使用します。</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="7%" />
+<col width="68%" />
+<col width="7%" />
+<col width="7%" />
+<col width="11%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">パラメータ名</th>
+<th class="head">内容</th>
+<th class="head">型</th>
+<th class="head">単位</th>
+<th class="head">デフォルト</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>~laser_min_range</td>
+<td>最小スキャン範囲。レーザー値が指定値以下の場合、レーザーの最大値の値(laser_max_range)を設定します。 0以下の値を指定すると、トピック（LiDAR）に設定されているレーザーの最小範囲が使用されます。基本的にトピックで設定されている値を使用するほうが良いです。</td>
+<td>double</td>
+<td>m</td>
+<td>-1.0</td>
+</tr>
+<tr class="row-odd"><td>~laser_max_range</td>
+<td>最大スキャン範囲。0以下の値を指定すると、トピックに設定されているレーザーの最大範囲が使用されます。基本的にトピックで設定されている値を使用するほうが良いです。</td>
+<td>double</td>
+<td>m</td>
+<td>-1.0</td>
+</tr>
+<tr class="row-even"><td>~laser_max_beams</td>
+<td>レーザー1セットごとに等間隔に取得したサンプル個数。比較的精度の高いLiDARなら増やしたほうが良い成果になりやすいです。</td>
+<td>int</td>
+<td>－</td>
+<td>30</td>
+</tr>
+<tr class="row-odd"><td>~laser_z_hit</td>
+<td>ビームの尤度を計算する際の、ガウシアンノイズの重み。ROSのチュートリアルで使用されている設定値を使用することが多いです。</td>
+<td>double</td>
+<td>－</td>
+<td>0.95</td>
+</tr>
+<tr class="row-even"><td>~laser_z_short</td>
+<td>ビームの尤度を計算する際の、障害物対策ノイズの重み。likelihood_fieldモデルでは使用されません。ROSのチュートリアルで使用されている設定値を使用することが多いです。</td>
+<td>double</td>
+<td>－</td>
+<td>0.1</td>
+</tr>
+<tr class="row-odd"><td>~laser_z_max</td>
+<td>ビームの尤度を計算する際の、センサ最大距離ノイズの重み。likelihood_fieldモデルでは使用されません。ROSのチュートリアルで使用されている設定値を使用することが多いです。</td>
+<td>double</td>
+<td>－</td>
+<td>0.05</td>
+</tr>
+<tr class="row-even"><td>~laser_z_rand</td>
+<td>ビームの尤度を計算する際の、ランダムノイズの重み。ROSのチュートリアルで使用されている設定値を使用することが多いです。</td>
+<td>double</td>
+<td>－</td>
+<td>0.05</td>
+</tr>
+<tr class="row-odd"><td>~laser_sigma_hit</td>
+<td>ガウシアンノイズの標準偏差。ROSのチュートリアルで使用されている設定値を使用することが多いです。</td>
+<td>double</td>
+<td>－</td>
+<td>0.2</td>
+</tr>
+<tr class="row-even"><td>~laser_lambda_short</td>
+<td>z_shortによる尤度加算の分布を調整するパラメータ。ROSのチュートリアルで使用されている設定値を使用することが多いです。</td>
+<td>double</td>
+<td>－</td>
+<td>0.1</td>
+</tr>
+<tr class="row-odd"><td>~laser_likelihood_max_dist</td>
+<td>LikelihoodField生成の際に、障害物からフィールドを広げる距離。ROSのチュートリアルで使用されている設定値を使用することが多いです。</td>
+<td>double</td>
+<td>m</td>
+<td>2.0</td>
+</tr>
+<tr class="row-even"><td>~laser_model_type</td>
+<td>beam 、 likelihood_field 、 likelihood_field_prob内の使用するモデル。基本的にlikelihood_fieldモデルを使用します。</td>
+<td>string</td>
+<td>－</td>
+<td>likelihood_field</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="odom-param">
+<span id="id34"></span><h4>3.5.3   オドメトリモデルのパラメーター<a class="headerlink" href="#odom-param" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>　odom_model_typeが「diff」の場合、「Probabilistic Robotics」p136のsample_motion_model_odometryアルゴリズムを使用します。 このモデルでは本で定義されているように、 odom_alpha1からodom_alpha4までのノイズパラメーターを使用します。odom_model_typeが「omni」の場合、 odom_alpha1~odom_alpha5を使用します。最初の4つのパラメーターの意味は、 「diff」モデルの際の意味とほぼ同じです。 5番目のパラメーターは、向いている方向に移動するロボットに対するパラメータとなります。
+　「diff-corrected」および「omni-corrected」では、ノイズが元のモデルに対してルートをかけたものになっているため、odom_alphaパラメーターはデフォルト設定のままでは、うまく機能しないと思われます。これらの値をおそらくもっと小さくする必要があります。<a class="reference external" href="http://answers.ros.org/question/227811/tuning-amcls-diff-corrected-and-omni-corrected-odom-models">http://answers.ros.org/question/227811/tuning-amcls-diff-corrected-and-omni-corrected-odom-models</a></p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="7%" />
+<col width="68%" />
+<col width="7%" />
+<col width="7%" />
+<col width="11%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">パラメータ名</th>
+<th class="head">内容</th>
+<th class="head">型</th>
+<th class="head">単位</th>
+<th class="head">デフォルト</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>~odom_model_type</td>
+<td>使用するオドメトリモデル。 diff 、omni 、diff-corrected、omni-correctedのいずれかが設定できます。新規で使用する場合は、*-correctedを使用したほうが良いと思われます。</td>
+<td>string</td>
+<td>－</td>
+<td>diff</td>
+</tr>
+<tr class="row-odd"><td>~odom_alpha1</td>
+<td>現在のロボットの動きの回転成分から、計算するオドメトリの回転成分に対するノイズ。 大きくするとロボットの回転が大きい時にオドメトリの回転の信頼度が下がります。オドメトリのノイズやエンコーダの反応が遅いなどの場合は、2.0や5.0など、かなり大きい値を指定した方が良い結果となる傾向があります。</td>
+<td>double</td>
+<td>－</td>
+<td>0.2</td>
+</tr>
+<tr class="row-even"><td>~odom_alpha2</td>
+<td>現在のロボットの動きの並進成分から、計算するオドメトリの回転成分に対するノイズ。 大きくするとロボットの平行移動が大きい時にオドメトリの回転の信頼度が下がります。オドメトリのノイズやエンコーダの反応が遅いなどの場合は、2.0や5.0など、かなり大きい値を指定した方が良い結果となる傾向があります。</td>
+<td>double</td>
+<td>－</td>
+<td>0.2</td>
+</tr>
+<tr class="row-odd"><td>~odom_alpha3</td>
+<td>現在のロボットの動きの並進成分から、計算するオドメトリの平行移動成分に対するノイズ。 大きくするとロボットの平行移動が大きい時にオドメトリの平行移動の信頼度が下がります。よほどスリップするような環境でなければ、直線方向の誤差は出にくいです。</td>
+<td>double</td>
+<td>－</td>
+<td>0.2</td>
+</tr>
+<tr class="row-even"><td>~odom_alpha4</td>
+<td>現在のロボットの動きの回転成分から、計算するオドメトリの平行移動成分に対するノイズ。 大きくすると推定しているロボット回転が大きい場合にオドメトリの平行移動の信頼度が下がります。よほどスリップするような環境でなければ、直線方向の誤差は出にくいです。</td>
+<td>double</td>
+<td>－</td>
+<td>0.2</td>
+</tr>
+<tr class="row-odd"><td>~odom_alpha5</td>
+<td>ホロノミック体の場合の直線（y軸）誤差。（モデルがomniの場合にのみ使用）よほどスリップするような環境でなければ、直線方向の誤差は出にくいです。</td>
+<td>double</td>
+<td>－</td>
+<td>0.2</td>
+</tr>
+<tr class="row-even"><td>~odom_frame_id</td>
+<td>オドメトリ原点座標のフレーム名</td>
+<td>string</td>
+<td>－</td>
+<td>odom</td>
+</tr>
+<tr class="row-odd"><td>~base_frame_id</td>
+<td>ロボットベース原点座標のフレーム名</td>
+<td>string</td>
+<td>－</td>
+<td>base_link</td>
+</tr>
+<tr class="row-even"><td>~global_frame_id</td>
+<td>地図原点座標のフレーム名</td>
+<td>string</td>
+<td>－</td>
+<td>map</td>
+</tr>
+<tr class="row-odd"><td>~tf_broadcast</td>
+<td>TF情報をpublishするか否か</td>
+<td>bool</td>
+<td>－</td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="tf">
+<span id="transform"></span><h3>3.6     tfメッセージ<a class="headerlink" href="#tf" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>　amclがPublishするtfメッセージは。グローバルフレーム（~global_frame_id）とオドメトリーフレーム（~odom_frame_id）間のメッセージになります。amclが推定を行うのはレーザーセンサの位置のため、レーザーセンサ-ベースフレーム（~base_frame_id）間・ベースフレームーオドメトリ間のtfのパスが必要になります。一般的にグローバルフレームはマップ、ベースフレームはロボットを表します。</p>
+<p>　最初のレーザースキャンを受信すると、 amclはレーザーセンサ-ベースフレームの間のtfを検索し、そのtfの値を更新せず使用し続けます。 そのため、 amclはレーザーがロボット上で動くことができ、ロボットと異なる動きをするレーザーに対しては使用できません。</p>
+<p>　以下の図は、オドメトリとamclを使用した位置推定の違いを示しています。 amclがPublishするのはグローバルフレームとオドメトリーフレームの間のtfのみです。 基本的に、このtfはデッドレコニングを使用して発生するドリフトを考慮に入れたものになります。</p>
+<a class="reference internal image-reference" href="_images/amcl_tf.png"><img alt="_images/amcl_tf.png" class="align-center" src="_images/amcl_tf.png" style="width: 640px;" /></a>
+<div class="line-block">
+<div class="line">　出典: <a class="reference external" href="http://wiki.ros.org/amcl">http://wiki.ros.org/amcl</a></div>
+</div>
+</div>
+</div>
+<div class="section" id="internal-processing">
+<span id="id35"></span><h2>4.　内部処理手順<a class="headerlink" href="#internal-processing" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="sequence">
+<span id="id36"></span><h3>4.1     レーザ入力時のシーケンス<a class="headerlink" href="#sequence" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>　レーザーが入力された際のシーケンスは以下のようになります。</p>
+<a class="reference internal image-reference" href="_images/amcl_sequence.png"><img alt="_images/amcl_sequence.png" class="align-center" src="_images/amcl_sequence.png" style="width: 500px;" /></a>
+</div>
+</div>
+</div>
+
+
+            </div>
+        </div>
+        <div class='footer'>
+            <ul>
+            <li><div class="copyright align-left">This document is licensed under the <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0</a></div></li>
+            <li><div class="copyright align-right">Copyright © National Institute of Advanced Industrial Science and Technology （AIST）<br/> （Japan Corporate Number 7010005005425）. All rights reserved.</div></li>
+            </ul>
+            <br />
+        </div>
+    </div>
+</body>
+</html>

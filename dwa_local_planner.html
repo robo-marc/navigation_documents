@@ -1,0 +1,937 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3c.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <title>NavigationStack - dwa_local_planner</title>
+
+    <script src="_static/jquery-1.7.1.min.js"></script>
+    <script src="_static/bootstrap-modal.js"></script>
+    <script src="_static/bootstrap-collapse.js"></script>
+    <script src="_static/bootstrap-dropdown.js"></script>
+
+    <link rel="stylesheet" href="_static/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-responsive.css" type="text/css" />
+    <link rel="stylesheet" href="_static/template.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+
+</head>
+<body>
+    <div id="fb-root"></div>
+    
+    <div class="container-fluid">
+        <div class="hero-unit">
+            <div class="page-header">
+                <a href="index.html"><font color="#000000">Navigation Stack</font></a>
+                <br/>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span3">
+                <div class="well sidebar-nav">
+                    <ul class="nav nav-list">
+                        <h3>コンテンツ</h3>
+                        <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="navigation_overview.html">Navigation Stack概要</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="navigation_overview.html#id1">Navigation Stackとは</a></li>
+<li class="toctree-l2"><a class="reference internal" href="navigation_overview.html#id2">Navigation Stackの入出力</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#transform-tree">Transform Tree</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id4">測域センサ情報（レーザースキャン）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id6">測域センサ情報（ポイントクラウド）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id8">オドメトリ情報</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id10">地図</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id12">駆動（速度）命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id14">その他のメッセージ型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id22">サービス型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="navigation_overview.html#id26">アクション型</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="packages.html">各パッケージ仕様</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="packages.html#move-base">move_baseメイン</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="move_base.html">move_base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nav_core.html">nav_core</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id2">自己位置推定関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="amcl.html">amcl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fake_localization.html">fake_localization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id3">地図配信</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="map_server.html">map_server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id4">コストマップ関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="costmap_2d.html">costmap_2d</a></li>
+<li class="toctree-l3"><a class="reference internal" href="voxel_grid.html">voxel_grid</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id5">グローバルプランナー関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="navfn.html">nav_fn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="global_planner.html">global_planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="carrot_planner.html">carrot_planner</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="packages.html#id6">ローカルプランナー関連</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="base_local_planner.html">base_local_planner</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">dwa_local_planner</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html#id7">リカバリー動作関連</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="clear_costmap_recovery.html">clear_costmap_recovery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rotate_recovery.html">rotate_recovery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="move_slow_and_clear.html">move_slow_and_clear</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="span8">
+<div class="section" id="dwa-local-planner">
+<h1>dwa_local_planner<a class="headerlink" href="#dwa-local-planner" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>目次</p>
+<div class="line-block">
+<div class="line">　1. <a class="reference internal" href="#summary-dwalocalplanner"><span class="std std-ref">概要</span></a></div>
+<div class="line">　2. <a class="reference internal" href="#packagecomponent-dwalocalplanner"><span class="std std-ref">パッケージの構成</span></a></div>
+<div class="line">　3. <a class="reference internal" href="#overview-dwalocalplanner"><span class="std std-ref">アルゴリズム</span></a></div>
+<div class="line">　　3.1 <a class="reference internal" href="#purpose-dwalocalplanner"><span class="std std-ref">パッケージの目的</span></a></div>
+<div class="line">　　3.2 <a class="reference internal" href="#procesure-dwalocalplanner"><span class="std std-ref">ローカルプランニングの処理概要</span></a></div>
+<div class="line">　　3.3 <a class="reference internal" href="#velocitysampling-dwalocalplanner"><span class="std std-ref">速度空間のサンプリング</span></a></div>
+<div class="line">　　3.4 <a class="reference internal" href="#trajectorysimulation-dwalocalplanner"><span class="std std-ref">軌道の計算</span></a></div>
+<div class="line">　　3.5 <a class="reference internal" href="#evaltrajectory-dwalocalplanner"><span class="std std-ref">軌道の評価</span></a></div>
+<div class="line">　　3.6 <a class="reference internal" href="#goalreaching-dwalocalplanner"><span class="std std-ref">ゴール地点到達時の処理</span></a></div>
+<div class="line">　4. <a class="reference internal" href="#dwaplannerros-dwalocalplanner"><span class="std std-ref">ローカルプランナークラス DWAPlannerROS</span></a></div>
+<div class="line">　　4.1 <a class="reference internal" href="#subscribed-topics-dwalocalplanner"><span class="std std-ref">Subscribe トピック</span></a></div>
+<div class="line">　　4.2 <a class="reference internal" href="#published-topics-dwalocalplanner"><span class="std std-ref">Publish トピック</span></a></div>
+<div class="line">　　4.3 <a class="reference internal" href="#parameters-dwalocalplanner"><span class="std std-ref">パラメーター</span></a></div>
+<div class="line">　　　4.3.1 <a class="reference internal" href="#robot-configuration-parameters-dwalocalplanner"><span class="std std-ref">ロボット構成パラメーター</span></a></div>
+<div class="line">　　　4.3.2 <a class="reference internal" href="#goal-tolerance-parameters-dwalocalplanner"><span class="std std-ref">ゴール許容誤差パラメーター</span></a></div>
+<div class="line">　　　4.3.3 <a class="reference internal" href="#forward-simulation-parameters-dwalocalplanner"><span class="std std-ref">フォワードシミュレーションパラメーター</span></a></div>
+<div class="line">　　　4.3.4 <a class="reference internal" href="#trajectory-scoring-parameters-dwalocalplanner"><span class="std std-ref">軌道スコアリングパラメーター</span></a></div>
+<div class="line">　　　4.3.5 <a class="reference internal" href="#oscillation-prevention-parameters-dwalocalplanner"><span class="std std-ref">振動防止パラメーター</span></a></div>
+<div class="line">　　　4.3.6 <a class="reference internal" href="#global-plan-parameters-dwalocalplanner"><span class="std std-ref">グローバルプランパラメーター</span></a></div>
+<div class="line">　　4.4 <a class="reference internal" href="#cppapi-dwalocalplanner"><span class="std std-ref">C++ API</span></a></div>
+<div class="line">　　4.5 <a class="reference internal" href="#internalclasses-dwalocalplanner"><span class="std std-ref">下位クラス</span></a></div>
+<div class="line">　　　4.5.1 <a class="reference internal" href="#dwaplanner-dwalocalplanner"><span class="std std-ref">DWAプランナークラス</span></a></div>
+<div class="line">　　　4.5.1.1 <a class="reference internal" href="#cppapi-1-dwalocalplanner"><span class="std std-ref">C++ API</span></a></div>
+<div class="line">　5. <a class="reference internal" href="#sequence-dwalocalplanner"><span class="std std-ref">内部処理手順</span></a></div>
+<div class="line">　　5.1 <a class="reference internal" href="#methodcallsequence-dwalocalplanner"><span class="std std-ref">メソッドコールシーケンスの概要</span></a></div>
+<div class="line">　　5.2 <a class="reference internal" href="#method-frame-dwalocalplanner"><span class="std std-ref">各メソッドの処理概要</span></a></div>
+<div class="line"><br /></div>
+</div>
+<div class="section" id="summary-dwalocalplanner">
+<span id="id1"></span><h2>1　概要<a class="headerlink" href="#summary-dwalocalplanner" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>このパッケージは、平面上のローカルロボットナビゲーションを行うもので、Dynamic Window Approach の方式で実装しています。 従うべきグローバルプランとコストマップが与えられると、コントローラーは速度ベースのコマンドを生成して <a class="reference internal" href="base_local_planner.html#dic-mobilebase-baselocalplanner"><span class="std std-ref">モバイルベース</span></a> に送信します。 このパッケージは、 <a class="reference internal" href="base_local_planner.html#dic-footprint-baselocalplanner"><span class="std std-ref">footprint (接触範囲)</span></a> を凸多角形または円として表現できるロボットをサポートします。設定項目はROSパラメーターとして公開されており、起動ファイルで設定できます。またこのプランナーのパラメーターは動的に再設定可能です。 このパッケージのROSラッパーは、<a class="reference external" href="http://wiki.ros.org/nav_core">nav_core</a> パッケージで指定されたBaseLocalPlannerインターフェースに準拠しています。</p>
+<ul class="simple">
+<li>管理状態：管理済み</li>
+<li>管理者：David V. Lu!! &lt;davidvlu AT gmail DOT com&gt;, Michael Ferguson &lt;mfergs7 AT gmail DOT com&gt;, Aaron Hoy &lt;ahoy AT fetchrobotics DOT com&gt;</li>
+<li>著者： Eitan Marder-Eppstein, <a class="reference external" href="mailto:contradict&#37;&#52;&#48;gmail&#46;com">contradict<span>&#64;</span>gmail<span>&#46;</span>com</a></li>
+<li>ライセンス： BSD</li>
+<li>ソース： git <a class="reference external" href="https://github.com/ros-planning/navigation.git">https://github.com/ros-planning/navigation.git</a> （ブランチ：melodic-devel）</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="packagecomponent-dwalocalplanner">
+<span id="id2"></span><h2>2 パッケージの構成<a class="headerlink" href="#packagecomponent-dwalocalplanner" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>このパッケージは、move_base に組み込まれるローカルプランナー(DWAPlannerROS)と、実装クラス(DWAPlanner)からなっています。
+下位のアルゴリズムの実装には、 <a class="reference internal" href="base_local_planner.html#summary-baselocalplanner"><span class="std std-ref">base_local_planner</span></a> パッケージのクラスを使っています。</p>
+<a class="reference internal image-reference" href="_images/base_local_planner_component.png"><img alt="_images/base_local_planner_component.png" class="align-center" src="_images/base_local_planner_component.png" style="width: 100%;" /></a>
+<p>コンポーネント図</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="overview-dwalocalplanner">
+<span id="id3"></span><h2>3　アルゴリズム<a class="headerlink" href="#overview-dwalocalplanner" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="purpose-dwalocalplanner">
+<span id="id4"></span><h3>3.1 パッケージの目的<a class="headerlink" href="#purpose-dwalocalplanner" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>dwa_local_plannerパッケージは、モバイルベースを平面上で運転するコントローラーを提供します。
+このコントローラーは、パスプランナーをロボットに接続します。
+プランナーは、マップを使い、ロボットがスタートからゴール位置に到達するまでの運動の軌道を作成します。
+その過程で、プランナーは、ロボットの周囲に、グリッドマップとして表される価値関数を作成します。
+この価値関数は、グリッドセルを通過するコストを表現します。
+コントローラーの仕事は、この価値関数を使用して、ロボットに送信する速度 (縦方向速度, 横方向速度, 回転速度) を決定することです。
+(移動方向の定義については <a class="reference internal" href="base_local_planner.html#coord-baselocalplanner"><span class="std std-ref">座標系</span></a> 参照。)</p>
+<a class="reference internal image-reference" href="_images/local_plan.png"><img alt="_images/local_plan.png" class="align-center" src="_images/local_plan.png" style="width: 70%;" /></a>
+<p>出典: <a class="reference external" href="http://wiki.ros.org/dwa_local_planner">http://wiki.ros.org/dwa_local_planner</a></p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="procesure-dwalocalplanner">
+<span id="id5"></span><h3>3.2 ローカルプランニングの処理概要<a class="headerlink" href="#procesure-dwalocalplanner" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Dynamic Window Approach (DWA) アルゴリズムの基本的な考え方は次のとおりです。</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>ロボットの速度空間 (縦方向速度, 横方向速度, 回転速度) を離散的にサンプリングします。</li>
+<li>サンプリングされた速度ごとに、ロボットの現在の状態から <a class="reference internal" href="base_local_planner.html#dic-forwardsimulation-baselocalplanner"><span class="std std-ref">フォワードシミュレーション</span></a> を実行して、サンプリングされた速度を一定（短い）時間適用した場合にどう動くかを予測します。(軌道の予測)</li>
+<li>フォワードシミュレーションから得られた各軌道を評価 (スコア) します。評価には、障害物への近さ、ゴール地点への近さ、グローバルパスへの近さ、速度などの特性をとりこんだ尺度を使用します。&nbsp;不正な軌道（障害物と衝突する軌道）は破棄します。</li>
+<li>最高得点の軌道を見つけだし、その速度をロボットに送信します。</li>
+<li>以上の手順を繰り返します。</li>
+</ol>
+</div></blockquote>
+<p>便利なリファレンス：</p>
+<ul class="simple">
+<li><a class="reference external" href="https://pdfs.semanticscholar.org/dabd/bb636f02d3cff3d546bd1bdae96a058ba4bc.pdf?_ga=2.75374935.412017123.1520536154-80785446.1520536154">D. Fox, W. Burgard, and S. Thrun. &quot;The dynamic window approach to collision avoidance&quot;</a>. ローカルコントロールへの Dynamic Window Approach。</li>
+<li><a class="reference external" href="http://www.ri.cmu.edu/pub_files/pub1/kelly_alonzo_1994_7/kelly_alonzo_1994_7.pdf">Alonzo Kelly. &quot;An Intelligent Predictive Controller for Autonomous Vehicles&quot;</a>. 過去の同様のアプローチで制御するシステム。</li>
+<li><a class="reference external" href="https://pdfs.semanticscholar.org/dabd/bb636f02d3cff3d546bd1bdae96a058ba4bc.pdf?_ga=2.75374935.412017123.1520536154-80785446.1520536154">Brian P. Gerkey and Kurt Konolige. &quot;Planning and Control in Unstructured Terrain&quot;</a>. LAGRロボットで使用される Trajectory Rollout アルゴリズムの説明。</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="velocitysampling-dwalocalplanner">
+<span id="id6"></span><h3>3.3　速度空間のサンプリング<a class="headerlink" href="#velocitysampling-dwalocalplanner" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>ロボットの速度空間 (縦方向速度, 横方向速度, 回転速度) を離散的にサンプリングします。</p>
+<p>サンプリングする範囲は、</p>
+<ul>
+<li><dl class="first docutils">
+<dt>縦方向速度のサンプリング上限速度 = 現在の縦方向速度 + <a class="reference internal" href="#robot-configuration-parameters-dwalocalplanner"><span class="std std-ref">縦方向加速度の上限</span></a> * コントローラー呼び出し周期</dt>
+<dd><p class="first last">ただし最大で <a class="reference internal" href="#robot-configuration-parameters-dwalocalplanner"><span class="std std-ref">縦方向速度の上限(max_vel_x)</span></a></p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>縦方向速度のサンプリング下限速度 = 現在の縦方向速度 - <a class="reference internal" href="#robot-configuration-parameters-dwalocalplanner"><span class="std std-ref">縦方向加速度の上限</span></a> * コントローラー呼び出し周期</dt>
+<dd><p class="first last">ただし最小で <a class="reference internal" href="#robot-configuration-parameters-dwalocalplanner"><span class="std std-ref">縦方向速度の下限(min_vel_x)</span></a></p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>横方向速度のサンプリング上限速度 = 現在の横方向速度 + <a class="reference internal" href="#robot-configuration-parameters-dwalocalplanner"><span class="std std-ref">横方向加速度の上限</span></a> * コントローラー呼び出し周期</dt>
+<dd><p class="first last">ただし最大で <a class="reference internal" href="#robot-configuration-parameters-dwalocalplanner"><span class="std std-ref">横方向速度の上限(max_vel_y)</span></a></p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>横方向速度のサンプリング下限速度 = 現在の横方向速度 - <a class="reference internal" href="#robot-configuration-parameters-dwalocalplanner"><span class="std std-ref">横方向加速度の上限</span></a> * コントローラー呼び出し周期</dt>
+<dd><p class="first last">ただし最小で <a class="reference internal" href="#robot-configuration-parameters-dwalocalplanner"><span class="std std-ref">横方向速度の下限(max_vel_y)</span></a></p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>回転速度のサンプリング上限速度 = 現在の回転速度 + <a class="reference internal" href="#robot-configuration-parameters-dwalocalplanner"><span class="std std-ref">回転加速度の上限</span></a> * コントローラー呼び出し周期</dt>
+<dd><p class="first last">ただし最大で <a class="reference internal" href="#robot-configuration-parameters-dwalocalplanner"><span class="std std-ref">回転速度絶対値の上限(max_vel_theta)</span></a></p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>回転速度のサンプリング下限速度 = 現在の回転速度 - <a class="reference internal" href="#robot-configuration-parameters-dwalocalplanner"><span class="std std-ref">回転加速度の上限</span></a> * コントローラー呼び出し周期</dt>
+<dd><p class="first">ただし最小で <a class="reference internal" href="#robot-configuration-parameters-dwalocalplanner"><span class="std std-ref">回転速度絶対値の上限(max_vel_theta)</span></a> の負値</p>
+<p class="last">(コントローラー呼び出し周期は、<a class="reference internal" href="#forward-simulation-parameters-dwalocalplanner"><span class="std std-ref">controller_frequency</span></a> パラメーターの逆数であり、既定値は 0.05s です)</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>です。 上式は DWAの場合ですが、base_local_planner と同様に Trajectory Rollout も選択でき、その場合上式の 「コントローラー呼び出し周期」は、「<a class="reference internal" href="#forward-simulation-parameters-dwalocalplanner"><span class="std std-ref">フォワードシミュレーション時間</span></a> 」に置き換わります。</p>
+<p>求めたサンプリング範囲を等分割し、&quot;<a class="reference internal" href="#forward-simulation-parameters-dwalocalplanner"><span class="std std-ref">サンプリング数</span></a> &quot;個のサンプル値を抽出します。
+さらに、正と負のサンプル値の間に、0のサンプル値を挿入します。</p>
+<p>その場回転や横移動もサンプリング速度空間に含まれているため、base_local_plannerのような追加の専用サンプリング処理はありません。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="trajectorysimulation-dwalocalplanner">
+<span id="id7"></span><h3>3.4 軌道の計算<a class="headerlink" href="#trajectorysimulation-dwalocalplanner" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>軌道の計算方法は <a class="reference internal" href="base_local_planner.html#trajectorysimulation-baselocalplanner"><span class="std std-ref">base_local_planner</span></a> と同様です。</p>
+<p>ただしフォワードシミュレーションのステップ数は、定義式が少し異なり、</p>
+<p>「 縦横方向サンプリング速度の合成値 * フォワードシミュレーション時間 / <a class="reference internal" href="#forward-simulation-parameters-dwalocalplanner"><span class="std std-ref">距離ステップサイズ(sim_granularity)</span></a> 」</p>
+<p>または</p>
+<p>「サンプリング回転速度の絶対値 * フォワードシミュレーション時間 / <a class="reference internal" href="#forward-simulation-parameters-dwalocalplanner"><span class="std std-ref">角度ステップサイズ(angular_sim_granularity)</span></a>  」  (注：フォワードシミュレーション時間が掛かる点が base_local_plannerと異なります)</p>
+<p>のどちらか大きい方で決まります。</p>
+<p>また、ロボットのサンプリング速度をチェックし、次のような制限を超える軌道は破棄します。</p>
+<ul class="simple">
+<li>縦横方向合成速度が <a class="reference internal" href="#robot-configuration-parameters-dwalocalplanner"><span class="std std-ref">上限(max_trans_vel)</span></a> を超える軌道</li>
+<li>縦横方向合成速度が <a class="reference internal" href="#robot-configuration-parameters-dwalocalplanner"><span class="std std-ref">下限(min_trans_vel)</span></a> を下回る ＆ 回転速度絶対値が <a class="reference internal" href="#robot-configuration-parameters-dwalocalplanner"><span class="std std-ref">下限(min_vel_theta)</span></a> を下回る軌道</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="evaltrajectory-dwalocalplanner">
+<span id="id8"></span><h3>3.5　軌道の評価<a class="headerlink" href="#evaltrajectory-dwalocalplanner" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>軌道のコストには次のものがあります。</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="8%" />
+<col width="31%" />
+<col width="46%" />
+<col width="8%" />
+<col width="8%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">コスト名</th>
+<th class="head">内容</th>
+<th class="head">説明</th>
+<th class="head">重みパラメーター</th>
+<th class="head">管理クラス</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>obstacle_costs</td>
+<td>障害物コスト</td>
+<td>base_local_plannerの <a class="reference internal" href="base_local_planner.html#evaltrajectory-baselocalplanner"><span class="std std-ref">occ_cost 参照</span></a></td>
+<td><a class="reference internal" href="#trajectory-scoring-parameters-dwalocalplanner"><span class="std std-ref">occdist_scale</span></a></td>
+<td><a class="reference internal" href="base_local_planner.html#obstaclecostfunction-baselocalplanner"><span class="std std-ref">ObstacleCostFunction</span></a></td>
+</tr>
+<tr class="row-odd"><td>path_costs</td>
+<td>グローバルパスからの距離</td>
+<td>base_local_plannerの <a class="reference internal" href="base_local_planner.html#evaltrajectory-baselocalplanner"><span class="std std-ref">path_dist 参照</span></a></td>
+<td><a class="reference internal" href="#trajectory-scoring-parameters-dwalocalplanner"><span class="std std-ref">path_distance_bias</span></a></td>
+<td><a class="reference internal" href="base_local_planner.html#mapgridcostfunction-baselocalplanner"><span class="std std-ref">MapGridCostFunction</span></a></td>
+</tr>
+<tr class="row-even"><td>goal_costs</td>
+<td>ローカルゴールからの距離</td>
+<td>base_local_plannerの <a class="reference internal" href="base_local_planner.html#evaltrajectory-baselocalplanner"><span class="std std-ref">goal_dist 参照</span></a></td>
+<td><a class="reference internal" href="#trajectory-scoring-parameters-dwalocalplanner"><span class="std std-ref">goal_distance_bias</span></a></td>
+<td><a class="reference internal" href="base_local_planner.html#mapgridcostfunction-baselocalplanner"><span class="std std-ref">MapGridCostFunction</span></a></td>
+</tr>
+<tr class="row-odd"><td>alignment_costs</td>
+<td>グローバルパスへの向き (ROS Wiki 未記載)</td>
+<td>ロボットが <a class="reference internal" href="#trajectory-scoring-parameters-dwalocalplanner"><span class="std std-ref">forward_point_distance</span></a> だけ前進した位置での path_costs</td>
+<td><a class="reference internal" href="#trajectory-scoring-parameters-dwalocalplanner"><span class="std std-ref">path_distance_bias</span></a></td>
+<td><a class="reference internal" href="base_local_planner.html#mapgridcostfunction-baselocalplanner"><span class="std std-ref">MapGridCostFunction</span></a></td>
+</tr>
+<tr class="row-even"><td>goal_front_costs</td>
+<td>ローカルゴールへの向き (ROS Wiki 未記載)</td>
+<td>ロボットが <a class="reference internal" href="#trajectory-scoring-parameters-dwalocalplanner"><span class="std std-ref">forward_point_distance</span></a> だけ前進した位置での goal_costs (<a class="reference internal" href="base_local_planner.html#rotateinplacecost-baselocalplanner"><span class="std std-ref">その場回転の軌道の追加評価</span></a> と同様。ただしその場回転以外でも有効。)</td>
+<td><a class="reference internal" href="#trajectory-scoring-parameters-dwalocalplanner"><span class="std std-ref">goal_distance_bias</span></a></td>
+<td><a class="reference internal" href="base_local_planner.html#mapgridcostfunction-baselocalplanner"><span class="std std-ref">MapGridCostFunction</span></a></td>
+</tr>
+<tr class="row-odd"><td>twirling_costs</td>
+<td>スピンコスト(option) (ROS Wiki 未記載)</td>
+<td>急カーブの軌道ほど大きくなるため、カーブの緩い軌道を選好します。ただしデフォルトの重みは0です</td>
+<td><a class="reference internal" href="#trajectory-scoring-parameters-dwalocalplanner"><span class="std std-ref">twirling_scale</span></a></td>
+<td><a class="reference internal" href="base_local_planner.html#twirlingcostfunction-baselocalplanner"><span class="std std-ref">TwirlingCostFunction</span></a></td>
+</tr>
+<tr class="row-even"><td>oscillation_costs</td>
+<td>振動コスト (ROS Wiki 未記載)</td>
+<td>base_local_plannerの <a class="reference internal" href="base_local_planner.html#oscillation-suppression-baselocalplanner"><span class="std std-ref">振動抑制 参照</span></a>。ただし、振動フラグが設定されてから移動距離が <a class="reference internal" href="#oscillation-prevention-parameters-dwalocalplanner"><span class="std std-ref">oscillation_reset_dist</span></a> を超えた場合だけでなく、回転角度が <a class="reference internal" href="#oscillation-prevention-parameters-dwalocalplanner"><span class="std std-ref">oscillation_reset_angle</span></a>  を超えた場合もフラグをリセットします。</td>
+<td>コスト負の軌道は破棄</td>
+<td><a class="reference internal" href="base_local_planner.html#oscillationcostfunction-baselocalplanner"><span class="std std-ref">OscillationCostFunction</span></a></td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>これらのコストを、所定の重み付け（カスタマイズ可能）を掛け合わせて合算し、与えられた軌道のコストとします。
+各軌道ごとにコストを算出し、最も低コストの軌道を結果の軌道とします。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="goalreaching-dwalocalplanner">
+<span id="id9"></span><h3>3.6　ゴール地点到達時の処理<a class="headerlink" href="#goalreaching-dwalocalplanner" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>ローカルプランナーがロボットを停止すべき場所に正確に停止させるのが理想です。 しかし実際には、センサーのノイズとアクチュエータの不確実性によりロボットが目標地点を行き過ぎて、延々と切り返しを続けてしまうことがあります。
+それを防ぐため、ロボットがゴール地点に十分近づくと走行を停止し、指示されたゴール方向へその場回転のみ行うようにします。 それは次の手順で行います。</p>
+<ol class="arabic simple">
+<li>コントローラーの各サイクルで、ロボットがグローバルゴールの近傍に到達したか判定します。<ul>
+<li>ロボットからゴール地点までの距離が、<a class="reference internal" href="#goal-tolerance-parameters-dwalocalplanner"><span class="std std-ref">xy_goal_tolerance</span></a> 以下の場合、ゴール地点に到達済みと判定します。</li>
+<li>ロボットがゴール地点に到達していれば以下の最終補正処理に移行します。</li>
+</ul>
+</li>
+<li>ロボットを停止させます。<ul>
+<li>ロボットを許される加速度の範囲内で減速し、停止させます。</li>
+<li>ロボットが停止したかの判定には、XY合成速度と回転速度がしきい値(<a class="reference internal" href="#goal-tolerance-parameters-dwalocalplanner"><span class="std std-ref">trans_stopped_vel, theta_stopped_vel</span></a>)以下であるかを調べます。</li>
+</ul>
+</li>
+<li>ロボットが停止した後、ゴール方向にその場回転を行います。<ul>
+<li>ロボットの向きがゴール方向と合っているかを判定します。
+ロボットの現在の向きと指示されたゴール時の方向とのなす角が、<a class="reference internal" href="#goal-tolerance-parameters-dwalocalplanner"><span class="std std-ref">yaw_goal_tolerance</span></a> 以下か判定します。</li>
+<li>ロボットの向きが合っていない場合、ゴール方向へその場回転を行います。</li>
+<li>ロボットの向きが合っていれば、ゴール地点に最終到達したとして、速度0を指令します。</li>
+</ul>
+</li>
+</ol>
+<p>最終補正処理の途中でゴール地点の許容範囲外に出た場合は、最終補正処理をやめて通常の DWAに戻ります。
+ただし、<a class="reference internal" href="#goal-tolerance-parameters-dwalocalplanner"><span class="std std-ref">ゴール許容誤差ラッチフラグ</span></a> が trueの場合は、ゴール地点から外れても DWAに戻らず最終補正処理を続行します。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="dwaplannerros">
+<span id="dwaplannerros-dwalocalplanner"></span><h2>4.　ローカルプランナークラス DWAPlannerROS<a class="headerlink" href="#dwaplannerros" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>dwa_local_planner::DWAPlannerROS  オブジェクトは、dwa_local_planner::DWAPlanner  オブジェクトの機能を公開する <a class="reference external" href="http://wiki.ros.org/navigation/ROS_Wrappers">C++ ROSラッパー</a> です。 このオブジェクトは、初期化時に指定されたROS名前空間（以降、<em>name</em>と仮表記）で動作します。 このオブジェクトは、<a class="reference external" href="http://wiki.ros.org/nav_core">nav_core</a> パッケージにある nav_core::BaseLocalPlanner インターフェースに準拠しています。</p>
+<p>dwa_local_planner::DWAPlannerROS オブジェクトの作成例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">1</span> <span class="c1">#include &lt;tf/transform_listener.h&gt;</span>
+ <span class="mi">2</span> <span class="c1">#include &lt;costmap_2d/costmap_2d_ros.h&gt;</span>
+ <span class="mi">3</span> <span class="c1">#include &lt;dwa_local_planner/dwa_planner_ros.h&gt;</span>
+ <span class="mi">4</span>
+ <span class="mi">5</span> <span class="o">...</span>
+ <span class="mi">6</span>
+ <span class="mi">7</span> <span class="n">tf</span><span class="p">::</span><span class="n">TransformListener</span> <span class="n">tf</span><span class="p">(</span><span class="n">ros</span><span class="p">::</span><span class="n">Duration</span><span class="p">(</span><span class="mi">10</span><span class="p">));</span>
+ <span class="mi">8</span> <span class="n">costmap_2d</span><span class="p">::</span><span class="n">Costmap2DROS</span> <span class="n">costmap</span><span class="p">(</span><span class="s2">&quot;my_costmap&quot;</span><span class="p">,</span> <span class="n">tf</span><span class="p">);</span>
+ <span class="mi">9</span>
+<span class="mi">10</span> <span class="n">dwa_local_planner</span><span class="p">::</span><span class="n">DWAPlannerROS</span> <span class="n">tp</span><span class="p">;</span>
+<span class="mi">11</span> <span class="n">tp</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="s2">&quot;my_dwa_planner&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">tf</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">costmap</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="subscribe">
+<span id="subscribed-topics-dwalocalplanner"></span><h3>4.1 Subscribe トピック<a class="headerlink" href="#subscribe" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="22%" />
+<col width="67%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">トピック名</th>
+<th class="head">型</th>
+<th class="head">内容</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>odom</td>
+<td><a class="reference external" href="http://docs.ros.org/api/nav_msgs/html/msg/Odometry.html">nav_msgs/Odometry</a></td>
+<td>ローカルプランナーにロボットの現在の速度を与える走行距離情報。 このメッセージの速度情報は、 TrajectoryPlannerROSオブジェクトに含まれるコストマップのrobot_base_frameと同じ座標フレームにあると想定されます 。 robot_base_frameパラメーターについては、 <a class="reference external" href="http://wiki.ros.org/costmap_2d">costmap_2d</a> パッケージを参照してください。</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="publish">
+<span id="published-topics-dwalocalplanner"></span><h3>4.2　Publish トピック<a class="headerlink" href="#publish" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="22%" />
+<col width="67%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">トピック名</th>
+<th class="head">型</th>
+<th class="head">内容</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>~&lt;name&gt;/global_plan</td>
+<td><a class="reference external" href="http://docs.ros.org/api/nav_msgs/html/msg/Path.html">nav_msgs/Path</a></td>
+<td>ローカルプランナーが現在従おうとしているグローバルプランの一部。 主に視覚化の目的で使用されます。</td>
+</tr>
+<tr class="row-odd"><td>~&lt;name&gt;/local_plan</td>
+<td><a class="reference external" href="http://docs.ros.org/api/nav_msgs/html/msg/Path.html">nav_msgs/Path</a></td>
+<td>最後のサイクルで最高得点を獲得したローカルプランまたは軌道。 主に視覚化の目的で使用されます。</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="parameters-dwalocalplanner">
+<span id="id10"></span><h3>4.3　パラメーター<a class="headerlink" href="#parameters-dwalocalplanner" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>dwa_local_planner::DWAPlannerROS ラッパーの動作をカスタマイズするために設定可能なROS  <a class="reference external" href="http://wiki.ros.org/Parameters">パラメーター</a> が多数あります。 これらのパラメーターは、ロボット構成、目標許容誤差、フォワードシミュレーション、軌道スコアリング、振動防止、グローバルプランなど、いくつかのカテゴリに分類されます。
+これらのパラメーターのほとんどは、 <a class="reference external" href="http://wiki.ros.org/dynamic_reconfigure">dynamic_reconfigure</a> を使用して変更することができ、実行中のシステムでローカルプランナーを容易に調整できます。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="robot-configuration-parameters-dwalocalplanner">
+<span id="id11"></span><h4>4.3.1　ロボット構成パラメーター<a class="headerlink" href="#robot-configuration-parameters-dwalocalplanner" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="7%" />
+<col width="68%" />
+<col width="7%" />
+<col width="7%" />
+<col width="11%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">パラメーター名</th>
+<th class="head">内容</th>
+<th class="head">型</th>
+<th class="head">単位</th>
+<th class="head">デフォルト</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>~&lt;name&gt;/acc_lim_x</td>
+<td>ロボットの縦方向加速度の上限</td>
+<td>double</td>
+<td>m/s^2</td>
+<td>2.5</td>
+</tr>
+<tr class="row-odd"><td>~&lt;name&gt;/acc_lim_y</td>
+<td>ロボットの横方向加速度の上限</td>
+<td>double</td>
+<td>m/s^2</td>
+<td>2.5</td>
+</tr>
+<tr class="row-even"><td>~&lt;name&gt;/acc_lim_theta</td>
+<td>ロボットの回転加速度の上限</td>
+<td>double</td>
+<td>rad/s^2</td>
+<td>3.2</td>
+</tr>
+<tr class="row-odd"><td>~&lt;name&gt;/acc_lim_trans</td>
+<td>ロボットの並進運動加速度の上限。現在のソースでは無効なパラメーター (ROS Wiki 未記載)</td>
+<td>double</td>
+<td>m/s^2</td>
+<td>0.1</td>
+</tr>
+<tr class="row-even"><td>~&lt;name&gt;/max_vel_trans</td>
+<td>ロボットの並進運動速度の絶対値の上限。旧max_trans_vel。 (縦方向と横方向の合成速度の上限。これを超える軌道は破棄します。)</td>
+<td>double</td>
+<td>m/s</td>
+<td>0.55</td>
+</tr>
+<tr class="row-odd"><td>~&lt;name&gt;/min_vel_trans</td>
+<td>ロボットの並進運動速度の絶対値の下限。旧min_trans_vel。(縦方向と横方向の合成速度の下限。これと min_vel_theta のどちらも満たさない軌道は破棄します。)</td>
+<td>double</td>
+<td>m/s</td>
+<td>0.1</td>
+</tr>
+<tr class="row-even"><td>~&lt;name&gt;/max_vel_x</td>
+<td>ロボットの縦方向速度の上限</td>
+<td>double</td>
+<td>m/s</td>
+<td>0.55</td>
+</tr>
+<tr class="row-odd"><td>~&lt;name&gt;/min_vel_x</td>
+<td>ロボットの縦方向速度の下限。バックの動きでは負の値</td>
+<td>double</td>
+<td>m/s</td>
+<td>0.0</td>
+</tr>
+<tr class="row-even"><td>~&lt;name&gt;/max_vel_y</td>
+<td>ロボットの横方向速度の上限。(左方向は正の値)</td>
+<td>double</td>
+<td>m/s</td>
+<td>0.1</td>
+</tr>
+<tr class="row-odd"><td>~&lt;name&gt;/min_vel_y</td>
+<td>ロボットの横方向速度の下限。(右方向は負の値)</td>
+<td>double</td>
+<td>m/s</td>
+<td>-0.1</td>
+</tr>
+<tr class="row-even"><td>~&lt;name&gt;/max_vel_theta</td>
+<td>ロボットの回転速度絶対値の上限。旧max_rot_vel</td>
+<td>double</td>
+<td>rad/s</td>
+<td>1.0</td>
+</tr>
+<tr class="row-odd"><td>~&lt;name&gt;/min_vel_theta</td>
+<td>ロボットの回転速度絶対値の下限。旧min_rot_vel。 (これと min_vel_trans のどちらも満たさない軌道は破棄します。)</td>
+<td>double</td>
+<td>rad/s</td>
+<td>0.4</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="goal-tolerance-parameters-dwalocalplanner">
+<span id="id12"></span><h4>4.3.2　ゴール許容誤差パラメーター<a class="headerlink" href="#goal-tolerance-parameters-dwalocalplanner" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="7%" />
+<col width="68%" />
+<col width="7%" />
+<col width="7%" />
+<col width="11%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">パラメーター名</th>
+<th class="head">内容</th>
+<th class="head">型</th>
+<th class="head">単位</th>
+<th class="head">デフォルト</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>~&lt;name&gt;/yaw_goal_tolerance</td>
+<td>ゴール地点に到達したときの、コントローラーの向き(回転角)の許容誤差</td>
+<td>double</td>
+<td>rad</td>
+<td>0.05</td>
+</tr>
+<tr class="row-odd"><td>~&lt;name&gt;/xy_goal_tolerance</td>
+<td>ゴール地点に到達したときの、コントローラーの 2D平面上距離の許容誤差</td>
+<td>double</td>
+<td>m</td>
+<td>0.10</td>
+</tr>
+<tr class="row-even"><td>~&lt;name&gt;/latch_xy_goal_tolerance</td>
+<td>ゴール許容誤差ラッチフラグ。trueの場合、ロボットがゴール地点に到達すると、後はその場回転のみ行います。回転の間にゴール許容誤差の範囲外になることもあります。(falseの場合は、範囲外に出たら通常の動作に戻ります。)</td>
+<td>bool</td>
+<td>-</td>
+<td>false</td>
+</tr>
+<tr class="row-odd"><td>~&lt;name&gt;/trans_stopped_vel</td>
+<td>最終補正にあたって停止したとみなす X-Y合成速度。停止後その場回転します。(ROS Wiki 未記載)</td>
+<td>double</td>
+<td>m/s</td>
+<td>0.1</td>
+</tr>
+<tr class="row-even"><td>~&lt;name&gt;/theta_stopped_vel</td>
+<td>最終補正にあたって停止したとみなす回転速度。停止後その場回転します。(ROS Wiki 未記載)</td>
+<td>double</td>
+<td>rad/s</td>
+<td>0.1</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="forward-simulation-parameters-dwalocalplanner">
+<span id="id13"></span><h4>4.3.3　フォワードシミュレーションパラメーター<a class="headerlink" href="#forward-simulation-parameters-dwalocalplanner" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="7%" />
+<col width="68%" />
+<col width="7%" />
+<col width="7%" />
+<col width="11%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">パラメーター名</th>
+<th class="head">内容</th>
+<th class="head">型</th>
+<th class="head">単位</th>
+<th class="head">デフォルト</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>~&lt;name&gt;/sim_time</td>
+<td>軌道をフォワードシミュレーションする時間</td>
+<td>double</td>
+<td>s</td>
+<td>1.7</td>
+</tr>
+<tr class="row-odd"><td>~&lt;name&gt;/sim_granularity</td>
+<td>与えられた軌道上の点間のステップサイズ</td>
+<td>double</td>
+<td>m</td>
+<td>0.025</td>
+</tr>
+<tr class="row-even"><td>~&lt;name&gt;/angular_sim_granularity</td>
+<td>与えられた軌道上の角度サンプル間のステップサイズ</td>
+<td>double</td>
+<td>rad</td>
+<td>0.1</td>
+</tr>
+<tr class="row-odd"><td>~&lt;name&gt;/vx_samples</td>
+<td>速度空間の縦方向速度を探索するときに使用するサンプルの数</td>
+<td>integer</td>
+<td>-</td>
+<td>3</td>
+</tr>
+<tr class="row-even"><td>~&lt;name&gt;/vy_samples</td>
+<td>速度空間の横方向速度を探索するときに使用するサンプルの数</td>
+<td>integer</td>
+<td>-</td>
+<td>10</td>
+</tr>
+<tr class="row-odd"><td>~&lt;name&gt;/vth_samples</td>
+<td>速度空間の回転速度を探索するときに使用するサンプルの数</td>
+<td>integer</td>
+<td>-</td>
+<td>20</td>
+</tr>
+<tr class="row-even"><td>~&lt;name&gt;/controller_frequency</td>
+<td>このコントローラーが呼び出される頻度。 コントローラーの名前空間に設定されていない場合、searchParamを使用して親の名前空間からパラメーターを読み取ります。 すなわち、move_base とともに使用する場合は move_base の &quot;controller_frequency&quot;パラメーターを設定するだけでよく 、このパラメーターを未設定のままにしておけます。</td>
+<td>double</td>
+<td>Hz</td>
+<td>20.0</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="trajectory-scoring-parameters-dwalocalplanner">
+<span id="id14"></span><h4>4.3.4　軌道スコアリングパラメーター<a class="headerlink" href="#trajectory-scoring-parameters-dwalocalplanner" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>各軌道のスコアリングに使用されるコスト関数は、次の形式です。:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>cost =
+path_distance_bias * (軌道終端からパスへの距離(m))
++ goal_distance_bias * (軌道終端からローカルゴールへの距離(m))
++ occdist_scale * (軌道中の最大障害物コスト。単位は障害物コスト (0-254))
++ path_distance_bias * (グローバルパスへの向きのコスト(m))
++ goal_distance_bias * (ローカルゴールへの向きのコスト(m))
++ twirling_scale * (スピンコスト(rad/s))
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="7%" />
+<col width="68%" />
+<col width="7%" />
+<col width="7%" />
+<col width="11%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">パラメーター名</th>
+<th class="head">内容</th>
+<th class="head">型</th>
+<th class="head">単位</th>
+<th class="head">デフォルト</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>~&lt;name&gt;/path_distance_bias</td>
+<td>コントローラーがパスにどれだけ近づこうとするかの重み</td>
+<td>double</td>
+<td>1/m</td>
+<td>32</td>
+</tr>
+<tr class="row-odd"><td>~&lt;name&gt;/goal_distance_bias</td>
+<td>コントローラーがローカルの目標にどれだけ近づこうとするかの重み。このパラメーターは速度も制御します。</td>
+<td>double</td>
+<td>1/m</td>
+<td>24</td>
+</tr>
+<tr class="row-even"><td>~&lt;name&gt;/occdist_scale</td>
+<td>コントローラーが障害物をどれだけ回避しようとするかの重み</td>
+<td>double</td>
+<td>-</td>
+<td>0.01</td>
+</tr>
+<tr class="row-odd"><td>~&lt;name&gt;/twirling_scale</td>
+<td>スピンコストの重み</td>
+<td>double</td>
+<td>s/rad</td>
+<td>0</td>
+</tr>
+<tr class="row-even"><td>~&lt;name&gt;/forward_point_distance</td>
+<td>追加のスコアリングポイントを配置するためのロボット中心点からの距離。 (ロボットの向きの評価で使用します。base_local_planner の <a class="reference internal" href="base_local_planner.html#trajectory-scoring-parameters-baselocalplanner"><span class="std std-ref">heading_lookahead</span></a> に相当します。)</td>
+<td>double</td>
+<td>m</td>
+<td>0.325</td>
+</tr>
+<tr class="row-odd"><td>~&lt;name&gt;/stop_time_buffer</td>
+<td>軌道が有効と見なされるために、衝突前にロボットが停止しなければならない時間。 (現状のソースコードでは無効)</td>
+<td>double</td>
+<td>s</td>
+<td>0.2</td>
+</tr>
+<tr class="row-even"><td>~&lt;name&gt;/scaling_speed</td>
+<td>ロボットの footprint のスケーリングを開始する速度の絶対値。 (現状のソースコードではスケーリングは行っていないため無効)</td>
+<td>double</td>
+<td>m/s</td>
+<td>0.25</td>
+</tr>
+<tr class="row-odd"><td>~&lt;name&gt;/max_scaling_factor</td>
+<td>ロボットの footprint をスケーリングする最大係数。　(現状のソースコードではスケーリングは行っていないため無効)</td>
+<td>double</td>
+<td>-</td>
+<td>0.2</td>
+</tr>
+<tr class="row-even"><td>~&lt;name&gt;/publish_cost_grid</td>
+<td>プランナーが計画時に使用するコストグリッドを公開するかどうか。 trueの場合、 sensor_msgs/PointCloud2 が~&lt;name&gt;/cost_cloudトピックで利用可能になります。 各点群はコストグリッドを表し、個々のスコアリング関数コンポーネントのフィールドを持ちます。 また、スコアリングパラメーターを考慮に入れた各セルの全体的なコストを持ちます。</td>
+<td>bool</td>
+<td>-</td>
+<td>false</td>
+</tr>
+<tr class="row-odd"><td>~&lt;name&gt;/use_dwa</td>
+<td>Dynamic Window Approach (DWA) を使用するか、Trajectory Rollout を使用するか。(ROS Wikiに記載なし)</td>
+<td>bool</td>
+<td>-</td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="oscillation-prevention-parameters-dwalocalplanner">
+<span id="id15"></span><h4>4.3.5　振動防止パラメーター<a class="headerlink" href="#oscillation-prevention-parameters-dwalocalplanner" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="7%" />
+<col width="68%" />
+<col width="7%" />
+<col width="7%" />
+<col width="11%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">パラメーター名</th>
+<th class="head">内容</th>
+<th class="head">型</th>
+<th class="head">単位</th>
+<th class="head">デフォルト</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>~&lt;name&gt;/oscillation_reset_dist</td>
+<td>振動フラグがリセットされるまでにロボットが移動する必要がある距離</td>
+<td>double</td>
+<td>m</td>
+<td>0.05</td>
+</tr>
+<tr class="row-odd"><td>~&lt;name&gt;/oscillation_reset_angle</td>
+<td>振動フラグがリセットされるまでにロボットが回転する必要がある角度。 (ROS Wiki 未記載)</td>
+<td>double</td>
+<td>rad</td>
+<td>0.2</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="global-plan-parameters-dwalocalplanner">
+<span id="id16"></span><h4>4.3.6　グローバルプランパラメーター<a class="headerlink" href="#global-plan-parameters-dwalocalplanner" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="7%" />
+<col width="68%" />
+<col width="7%" />
+<col width="7%" />
+<col width="11%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">パラメーター名</th>
+<th class="head">内容</th>
+<th class="head">型</th>
+<th class="head">単位</th>
+<th class="head">デフォルト</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>~&lt;name&gt;/prune_plan</td>
+<td>ロボットがパスに沿って移動するときにプランを「食べていくか」を定義します。 trueに設定されている場合、ロボットが移動した際に経路のうち現在位置から1メートル以上過去の点は消します。</td>
+<td>bool</td>
+<td>-</td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="c-api">
+<span id="cppapi-dwalocalplanner"></span><h3>4.4　C++ API<a class="headerlink" href="#c-api" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>base_local_planner::TrajectoryPlannerROS クラスの C ++レベルのAPIドキュメントについては、次のページを参照してください： <a class="reference external" href="http://www.ros.org/doc/api/dwa_local_planner/html/classdwa__local__planner_1_1DWAPlannerROS.html">DWAPlannerROS C ++ API</a></p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="internalclasses-dwalocalplanner">
+<span id="id17"></span><h3>4.5.　下位クラス<a class="headerlink" href="#internalclasses-dwalocalplanner" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="dwa">
+<span id="dwaplanner-dwalocalplanner"></span><h4>4.5.1　DWAプランナークラス<a class="headerlink" href="#dwa" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>dwa_local_planner::DWAPlanner は、前述のDWAおよび Trajectory Rollout アルゴリズムの実装を提供します。 ROSで dwa_local_planner::DWAPlanner を使用するには、 <a class="reference internal" href="#dwaplannerros-dwalocalplanner"><span class="std std-ref">DWAPlannerROS ラッパー</span></a> を使用してください。 dwa_local_planner::DWAPlanner を単独で使用することは推奨されません。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="cppapi-1-dwalocalplanner">
+<span id="id18"></span><h5>4.5.1.1　C++ API<a class="headerlink" href="#cppapi-1-dwalocalplanner" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<p>dwa_local_planner::DWAPlanner クラスの C ++レベルのAPIドキュメントについては、次のページを参照してください： <a class="reference external" href="http://www.ros.org/doc/api/dwa_local_planner/html/classdwa__local__planner_1_1DWAPlanner.html">DWAPlanner C ++ API</a></p>
+<div class="line-block" id="additional-explanation-dwalocalplanner">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="sequence-dwalocalplanner">
+<span id="id19"></span><h2>5.　内部処理手順<a class="headerlink" href="#sequence-dwalocalplanner" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="methodcallsequence-dwalocalplanner">
+<span id="id20"></span><h3>5.1　メソッドコールシーケンスの概要<a class="headerlink" href="#methodcallsequence-dwalocalplanner" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<a class="reference internal image-reference" href="_images/dwa_planner_sequence.png"><img alt="_images/dwa_planner_sequence.png" class="align-center" src="_images/dwa_planner_sequence.png" style="width: 100%;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="method-frame-dwalocalplanner">
+<span id="id21"></span><h3>5.2　各メソッドの処理概要<a class="headerlink" href="#method-frame-dwalocalplanner" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li>DWAPlannerROS::computeVelocityCommands() … 速度指令計算<ul>
+<li>ゴール地点に到達済みかを判定します。</li>
+<li>ゴール地点に到達済みなら最終補正の速度指令を返します。 LatchedStopRotateController::computeVelocityCommandsStopRotate()<ul>
+<li>ロボットが未停止であれば減速/停止の速度指令を返却します。</li>
+<li>ロボットが停止済みであれば角度を合わせるための回転速度指令を返却します。</li>
+<li>角度も合っていればゼロ速度指令を返却します。</li>
+</ul>
+</li>
+<li>ゴール地点に到達していなければ、 DWAPlanner::findBestPath()をコールします。</li>
+</ul>
+</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul>
+<li><p class="first">DWAPlanner::findBestPath() … 最良経路検索</p>
+<blockquote>
+<div><ul class="simple">
+<li>各コスト関数に変数を設定します。<ul>
+<li>path_costs (グローバルパスからの距離) ← グローバルパスを設定します。</li>
+<li>goal_costs (ローカルゴールからの距離) ← グローバルパスを設定します。</li>
+<li>obstacle_costs (障害物コスト) ← ロボットの footprint を設定します。</li>
+<li>goal_front_costs (ローカルゴールへの向き)   ← グローバルパスを設定します。</li>
+<li>alignment_costs (グローバルパスへの向き) ←  グローバルパスを設定します。</li>
+</ul>
+</li>
+<li>速度サンプリング base_local_planner::SimpleTrajectoryGenerator::initialise() … とりうる (縦方向速度, 横方向速度, 回転速度) の組み合わせリストを作成します。</li>
+<li>最良軌道検索 base_local_planner::SimpleScoredSamplingPlanner::findBestTrajectory() をコールします。</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul>
+<li><p class="first">base_local_planner::SimpleScoredSamplingPlanner::findBestTrajectory() … 最良軌道検索</p>
+<blockquote>
+<div><ul class="simple">
+<li>各コスト関数を更新します。　 TrajectoryCostFunction::prepare()   … グローバルパスのマッピング＆伝搬計算などを行います。</li>
+<li>軌道を作成します。 SimpleTrajectoryGenerator::nextTrajectory()   … サンプリング速度のセットについて、軌道を計算します。</li>
+<li>軌道をスコアリングします。 TrajectoryCostFunction::scoreTrajectory()   … 軌道に沿ってコストを集計します。</li>
+<li>異なるタイプのコスト(path_costs, goal_costs, etc.)を加重和します。</li>
+<li>最も低コストの軌道を見つけます。</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+            </div>
+        </div>
+        <div class='footer'>
+            <ul>
+            <li><div class="copyright align-left">This document is licensed under the <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0</a></div></li>
+            <li><div class="copyright align-right">Copyright © National Institute of Advanced Industrial Science and Technology （AIST）<br/> （Japan Corporate Number 7010005005425）. All rights reserved.</div></li>
+            </ul>
+            <br />
+        </div>
+    </div>
+</body>
+</html>
